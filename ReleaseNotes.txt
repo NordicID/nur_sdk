@@ -1,0 +1,308 @@
+1.8.4
+**************************************************************************
+ * API version in this distribution is 1.8.4.0
+ * AR55 far beam support
+**************************************************************************
+
+1.8.3
+Date: 16.2.2016
+**************************************************************************
+ * API version in this distribution is 1.8.2.7
+ * Copied correct release DLLs into the sample directories.
+**************************************************************************
+
+1.8.2
+Date: 18.1.2016
+**************************************************************************
+ * API version in this distribution is 1.8.0
+ * Added missing resources to CAEN RT0005 sample for WCE/WEC.
+ * Copied correct release DLLs into the sample directories.
+**************************************************************************
+
+1.8.1
+Date: 14.1.2016
+**************************************************************************
+ * API version in this distribution is 1.8.0
+ * Docs\AN-NUR-ANTAPI.pdf
+ * EmbeddedNUR\CustomExchange_read_example.pdf
+ * EmbeddedNUR\NUR_AN001_basic_commands.pdf
+ * EmbeddedNUR\NUR_AN002_module_setup.pdf
+ * EmbeddedNUR\NUR_AN003_scan_single.pdf
+ * EmbeddedNUR\NUR_AN004_inventory_and_tag_buffer.pdf
+ * EmbeddedNUR\NUR_AN005_read_tag.pdf
+ * EmbeddedNUR\NUR_AN006_write_tag.pdf
+ * EmbeddedNUR\NUR_AN010_tag_selection.pdf
+ * EmbeddedNUR\NUR_CRC16_explained.pdf
+
+ * Driver install update (EXE = 1.1.0.0)
+ * Added missing WINUSB directory to driver install
+ * Added Docs\AppNotes for eNUR (embedded)
+ * Added EM4325DS temperature tag project
+ * Java libraries (NurApi.jar) for compiler version 1.6 and 1.7 updated
+ * Documentation for each JAR brought up-to date.
+ * Java libraries for compiler version 1.8 are added and updated. 
+  -- Java\Compiler_1.8\
+  -- NurApi.jar
+  -- NativeSerialTransport.jar
+  -- NurApiAndroid.jar
+  -- NurApiSocketTransport.jar
+  -- SampoExtensionAPI.jar
+
+ * Added separate documentation for NUR Java API (NurApi.jar): Docs\NurApiJavaDoc\
+
+**************************************************************************
+
+Version 1.8
+Date: 30.11.2015
+
+ - API version is 1.8.0
+ - Added cross-platform linux libraries
+ - Added .NET temperature tag example(s)
+  -- currently only CAEN RT0005 (RT0005ET)
+ - Added Java libraries
+ - added sources for Java native transport
+
+Version 1.7.9:
+Date: 24.06.2015
+- Accompanying FW version 5.0-A for L2 module
+- Nordic ID AR55 support
+- New physical antenna api
+- Runtime auto tuning support
+- RX sensitivity setting
+- Morocco, Peru regions added
+- Cache module info in api
+- Possibility to set constant channel index
+- Possibility to keep CW on between commmands
+
+Version 1.7.0:
+- accompanying FW version 4.8-A for L2 module
+- selection mask bit alignment fix
+- EU band fix for Medea
+- beep duty cycle 
+- fetch one tag at a time
+- inventory ex re-run possibility
+- receiver jam fix
+- 1W PA current change
+- inventory + read allows bank 0
+- XPC removal for EPC-only requests
+
+**************************************************************************
+**************************************************************************
+
+Version 1.6.9:
+Date: 24.06.2013
+
+ - Internal configuration changes
+
+**************************************************************************
+**************************************************************************
+
+Version 1.6.6.2:
+Date: 26.02.2013
+
+ - one Watt support added
+ - common sources for .NET API
+ - somewhat improved .NET API documentation
+
+**************************************************************************
+**************************************************************************
+
+Version: 1.6.6.0
+Date: 26.02.2013
+
+Introducing device capabilities and fixes for Ethernet Sampo.
+- per antenna power support
+- separate read, write, lock and kill timeout values
+- enhanced custom exchange
+- BlockErase
+- BlockPermalock
+- enhanced BlockWrite
+
+**************************************************************************
+**************************************************************************
+
+Version: 1.6.1.0
+Date: 08.10.2013
+
+Typo fixes -> version update.
+
+**************************************************************************
+**************************************************************************
+
+Version: 1.6.0.0
+Date: 30.9.2013
+
+NurApi changes:
+ * Several new commands.
+ * NUR 05L2 support
+
+**************************************************************************
+**************************************************************************
+
+Version: 1.5.2.0
+Date: 5.7.2013
+
+NurApi changes:
+ * Internal improvements
+
+NurApiDotNet changes:
+ * Internal improvements
+
+**************************************************************************
+**************************************************************************
+
+Version: 1.4.3.1
+Date: 4.2.2013
+
+NurApi changes:
+ * Fixed NUR_NOTIFY_INVENTORY issue.
+
+NurApiDotNet changes:
+ * Internal improvements
+
+**************************************************************************
+**************************************************************************
+
+Version: 1.4.3
+Date: 25.1.2013
+
+NurApi changes:
+ * More safe firmware update
+ * Added new NUR_REGIONID enums
+   (Korea, India, Russia, Vietnam, Singapore, Thailand, Philippines)
+
+NurApiDotNet changes:
+ * Added new REGIONID consts.
+   (Korea, India, Russia, Vietnam, Singapore, Thailand, Philippines)
+
+**************************************************************************
+**************************************************************************
+
+
+Version: 1.4.2
+Date: 21.9.2012
+
+
+NurApi changes:
+ * Added custom read and write command support.
+ * Added extended inventory commands with multiple filters.
+ * Added Ethernet related functionalities for Nordic ID Sampo.
+ * Added the possibility to get/set Title to device.
+
+NurApiDotNet changes:
+ * Added custom read and write command support.
+ * Added extended inventory commands with multiple filters.
+ * Added Ethernet related functionalities for Nordic ID Sampo.
+ * Added the possibility to get/set Title to device.
+
+
+**************************************************************************
+**************************************************************************
+
+
+Version: 1.3.1
+Date: 5.3.2012
+
+NurApi changes:
+ * Added RSSI filtering (see NUR_MODULESETUP).
+
+NurApiDotNet changes:
+ * Added RSSI filtering (see ModuleSetup).
+
+
+**************************************************************************
+**************************************************************************
+
+
+Version: 1.3.0
+Date: 3.2.2012
+
+NurApi changes:
+ * Module power managemen improvments.
+ * Fixed NurApiKillTag() function.
+ * Added NurApiSetLockRaw(), NurApiModuleRestart() function.
+
+NurApiDotNet changes:
+ * Added NurApi.SetLockRaw() function.
+ * Added NurApi.REGIONID_JA250MW and NurApi.REGIONID_JA500MW constants.
+
+
+**************************************************************************
+**************************************************************************
+
+
+Version: 1.2.2
+Date: 4.1.2012
+
+NurApi changes:
+ * Internal improvements
+
+
+**************************************************************************
+**************************************************************************
+
+
+Version: 1.2.1
+Date: 23.12.2011
+
+NurApi changes:
+ * Added Sensors, Gpios, Baudrate and InventoryEpcLength settings to ini -file
+ * Ini -file can contain a variable number of settings
+
+NurApiDotNet changes:
+ * Added RXDECODING and TXMODULATION constants.
+
+
+**************************************************************************
+**************************************************************************
+
+
+Version: 1.2.0
+Date: 10.11.2011
+
+NurApi changes:
+ * Notification system improvements
+ * Added inventoryEpcLength to struct NUR_MODULE_SETUP; Ability to set exact length of inventoried EPC
+ 
+NurApiDotNet changes: 
+ * Memory usage improvements
+ * Added inventoryEpcLength to NurApi.ModuleSetup
+ * Serialize access to TagStorage
+
+
+**************************************************************************
+**************************************************************************
+
+
+Version: 1.0.8
+Date: 21.10.2011
+
+NurApi changes:
+ * Larger serial port buffer to prevent buffer underflow
+ 
+NurApiDotNet changes: 
+ * Added missing NurApi.SetUseBlockWrite() and NurApi.GetUseBlockWrite() functions
+ * ModuleSetup naming to match NurApi
+
+
+**************************************************************************
+**************************************************************************
+
+
+Version: 1.0.7
+Date: 13.10.2011
+
+NurApi changes:
+ * Added NurApiResetToTarget() function
+ * Added inventoryTarget to struct NUR_MODULE_SETUP
+ * Fixed possible race condition in inventory stream notification
+
+NurApiDotNet changes: 
+ * Added NurApi.ResetToTarget() function
+ * Added inventoryTarget to NurApi.ModuleSetup
+ * Added NurApi.InventorySelectStream() function
+
+
+**************************************************************************
+**************************************************************************
+
