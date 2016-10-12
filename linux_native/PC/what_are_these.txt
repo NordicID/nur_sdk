@@ -1,0 +1,12 @@
+Linux libraries for Pentium, x86 and x86-64.
+
+Files:
+
+libNurApii586.a		Static link library optimized for Pentium architecture				(gcc (Ubuntu 4.8.2-19ubuntu1) 4.8.2)
+libNurApii586.so	Shared object (dynamic library) optimized for Pentium architecture	(gcc (Ubuntu 4.8.2-19ubuntu1) 4.8.2)
+
+libNurApix86.a		Static link library for x86 architecture (32-bit)					(gcc (Ubuntu 4.8.2-19ubuntu1) 4.8.2)
+libNurApix86.so		Shared object (dynamic library) for x86 architecture (32-bit)		(gcc (Ubuntu 4.8.2-19ubuntu1) 4.8.2)
+
+libNurApix64.a		Static link library for x86-64 architecture	(64-bit)				(gcc (Ubuntu 4.8.2-19ubuntu1) 4.8.2)
+libNurApix64.so		Shared object (dynamic library) for x86-64 architecture (64-bit)	(gcc (Ubuntu 4.8.2-19ubuntu1) 4.8.2)
