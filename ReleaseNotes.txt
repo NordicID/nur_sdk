@@ -1,3 +1,11 @@
+1.8.6
+Date: 19.1.2017
+**************************************************************************
+ * API version in this distribution is 1.8.6.0
+ * Windows Native 32-bit, 64-bit, Windows-CE
+ * Fix windows ce transport timeout in some cases
+**************************************************************************
+
 1.8.4
 **************************************************************************
  * API version in this distribution is 1.8.4.0
