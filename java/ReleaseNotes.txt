@@ -1,0 +1,47 @@
+v1.8.1.32
+- writeEpcByEpc epc len fix
+
+v1.8.1.28
+- In case of multiple inventory stream notifications in buffer, preserve inventory notification "tagsAdded" field over notification replace
+
+v1.8.1.27 
+- Fixed read thread start sync on connect. Sometimes went for timeout because read thread was started already.
+
+v1.8.1.26
+- Fixed AutoTune notification
+
+v1.8.1.25 
+- NUR needs some time after boot, before it can receive commands reliably
+- Broadcast discovery set correct eth transport
+
+v1.8.1.24 
+- Add disableAck() method to NurApiTransport, allows transport to decide whether ACK is rally needed by transport or not.
+
+v1.8.1.23
+- NUR2 firmware update changes
+- Fix module setup rxsensitivity field serialization
+- NurTag gets also NurApi instance from FetchTags, InventoryNotification etc.
+- Fixed buffer size from NurCmdInventoryEx
+- Write thread fix for android 7
+- Fixed setPerAntennaPowerEx issue
+- Added Morocco. Peru, Israel and Hong Kong regions
+
+v1.8.1.19 
+- Remove unnecessary parameter check from NurCmdInvReadConfig
+
+v1.8.1.18
+- More reliability in low end devices (e.g. raspi) under heavy load
+
+v1.8.1.17
+- Implement NUR ACK handling
+- By default disabled logging to stdout, can be turned on with setLogToStdout(true)
+- Added getFwInfo() function
+
+v1.8.1.16
+- Fix possible multicore cpu race conditions
+- Added missing getVersions -command that provides the primary and
+secondary versions.
+
+v1.8.1.13
+- Fix packet data loss in some (rare) cases w/ huawei phones
+- Added NUR FW binary checking

@@ -1,0 +1,28 @@
+v1.9.5
+- Added NUR2 diagnostics features
+- Enforced security when invalid parameters passed in functions
+- Some minor improvements
+
+v1.9.1
+- MDNS discovery fixes
+
+v1.8.9
+- Added NUR2 rfProfile setup support
+- Added NUR2 devcaps support: NUR_CHIPVER_R2000, NUR_MODULETYPE_NUR2_1W
+- Speed up disconnect
+
+v1.8.8
+- More reliable connect on BT transports
+- NUR needs some time after boot before it can receive commands reliably
+
+v1.8.7
+- Add support for gen2v2 TAM2 protection modes 2,3
+
+v1.8.6
+- Fix windows ce transport timeout in some cases
+
+v1.8.5
+- Fix NurApiSetHostFlags function definition
+- Fix possible deadlock in linux
+- Added NurAccessoryExtension
+- Added iOS build support
