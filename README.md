@@ -2,7 +2,8 @@
 This repository contains SDK files for NurApi different platforms.
 
 ### Releases
-- Releases are tagged with version number, see [tags](https://github.com/NordicID/nur_sdk/tags)
+- **master** branch contains latest release
+- Older releases are tagged with version number, see [tags](https://github.com/NordicID/nur_sdk/tags)
 
 ### Platforms
 - [C/C++ SDK](native)
