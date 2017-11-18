@@ -1,3 +1,6 @@
+v1.8.1.33
+- Fixed possible thread leak
+
 v1.8.1.32
 - writeEpcByEpc epc len fix
 
