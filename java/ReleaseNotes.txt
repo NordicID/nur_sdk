@@ -1,3 +1,13 @@
+v1.8.1.35
+- Fixed possible write failure after reconnection
+
+v1.8.1.34
+- Fixed inventory select command response parsing
+- Added diagnostics functions. getDiagReport, setDiagConfig, getDiagConfig
+- Added NUR2 RfProfile setup support
+- Added NUR2 dev caps entries
+- Removed ini4j dependency
+
 v1.8.1.33
 - Fixed possible thread leak
 
