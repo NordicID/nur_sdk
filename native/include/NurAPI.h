@@ -1183,6 +1183,9 @@ struct NUR_DIAG_REPORT
  */
 typedef void (NURAPICALLBACK *NotificationCallback)(HANDLE hApi, DWORD timestamp, int type, LPVOID data, int dataLen);
 
+/** Callback function type for NurUSBEnumerateDevices() function */
+typedef int (NURAPICALLBACK *NurUSBEnumDeviceFunction)(const TCHAR *path, const TCHAR *friendlyname, LPVOID arg);
+
 /** @fn HANDLE NurApiCreate()
  * Creates new instance of NurApi object.
  *
@@ -1384,6 +1387,7 @@ int NURAPICONV NurApiPermalockByEPC(HANDLE hApi, DWORD password, BOOL secured, B
  *
  * @return	Zero when succeeded, non-zero error code when failed.
 */
+NUR_API
 int NURAPICONV NurApiPermalockSingulated32(HANDLE hApi, DWORD password, BOOL secured, 
 												BYTE sBank, DWORD sAddress, int sMaskBitLength, BYTE *sMask,
 												struct NUR_PERMALOCK_PARAM *pLock);
@@ -1730,7 +1734,16 @@ int NURAPICONV NurApiConnectUsb(HANDLE hApi, const TCHAR *devpath);
 NUR_API
 int NURAPICONV NurApiSetUsbAutoConnect(HANDLE hApi, BOOL useAutoConnect);
 
-// DWORD NURAPICONV NurUSBEnumerateDevices(NurUSBEnumDeviceFunction funcPtr, LPVOID arg)
+/** @fn int NurUSBEnumerateDevices(NurUSBEnumDeviceFunction funcPtr, LPVOID arg)
+ * Enumerate all USB connected NUR devices. 
+ * NOTE: This function works only in WIN32 target
+ *
+ * @param funcPtr	Pointer to callback function
+ * @param arg		Application specific argument pointer. This is passed to callback
+ * @return Number of connected USB devices found.
+ */
+NUR_API
+DWORD NURAPICONV NurUSBEnumerateDevices(NurUSBEnumDeviceFunction funcPtr, LPVOID arg);
 
 /** @fn BOOL NurApiGetUsbAutoConnect()
  *
@@ -2355,6 +2368,7 @@ int NURAPICONV NurApiInventoryEx(HANDLE hApi,
  *
  * @return	Zero when succeeded, On error non-zero error code is returned.
  */
+NUR_API
 int NURAPICONV NurApiRerunInventoryEx(HANDLE hApi, struct NUR_INVENTORY_RESPONSE *resp);
 
 /** @fn int NurApiStartInventoryEx(HANDLE hApi, struct NUR_INVEX_PARAMS *params,

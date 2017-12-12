@@ -40,8 +40,4 @@ enum NUR_USB_CONNTYPE
 	USB_CONNTYPE_WINUSB = 2
 };
 
-#ifndef NUR_WINCE
-	#include <shlobj.h>    // for SHGetFolderPath
-#endif
-
 #endif /* NUROS_WIN32_H_ */

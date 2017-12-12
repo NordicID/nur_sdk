@@ -238,6 +238,7 @@ enum NUR_NOTIFICATION
 	NUR_NOTIFICATION_TT_CHANGED,			/**< Tag tracking event */
 	NUR_NOTIFICATION_TT_SCANEVENT,			/**< Tag tracking scan start/stop event */
 	NUR_NOTIFICATION_DIAG_REPORT,			/**< Diagnostics report */
+	NUR_NOTIFICATION_ACCESSORY,				/**< Accessory event */
 	NUR_NOTIFICATION_LAST
 };
 
