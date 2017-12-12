@@ -7,21 +7,6 @@
         <member name="T:NurApiDotNet.NurApi">
             <summary>
             The NurApiDotNet namespace contains classes for creating C# based applications for Nordic ID UHF RFID reader module family.<para></para>
-            All products with module:
-            <list type="bullet">
-            <item>
-            <description>NUR-05W</description>
-            </item>
-            <item>
-            <description>NUR-05W L2</description>
-            </item>    
-            <item>
-            <description>NUR-10W (1W module)</description>
-            </item>
-            <item>
-            <description>NUR2-1W (1W module)</description>
-            </item>
-            </list>
             </summary>
             <summary>
             NurApi class
@@ -205,6 +190,9 @@
         </member>
         <member name="F:NurApiDotNet.NurApi.NOTIFICATION_DIAG_REPORT">
             <summary> Diagnostics report </summary>
+        </member>
+        <member name="F:NurApiDotNet.NurApi.NOTIFICATION_ACCESSORY">
+            <summary> Accessory event </summary>
         </member>
         <member name="F:NurApiDotNet.NurApi.LOG_VERBOSE">
             <summary>Log level Verbose</summary>
@@ -1652,19 +1640,21 @@
         <member name="M:NurApiDotNet.NurApi.#ctor">
             <summary>
             <para>Standard constructor.</para>
-            <para>For example of assigning event handlers when instance is created, see <see cref="M:NurApiDotNet.NurApi.#ctor(System.Windows.Forms.Control)"/>.</para>
+            <example>
+            <code source="..\DocExample\NurApiCreate.cs"></code>
+            </example>
             </summary>
         </member>
         <member name="M:NurApiDotNet.NurApi.#ctor(System.Windows.Forms.Control)">
             <summary>
             Standard constructor
             </summary>
-            <param name="notificationReceiver">Notfications will be executed in same thread where this Control is running</param>
+            <param name="notificationReceiver">Notifications will be executed in same thread where this Control is running</param>
             <example>
             <code source="..\DocExample\NurApiCreate.cs"></code>
             </example>
             <remarks>
-            <para>The notification nreceiver is the class tha can receive notification from the API.</para>
+            <para>NurApi sends events in notification receiver context using Invoke(), thus UI components can be updated from events directly.</para>
             <para>Some events the API sends are for example:</para>
             <para><see cref="E:NurApiDotNet.NurApi.ConnectedEvent"/></para>
             <para><see cref="E:NurApiDotNet.NurApi.DisconnectedEvent"/></para>
@@ -1674,7 +1664,9 @@
             <summary>
             <para>Constructor that creates a new instance of the API based on a client handle.</para>
             <para></para>
-            <para>For example of assigning event handlers when instance is created, see <see cref="M:NurApiDotNet.NurApi.#ctor(System.Windows.Forms.Control)"/>.</para>
+            <example>
+            <code source="..\DocExample\NurApiCreate.cs"></code>
+            </example>
             </summary>
             <value>
             The parameter is basically native API's handle: see <see cref="M:NurApiDotNet.NurApi.GetHandle"/>.
@@ -1743,7 +1735,6 @@
             </summary>
             <param name="mask">Use NurApi.LOG_VERBOSE,NurApi.LOG_ERROR,NurApi.LOG_USER,NurApi.LOG_DATA,NurApi.LOG_ALL</param>
             <example>
-            Set mask for only errors and data using the class' NurApi instance 'hNur':<para></para>
             <code lang="C#">hNur.SetLogLevel(NurApi.LOG_ERROR | NurApi.LOG_DATA);</code></example>
             <exception cref="T:NurApiDotNet.NurApiException">Thrown when Invalid handle value</exception>
         </member>
@@ -1867,6 +1858,160 @@
             <seealso cref="F:NurApiDotNet.NurApi.MIN_SCRATCHBYTES"/>
             <seealso cref="F:NurApiDotNet.NurApi.MAX_SCRATCHBYTES"/>
         </member>
+        <member name="M:NurApiDotNet.NurApi.AccGetFwInfo">
+            <summary>
+            Get information about the accessory device
+            </summary>
+            <exception cref="T:NurApiDotNet.NurApiException">Thrown when "API not created" or other error </exception>   
+            <returns>string format: Applicationversion space details;bootloaderversion</returns>
+        </member>
+        <member name="M:NurApiDotNet.NurApi.AccGetConnectionInfo">
+            <summary>
+            Get information about the connection
+            </summary>
+            <exception cref="T:NurApiDotNet.NurApiException">Thrown when "API not created" or other error </exception>   
+            <returns>MTU and DLE values as string</returns>
+        </member>
+        <member name="M:NurApiDotNet.NurApi.AccGetBatteryInfo">
+            <summary>
+            Get battery info of accessory
+            </summary>
+            <exception cref="T:NurApiDotNet.NurApiException">Thrown when "API not created" or other error </exception>   
+            <returns><see>BatteryInfo</see> object holding battery information</returns>
+        </member>
+        <member name="M:NurApiDotNet.NurApi.AccBarcodeStart(System.UInt16)">
+            <summary>
+            Start scan for barcode reader engine<br></br>
+            This function is non-blocking. Use <see>AccessoryEvent</see> for receiving scan results.
+            </summary>
+            <exception cref="T:NurApiDotNet.NurApiException">Thrown when "API not created" or other error </exception>   
+            <param name="timeout">Timeout in millisecons</param>
+        </member>
+        <member name="M:NurApiDotNet.NurApi.AccBarcodeCancel">
+            <summary>
+            Cancel barcode scan immediately.
+            </summary>
+            <exception cref="T:NurApiDotNet.NurApiException">Thrown when "API not created" or other error </exception>   
+        </member>
+        <member name="M:NurApiDotNet.NurApi.AccBarcodeRead(System.Byte[],System.Text.Encoding)">
+            <summary>
+            Read barcode scan result from Accessory Event data
+            </summary>
+            <param name="reply">Scan result reply from accessory</param>
+            <param name="encoding">Encoding to use to translate barcode data to string</param>
+            <exception cref="T:System.Exception">Thrown if cannot encode string </exception>  
+            <returns>Result of scan or empty string if cancelled or no result during timeout</returns>        
+        </member>
+        <member name="M:NurApiDotNet.NurApi.AccBarcodeRead(System.Byte[])">
+            <summary>
+            Read barcode scan result from Accessory Event data
+            </summary>
+            <param name="reply">Scan result reply from accessory</param>
+            <returns>Result of scan or empty string if cancelled or no result during timeout. Barcode data is translated to string using ASCII encoding.</returns>
+        </member>
+        <member name="M:NurApiDotNet.NurApi.AccBeep(System.Int32)">
+            <summary>
+            Generate simple beep sound for accessory device
+            </summary>
+            <param name="beeptime">beep time (1-5000ms)</param>
+            <exception cref="T:NurApiDotNet.NurApiException">Thrown when "API not created" or other error </exception>   
+        </member>
+        <member name="M:NurApiDotNet.NurApi.AccVibrate(System.Int32,System.Int32)">
+            <summary>
+            Use vibra of accessory device<br></br>
+            Parameter exception thrown if vibratingTime * count exceeds 2000ms
+            </summary>
+            <param name="vibratingTime">vibration ontime and offtime in milliseconds</param>
+            <param name="count">Number of times to repeat</param>
+            <exception cref="T:NurApiDotNet.NurApiException">Thrown when "API not created" or other error </exception>   
+        </member>
+        <member name="M:NurApiDotNet.NurApi.AccGetWirelessChargeStatus">
+            <summary>
+            Get wireless charge status.
+            </summary>
+            <returns>Status of wireless charge <see cref="T:NurApiDotNet.NurApi.AccWirelessChargeStatus"/></returns>
+        </member>
+        <member name="M:NurApiDotNet.NurApi.AccSetWirelessCharge(System.Boolean)">
+            <summary>
+            Set wireless charge on/off
+            </summary>
+            <param name="on">true to activate wireless charging</param>
+            <exception cref="T:NurApiDotNet.NurApiException">Thrown when "API not created" or other error </exception>      
+            <returns>Status of wireless charge <see cref="T:NurApiDotNet.NurApi.AccWirelessChargeStatus"/></returns>
+        </member>
+        <member name="M:NurApiDotNet.NurApi.AccClearPairingData">
+            <summary>
+            Clear pairing information from accessory device <br></br>
+            Note: if pairings exist then accessory device will be rebooted.
+            </summary>        
+            <exception cref="T:NurApiDotNet.NurApiException">Thrown when "API not created" or other error </exception>           
+        </member>
+        <member name="M:NurApiDotNet.NurApi.AccGetConfig">
+            <summary>
+            Get configuration from accessory.
+            </summary>        
+            <returns>Returns AccessoryConfig object holding diagnostics report.</returns>
+            <seealso cref="T:NurApiDotNet.NurApi.AccessoryConfig"/>     
+        </member>
+        <member name="M:NurApiDotNet.NurApi.AccSetHIDMode(NurApiDotNet.NurApi.HIDMode)">
+            <summary>
+            Set <see cref="T:NurApiDotNet.NurApi.HIDMode"/><br></br>
+            Note: Accessory restart required after set HID mode.
+            </summary>
+            <param name="mode"><see>HIDMode</see></param>
+        </member>
+        <member name="M:NurApiDotNet.NurApi.AccGetHIDMode">
+            <summary>
+            Get current HID mode
+            </summary>
+            <returns><see cref="T:NurApiDotNet.NurApi.HIDMode"/></returns>
+        </member>
+        <member name="M:NurApiDotNet.NurApi.AccRestart">
+            <summary>
+            Restart accessory.<br></br>
+            Note: Accessory will be disconnect.
+            </summary>
+        </member>
+        <member name="M:NurApiDotNet.NurApi.AccPowerOff">
+            <summary>
+            Power off accessory.<br></br>
+            Note: Accessory will be disconnect.
+            </summary>
+        </member>
+        <member name="M:NurApiDotNet.NurApi.AccSetPairingMode(NurApiDotNet.NurApi.PairingMode)">
+            <summary>
+            Set <see cref="T:NurApiDotNet.NurApi.PairingMode"/><br></br>
+            Note: Accessory restart required after set PairingMode mode.
+            </summary>
+            <param name="mode"><see>HIDMode</see></param>
+        </member>
+        <member name="M:NurApiDotNet.NurApi.AccGetPairingMode">
+            <summary>
+            Get current Pairing mode
+            </summary>
+            <returns><see cref="T:NurApiDotNet.NurApi.PairingMode"/></returns>
+        </member>
+        <member name="M:NurApiDotNet.NurApi.AccImagerAim(System.Boolean)">
+            <summary>
+            Set Imager aimer on/off
+            </summary>
+            <param name="aim">true aiming on</param>
+        </member>
+        <member name="M:NurApiDotNet.NurApi.AccImagerCmd(NurApiDotNet.NurApi.ImagerType,System.String)">
+            <summary>
+            Send configuring command to Imager
+            </summary>
+            <param name="imager">Type of imager <see cref="T:NurApiDotNet.NurApi.ImagerType"/></param>
+            <param name="cmd">Configuration string</param>
+            <returns>byte array of response depending on command code(s) sent to imager. null if command string not valid. First byte of array contains ACK (0x6 success) or NAK (0x15 fail)</returns>
+        </member>
+        <member name="M:NurApiDotNet.NurApi.AccImagerSaveConfig(NurApiDotNet.NurApi.ImagerType)">
+            <summary>
+            After sending configuration to imager using <see cref="M:NurApiDotNet.NurApi.AccImagerCmd(NurApiDotNet.NurApi.ImagerType,System.String)"/>, settings are ready to use but next power down causes settings to lost.<br></br>
+            Therefore, it’s important to save settings to volatile memory of imager.
+            </summary>
+            <param name="imager">Type of imager <see cref="T:NurApiDotNet.NurApi.ImagerType"/></param>
+        </member>
         <member name="M:NurApiDotNet.NurApi.StartProgramApp(System.String)">
             <summary>
             Start firmware uploading
@@ -1956,77 +2101,6 @@
         </member>
         <member name="F:NurApiDotNet.NurApi.INVALID_HANDLE_VALUE">
             <summary>Invalid handle value (-1)</summary>
-        </member>
-        <member name="M:NurApiDotNet.NurApi.ArrayToInfoData(System.Byte[])">
-            <summary>
-            Pointer to DevSearch array ***       
-            </summary>
-            <param name="ptr">Pointer to data array</param>
-            <returns>Search data as <see cref="T:NurApiDotNet.NurApi.DevInfoData"/> structure</returns>
-        </member>
-        <member name="M:NurApiDotNet.NurApi.ArrayToClientInfoData(System.Byte[])">
-            <summary>
-            Pointer to Client info data array ***       
-            </summary>
-            <param name="ptr">Pointer to data array</param>
-            <returns>Search data as <see cref="T:NurApiDotNet.NurApi.ClientInfoData"/> structure</returns>
-        </member>
-        <member name="M:NurApiDotNet.NurApi.ArrayToInvData(System.Byte[])">
-            <summary>
-            Pointer to inventory data array ***
-            </summary>
-            <param name="ptr">Pointer to data array</param>
-            <returns>inventory data as <see cref="T:NurApiDotNet.NurApi.PeriodicInventoryData"/> structure</returns>
-        </member>
-        <member name="M:NurApiDotNet.NurApi.ArrayToPrgProgressData(System.Byte[])">
-            <summary>
-            Pointer to programming progress data array
-            </summary>
-            <param name="ptr">Pointer to data array</param>
-            <returns>programming progress data as <see cref="T:NurApiDotNet.NurApi.PrgProgressData"/> structure</returns>
-        </member>
-        <member name="M:NurApiDotNet.NurApi.ArrayToTraceTagData(System.Byte[])">
-            <summary>
-            Pointer to trace tag data array
-            </summary>
-            <param name="ptr">Pointer to data array</param>
-            <returns>trace tag data as <see cref="T:NurApiDotNet.NurApi.TraceTagData"/> structure</returns>
-        </member>
-        <member name="M:NurApiDotNet.NurApi.ArrayToIOChangeData(System.Byte[])">
-            <summary>
-            Pointer to I/O change data array
-            </summary>
-            <param name="ptr">Pointer to data array</param>
-            <returns>I/O change data as <see cref="T:NurApiDotNet.NurApi.IOChangeData"/> structure</returns>		
-        </member>
-        <member name="M:NurApiDotNet.NurApi.ArrayToTriggerReadData(System.Byte[])">
-            <summary>
-            Pointer to trigger read data array
-            </summary>
-            <param name="ptr">Pointer to data array</param>
-            <returns>Trigger read data as <see cref="T:NurApiDotNet.NurApi.TriggerReadData"/> structure</returns>
-        </member>
-        <member name="M:NurApiDotNet.NurApi.ArrayToInventoryStreamData(System.Byte[])">
-            <summary>
-            Pointer to inventory stream data array
-            </summary>
-            <param name="ptr">Pointer to data array</param>
-            <returns>Inventory stream data as <see cref="T:NurApiDotNet.NurApi.InventoryStreamData"/> structure</returns>
-        </member>
-        <member name="M:NurApiDotNet.NurApi.ArrayToNXPAlarmStreamData(System.Byte[])">
-            <summary>
-            Convert native NXP alarm stream data to NXPAlarmStreamData.
-            </summary>
-            <param name="ptr">Pointer to data array</param>
-            <returns>NAP alarm stream data as <see cref="T:NurApiDotNet.NurApi.NXPAlarmStreamData"/> structure</returns>
-        </member>
-        <member name="M:NurApiDotNet.NurApi.ArrayToEPCEnumStreamData(System.Byte[])">
-            <summary>
-            Convert native EPC enumeration data to EPCEnumStreamData.
-            This is NUR05WL2 module specific event. NUR05W and NUR05WL1 do not support this event.
-            </summary>
-            <param name="ptr">Pointer to data array</param>
-            <returns>EPC enumeration stream data as <see cref="T:NurApiDotNet.NurApi.EPCEnumStreamData"/> structure</returns>
         </member>
         <member name="M:NurApiDotNet.NurApi.ArrayToStruct``1(System.Byte[])">
             <summary>
@@ -3133,7 +3207,6 @@
             <seealso cref="M:NurApiDotNet.NurApi.StartInventoryStream(System.Int32,System.Int32,System.Int32)"/>
             <seealso cref="M:NurApiDotNet.NurApi.StopInventoryStream"/>
             <example>
-            <para>In the <see cref="M:NurApiDotNet.NurApi.#ctor(System.Windows.Forms.Control)"/> constructor the inventory stream event can be created like (API instance is 'hNur')</para>
             <code lang="C#">
             hNur.InventoryStreamEvent += new EventHandler&lt;NurApi.InventoryStreamEventArgs&gt;(hNur_InventoryStreamEvent);
             </code>
@@ -3151,7 +3224,6 @@
              <param name="session">The session parameter. Range 0 - 3.(see <see cref="P:NurApiDotNet.NurApi.InventorySession"/> property)</param>
              <exception cref="T:NurApiDotNet.NurApiException">Thrown when "API not created" or "NurApiStartInventoryStream" error </exception> 
              <example>
-             <para>In the <see cref="M:NurApiDotNet.NurApi.#ctor(System.Windows.Forms.Control)"/> constructor the inventory stream event can be created like (API instance is 'hNur')</para>
              <code lang="C#">
              hNur.InventoryStreamEvent += new EventHandler&lt;NurApi.InventoryStreamEventArgs&gt;(hNur_InventoryStreamEvent);
              </code>
@@ -3202,7 +3274,6 @@
             <param name="param">Reference to inventory parameters.</param>
             <param name="filters">Array of filters or null.</param>
             <example>
-            An inventory stream handler is added like (see also <see cref="M:NurApiDotNet.NurApi.#ctor(System.Windows.Forms.Control)"/> for event handler addition):<para></para>
             <code lang="C#">hNur.InventoryStreamEvent += new EventHandler&lt;NurApi.InventoryStreamEventArgs&gt;(hNur_InventoryStreamEvent);</code>
             The example below shows how to use this function in order to start the Monza FastID inventory.<para></para>
             The FastID inventory is a type of inventory in whic the tag returns both the EPC and TID at once:<para></para>
@@ -4104,7 +4175,7 @@
         </member>
         <member name="M:NurApiDotNet.NurApi.Monza4QTRead(System.UInt32,System.Boolean@,System.Boolean@,System.Byte,System.UInt32,System.Int32,System.Byte[])">
             <summary>
-            Monza4 QT command. Reads the QT_SR bit to <paramref name="reduce"/> and QT_MEM bit to <paramref name="pubmen"/>  .
+            Monza4 QT command. Reads the QT_SR bit to <paramref name="reduce"/> and QT_MEM bit to <paramref name="pubmem"/>  .
             </summary>
             <param name="passwd">Password for secured operations. Password is always needed.</param>
             <param name="reduce">The QT_SR bit (0/1) (range reduction). </param>
@@ -4599,7 +4670,6 @@
             </summary>
             <param name="cfg">Reference to inventory parameters.</param>
             <example>
-            Tag tracking event handler is added like (see also <see cref="M:NurApiDotNet.NurApi.#ctor(System.Windows.Forms.Control)"/> for event handler addition):<para></para>
             <code lang="C#">
             hNur.TagTrackingChangeEvent += hNur_TagTrackingChangeEvent;
             
@@ -4830,7 +4900,7 @@
             <param name="delim">Delimeter string ***</param>
             <returns>array of binary values</returns>
         </member>
-        <member name="M:NurApiDotNet.NurApi.xdigitvalue(System.Char)">
+        <member name="M:NurApiDotNet.NurApi.XDigitValue(System.Char)">
             <summary>
             Check whether given character is a hexadecimal digit.
             </summary>
@@ -4929,7 +4999,7 @@
             <returns>Returns the TAM response structure.</returns>
             <exception cref="T:NurApiDotNet.NurApiException">The exception is thrown if the <paramref name="keyData"/> is not null and its length is not 16 byte (i.e. 128 bits).</exception>
             <seealso cref="T:NurApiDotNet.NurApi.TAM_PARAM"/>
-            <remarks>The <paramref name="key"/> can be null. In such a case the key is not initialized.</remarks>
+            <remarks>The <paramref name="keyData"/> can be null. In such a case the key is not initialized.</remarks>
         </member>
         <member name="M:NurApiDotNet.NurApi.AllocTAM2Param(System.Byte,System.Byte[],System.UInt32,System.Byte,System.UInt16,System.Byte)">
             <summary>
@@ -4945,7 +5015,7 @@
             <exception cref="T:NurApiDotNet.NurApiException">The exception is thrown if the <paramref name="keyData"/> is not null and its length is not 16 byte (i.e. 128 bits).</exception>
             <exception cref="T:NurApiDotNet.NurApiException">Exception is thrown also with parameters being out of range.</exception>
             <seealso cref="T:NurApiDotNet.NurApi.TAM_PARAM"/>
-            <remarks>The <paramref name="key"/> can be null. In such a case the key is not initialized. </remarks>
+            <remarks>The <paramref name="keyData"/> can be null. In such a case the key is not initialized. </remarks>
         </member>
         <member name="M:NurApiDotNet.NurApi.AES128_ECBEncrypt(System.Byte[],System.Byte[])">
             <summary>
@@ -5130,6 +5200,11 @@
             </summary>
             <value>Value is true if the object is disposed.</value>
         </member>
+        <member name="P:NurApiDotNet.NurApi.UserData">
+            <summary>
+            User defined object
+            </summary>
+        </member>
         <member name="E:NurApiDotNet.NurApi.ConnectedEvent">
             <summary>
             Occurs when the reader is connected.
@@ -5189,6 +5264,11 @@
             Occurs when RFID module I/O pin changes state
             </summary>
         </member>
+        <member name="E:NurApiDotNet.NurApi.AccessoryEvent">
+            <summary>
+            Occurs when the Accessory notification is received.
+            </summary>
+        </member>
         <member name="E:NurApiDotNet.NurApi.TraceTagEvent">
             <summary>
             Occurs when the trace tag information is available.
@@ -5226,7 +5306,6 @@
             Occurs when information about inventory stream is available.
             </summary>
             <example>
-            <para>In the <see cref="M:NurApiDotNet.NurApi.#ctor(System.Windows.Forms.Control)"/> constructor the inventory stream event can be created like (API instance is 'hNur'):</para>
             <code lang="C#">
             hNur.InventoryStreamEvent += new EventHandler&lt;NurApi.InventoryStreamEventArgs&gt;(hNur_InventoryStreamEvent);
             </code>
@@ -5422,7 +5501,7 @@
             </remarks>
             <example>
             The example shows how to set the FCC (North-American) region and make the setting permanent.<para></para>
-            Created API instance is hNur, see also <see cref="M:NurApiDotNet.NurApi.#ctor(System.Windows.Forms.Control)"/>.<para></para>
+            Created API instance is hNur.<para></para>
             <code>
             // First write the region and take into use.
             try
@@ -5962,15 +6041,10 @@
         </member>
         <member name="T:NurApiDotNet.NurApi.NotificationCallbackDelegate">
             <summary>
-            Used for receiving events from NurApi.
-            NotificationCallbackDelegate is used to pass methods as arguments to other methods.
-            <para>Event handlers are nothing more than methods that are invoked through delegates.</para>
-            <para>You create a custom method and a class such as a windows control can call your method when a certain event occurs.</para>
-            Any method from any accessible class or struct that matches the delegate's signature, which consists of the return type and parameters, can be assigned to the delegate.
-            The method can be either static or an instance method. This makes it possible to programmatically change method calls, and also plug new code into existing classes. As long as you know the signature of the delegate, you can assign your own method.
-            <para>In the NurApi contructor, <see cref="M:NurApiDotNet.NurApi.#ctor(System.Windows.Forms.Control)"/>, there is a simple pice of code that shows the connected and disconnected events' creation.</para>
+            Internally used for receiving events from NurApi.
             </summary>
-            <param name="timestamp"></param>
+            <param name="timestamp">timestamp</param>
+            <param name="status">status code</param>
             <param name="type">Type of notification</param>
             <param name="data"></param>
         </member>
@@ -5985,9 +6059,21 @@
             </summary>
             <param name="timestamp">milliseconds after NurApi initialized</param>
         </member>
+        <member name="M:NurApiDotNet.NurApi.NurEventArgs.#ctor(System.UInt32,System.Int32)">
+            <summary>
+            Nur event arguments
+            </summary>
+            <param name="timestamp">milliseconds after NurApi initialized</param>
+            <param name="status">Notification status</param>
+        </member>
         <member name="F:NurApiDotNet.NurApi.NurEventArgs.timestamp">
             <summary>
             milliseconds after NurApi initialized
+            </summary>
+        </member>
+        <member name="F:NurApiDotNet.NurApi.NurEventArgs.status">
+            <summary>
+            Notification status code, this one of the NurApiErrors
             </summary>
         </member>
         <member name="T:NurApiDotNet.NurApi.BootEventArgs">
@@ -6113,6 +6199,26 @@
             <summary>
             I/O change results as <see cref="T:NurApiDotNet.NurApi.IOChangeData"/>
             </summary>            
+        </member>
+        <member name="T:NurApiDotNet.NurApi.AccessoryEventArgs">
+            <summary>
+            Accessory Event Arguments class (<see cref="E:NurApiDotNet.NurApi.AccessoryEvent"/>)
+            </summary>
+        </member>
+        <member name="M:NurApiDotNet.NurApi.AccessoryEventArgs.#ctor(System.UInt32,System.Int32,NurApiDotNet.NurApi.AccessoryEventType,System.Byte[])">
+            <summary>
+            AccessoryEvent Arguments
+            </summary>
+            <param name="timestamp">milliseconds after NurApi initialized</param>
+            <param name="status">status code</param>
+            <param name="type">Type of event</param>
+            <param name="data">byte array of event arguments</param>
+        </member>
+        <member name="F:NurApiDotNet.NurApi.AccessoryEventArgs.type">
+            <summary>Type of AccessoryEvent</summary>
+        </member>
+        <member name="F:NurApiDotNet.NurApi.AccessoryEventArgs.data">
+            <summary>byte array of AccessoryEvent arguments</summary>
         </member>
         <member name="T:NurApiDotNet.NurApi.TraceTagEventArgs">
             <summary>
@@ -6286,6 +6392,222 @@
         </member>
         <member name="F:NurApiDotNet.NurApi.UnknownNotifyEventArgs.data">
             <summary>byte array of notification arguments</summary>
+        </member>
+        <member name="T:NurApiDotNet.NurApi.AccessoryEventType">
+            <summary>
+            Event types of AccessoryEvent
+            </summary>
+        </member>
+        <member name="F:NurApiDotNet.NurApi.AccessoryEventType.Barcode">
+            <summary>
+            Barcode result
+            </summary>
+        </member>
+        <member name="F:NurApiDotNet.NurApi.AccessoryEventType.SpeedTest">
+            <summary>
+            SpeedTest result
+            </summary>
+        </member>
+        <member name="T:NurApiDotNet.NurApi.WIRELESS_CHARGE_STATUS">
+            <summary>
+            Accessory device wireless charging status
+            </summary>
+        </member>
+        <member name="F:NurApiDotNet.NurApi.WIRELESS_CHARGE_STATUS.WIRELESS_CHARGE_OFF">
+            <summary>
+            The accessory stated that wireless charging is currently off.
+            </summary>
+        </member>
+        <member name="F:NurApiDotNet.NurApi.WIRELESS_CHARGE_STATUS.WIRELESS_CHARGE_ON">
+            <summary>
+            The accessory stated that wireless charging is currently on.
+            </summary>
+        </member>
+        <member name="F:NurApiDotNet.NurApi.WIRELESS_CHARGE_STATUS.WIRELESS_CHARGE_REFUSED">
+            <summary>
+            The accessory stated that wireless charging is currently not available.
+            </summary>
+        </member>
+        <member name="F:NurApiDotNet.NurApi.WIRELESS_CHARGE_STATUS.WIRELESS_CHARGE_FAIL">
+            <summary>
+            There was an unexpected error in the communications (no reply, timeout etc.)
+            </summary>
+        </member>
+        <member name="F:NurApiDotNet.NurApi.WIRELESS_CHARGE_STATUS.WIRELESS_CHARGE_NOT_SUPPORTED">
+            <summary>
+            The accessory device replied with HW mismatch error.
+            </summary>
+        </member>
+        <member name="T:NurApiDotNet.NurApi.ImagerType">
+            <summary>
+            Imager types
+            </summary>
+        </member>
+        <member name="F:NurApiDotNet.NurApi.ImagerType.Opticon">
+            <summary>
+            Opticon
+            </summary>
+        </member>
+        <member name="T:NurApiDotNet.NurApi.HIDMode">
+            <summary>
+            HID modes of Accessory
+            </summary>
+        </member>
+        <member name="F:NurApiDotNet.NurApi.HIDMode.Disabled">
+            <summary>
+            HID disabled
+            </summary>
+        </member>
+        <member name="F:NurApiDotNet.NurApi.HIDMode.Barcode">
+            <summary>
+            HID Barcode only
+            </summary>
+        </member>
+        <member name="F:NurApiDotNet.NurApi.HIDMode.RFID">
+            <summary>
+            HID RFID only
+            </summary>
+        </member>
+        <member name="F:NurApiDotNet.NurApi.HIDMode.BarcodeRFID">
+            <summary>
+            HID Barcode + RFID
+            </summary>
+        </member>
+        <member name="T:NurApiDotNet.NurApi.PairingMode">
+            <summary>
+            Pairing mode
+            </summary>
+        </member>
+        <member name="F:NurApiDotNet.NurApi.PairingMode.Disabled">
+            <summary>
+            Disabled. Accessory cannot be paired with host device.
+            </summary>
+        </member>
+        <member name="F:NurApiDotNet.NurApi.PairingMode.Enabled">
+            <summary>
+            Enabled. Accessory can be paired with the host device.
+            </summary>
+        </member>
+        <member name="T:NurApiDotNet.NurApi.AccWirelessChargeStatus">
+            <summary>
+            Wireless charging status
+            </summary>
+            <seealso cref="M:NurApiDotNet.NurApi.AccSetWirelessCharge(System.Boolean)"/>
+        </member>
+        <member name="F:NurApiDotNet.NurApi.AccWirelessChargeStatus.OFF">
+            <summary>
+            The accessory stated that wireless charging is currently off.
+            </summary>
+        </member>
+        <member name="F:NurApiDotNet.NurApi.AccWirelessChargeStatus.ON">
+            <summary>
+            The accessory stated that wireless charging is currently on.
+            </summary>
+        </member>
+        <member name="F:NurApiDotNet.NurApi.AccWirelessChargeStatus.REFUSED">
+            <summary>
+            The accessory stated that wireless charging is currently not available.
+            </summary>
+        </member>
+        <member name="F:NurApiDotNet.NurApi.AccWirelessChargeStatus.FAIL">
+            <summary>
+            There was an unexpected error in the communications (no reply, timeout etc..)
+            </summary>
+        </member>
+        <member name="F:NurApiDotNet.NurApi.AccWirelessChargeStatus.NOT_SUPPORTED">
+            <summary>
+            The accessory device replied with HW mismatch error
+            </summary>
+        </member>
+        <member name="T:NurApiDotNet.NurApi.AccessoryConfig">
+            <summary>
+            Nur accessory device configuration.
+            </summary>
+        </member>
+        <member name="F:NurApiDotNet.NurApi.AccessoryConfig.signature">
+            <summary>
+            Signature of config struct. Use value read (NurAccGetConfig) from device.
+            </summary>
+        </member>
+        <member name="F:NurApiDotNet.NurApi.AccessoryConfig.config">
+            <summary>
+            Device configuration flags. Currently NUR_ACC_CFG_ACD or NUR_ACC_CFG_WEARABLE
+            </summary>
+        </member>
+        <member name="F:NurApiDotNet.NurApi.AccessoryConfig.flags">
+            <summary>
+            Device operation flags. Currently used to enable HID modes. NUR_ACC_FL_HID_BARCODE and/or NUR_ACC_FL_HID_RFID
+            </summary>
+        </member>
+        <member name="F:NurApiDotNet.NurApi.AccessoryConfig.device_name">
+            <summary>
+            NULL terminated string of device name. This used used as BLE visible name
+            </summary>
+        </member>
+        <member name="F:NurApiDotNet.NurApi.AccessoryConfig.hid_barcode_timeout">
+            <summary>
+            HID mode barcode scanner read timeout in milliseconds
+            </summary>
+        </member>
+        <member name="F:NurApiDotNet.NurApi.AccessoryConfig.hid_rfid_timeout">
+            <summary>
+            HID mode RFID read timeout in milliseconds
+            </summary>
+        </member>
+        <member name="F:NurApiDotNet.NurApi.AccessoryConfig.hid_rfid_maxtags">
+            <summary>
+            HID mode RFID read max tags. When max tags reached, reading will stop
+            </summary>
+        </member>
+        <member name="T:NurApiDotNet.NurApi.AccessoryFWInfo">
+            <summary>
+            Information about accessory firmwares
+            </summary>
+        </member>
+        <member name="F:NurApiDotNet.NurApi.AccessoryFWInfo.ApplicationVersion">
+            <summary>
+            Application FW version of accessory
+            </summary>
+        </member>
+        <member name="F:NurApiDotNet.NurApi.AccessoryFWInfo.FullAppVersion">
+            <summary>
+            Full version information of accessory application 
+            </summary>
+        </member>
+        <member name="F:NurApiDotNet.NurApi.AccessoryFWInfo.BootloaderVersion">
+            <summary>
+            Bootloader FW version of accessory
+            </summary>
+        </member>
+        <member name="T:NurApiDotNet.NurApi.AccessoryBatteryInfo">
+            <summary>
+            Hold information about battery of accessory
+            </summary>
+        </member>
+        <member name="F:NurApiDotNet.NurApi.AccessoryBatteryInfo.Charging">
+            <summary>
+            True if accessory currently charging
+            </summary>
+        </member>
+        <member name="F:NurApiDotNet.NurApi.AccessoryBatteryInfo.Percentage">
+            <summary>
+            Battery percentage level 0-100. -1 if unknown
+            </summary>
+        </member>
+        <member name="F:NurApiDotNet.NurApi.AccessoryBatteryInfo.Voltage">
+            <summary>
+            Battery voltage level in mV. -1 if unknown.
+            </summary>
+        </member>
+        <member name="F:NurApiDotNet.NurApi.AccessoryBatteryInfo.Current">
+            <summary>
+            Current battery current draw in mA.
+            </summary>
+        </member>
+        <member name="F:NurApiDotNet.NurApi.AccessoryBatteryInfo.Capacity">
+            <summary>
+            Battery capacity in mAh. -1 if unknown.
+            </summary>
         </member>
         <member name="T:NurApiDotNet.NurApi.PeriodicInventoryData">
             <summary>
@@ -6572,12 +6894,28 @@
         </member>
         <member name="F:NurApiDotNet.NurApi.IOChangeData.source">
             <summary>
-            Sensor/GPIO source number.
+            Sensor/GPIO source number. For accessory device buttons this is >=100
             </summary>
         </member>
         <member name="F:NurApiDotNet.NurApi.IOChangeData.dir">
             <summary>
             IO change direction; 1 = Low to high transition (Rising edge), 0 = High to low transition (Falling edge). 
+            </summary>
+        </member>
+        <member name="T:NurApiDotNet.NurApi.AccessoryEventData">
+            <summary>
+            Accessory data after <see cref="E:NurApiDotNet.NurApi.AccessoryEvent"/> event
+            </summary>
+            <seealso cref="E:NurApiDotNet.NurApi.AccessoryEvent"/>
+        </member>
+        <member name="F:NurApiDotNet.NurApi.AccessoryEventData.type">
+            <summary>
+            type of accessory event.
+            </summary>
+        </member>
+        <member name="F:NurApiDotNet.NurApi.AccessoryEventData.data">
+            <summary>
+            Data based on type
             </summary>
         </member>
         <member name="T:NurApiDotNet.NurApi.NXPAlarmStreamData">
@@ -6640,7 +6978,7 @@
         </member>
         <member name="F:NurApiDotNet.NurApi.TriggerReadData.source">
             <summary>
-            Sensor/GPIO source number.
+            Sensor/GPIO source number. For accessory device buttons this is >=100
             </summary>
         </member>
         <member name="F:NurApiDotNet.NurApi.TriggerReadData.antennaID">

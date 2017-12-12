@@ -1,3 +1,6 @@
+v1.9.6
+- Added windows 10 UWP support
+
 v1.9.5
 - Added NUR2 diagnostics functions
 
