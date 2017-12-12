@@ -1,3 +1,6 @@
+v1.9.7
+- Security enhancement, more strict input parameter validation 
+
 v1.9.6
 - Add windows 10 UWP support
 - Allow NurApiSetHostFlags to be called when not connected state
