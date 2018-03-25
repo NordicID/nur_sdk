@@ -1,11 +1,12 @@
 <?xml version="1.0" encoding="Windows-1252"?>
 <VisualStudioProject
 	ProjectType="Visual C++"
-	Version="8,00"
+	Version="9,00"
 	Name="NurApiExample"
 	ProjectGUID="{A091EF65-4CD2-4BEE-89B1-B074C4254528}"
 	RootNamespace="NurApiExample"
 	Keyword="Win32Proj"
+	TargetFrameworkVersion="131072"
 	>
 	<Platforms>
 		<Platform
@@ -40,7 +41,7 @@
 			<Tool
 				Name="VCCLCompilerTool"
 				Optimization="0"
-				AdditionalIncludeDirectories="../../../NurApi/native/include"
+				AdditionalIncludeDirectories="../../../include"
 				PreprocessorDefinitions="WIN32;_DEBUG;_CONSOLE"
 				MinimalRebuild="true"
 				BasicRuntimeChecks="3"
@@ -64,9 +65,11 @@
 				Name="VCLinkerTool"
 				AdditionalDependencies="NURAPI.lib"
 				LinkIncremental="2"
-				AdditionalLibraryDirectories="../../../NurApi/native/win32"
+				AdditionalLibraryDirectories="../../../windows/x86"
 				GenerateDebugInformation="true"
 				SubSystem="1"
+				RandomizedBaseAddress="1"
+				DataExecutionPrevention="0"
 				TargetMachine="1"
 			/>
 			<Tool
@@ -86,9 +89,6 @@
 			/>
 			<Tool
 				Name="VCAppVerifierTool"
-			/>
-			<Tool
-				Name="VCWebDeploymentTool"
 			/>
 			<Tool
 				Name="VCPostBuildEventTool"
@@ -119,7 +119,7 @@
 			/>
 			<Tool
 				Name="VCCLCompilerTool"
-				AdditionalIncludeDirectories="../../../NurApi/native/include"
+				AdditionalIncludeDirectories="../../../include"
 				PreprocessorDefinitions="WIN32;NDEBUG;_CONSOLE"
 				RuntimeLibrary="0"
 				UsePrecompiledHeader="0"
@@ -140,11 +140,13 @@
 				Name="VCLinkerTool"
 				AdditionalDependencies="NURAPI.lib"
 				LinkIncremental="1"
-				AdditionalLibraryDirectories="../../../NurApi/native/win32"
+				AdditionalLibraryDirectories="../../../windows/x86"
 				GenerateDebugInformation="true"
 				SubSystem="1"
 				OptimizeReferences="2"
 				EnableCOMDATFolding="2"
+				RandomizedBaseAddress="1"
+				DataExecutionPrevention="0"
 				TargetMachine="1"
 			/>
 			<Tool
@@ -164,9 +166,6 @@
 			/>
 			<Tool
 				Name="VCAppVerifierTool"
-			/>
-			<Tool
-				Name="VCWebDeploymentTool"
 			/>
 			<Tool
 				Name="VCPostBuildEventTool"
@@ -223,7 +222,7 @@
 			>
 		</Filter>
 		<File
-			RelativePath="..\..\..\NurApi\native\win32\NURAPI.dll"
+			RelativePath="..\..\..\windows\x86\NURAPI.dll"
 			DeploymentContent="true"
 			>
 			<FileConfiguration
@@ -232,7 +231,17 @@
 				<Tool
 					Name="VCCustomBuildTool"
 					Description="Copy NurApi.dll"
-					CommandLine="copy &quot;$(InputPath)&quot; &quot;$(OutDir)&quot; /y"
+					CommandLine="copy &quot;$(InputPath)&quot; &quot;$(OutDir)&quot; /y&#x0D;&#x0A;"
+					Outputs="$(OutDir)\NurApi.dll"
+				/>
+			</FileConfiguration>
+			<FileConfiguration
+				Name="Release|Win32"
+				>
+				<Tool
+					Name="VCCustomBuildTool"
+					Description="Copy NurApi.dll"
+					CommandLine="copy &quot;$(InputPath)&quot; &quot;$(OutDir)&quot; /y&#x0D;&#x0A;"
 					Outputs="$(OutDir)\NurApi.dll"
 				/>
 			</FileConfiguration>

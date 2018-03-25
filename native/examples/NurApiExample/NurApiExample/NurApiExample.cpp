@@ -208,6 +208,7 @@ void DisplayMainMenu(HANDLE hApi)
 	_tprintf(_T(" 4 - Configure TxLevel\r\n"));
 	_tprintf(_T(" 5 - List physical antennas\r\n"));
 	_tprintf(_T(" 6 - Perform tag tracking\r\n"));
+	_tprintf(_T(" 7 - Network device discovery\r\n"));
 	_tprintf(_T(" q - QUIT\r\n"));
 	int connected = NurApiIsConnected(hApi);
 	_tprintf(_T("STATE: %s\r\n"), (connected == 0) ? _T("Connected") : _T("Disconnected"));
@@ -327,7 +328,9 @@ void NURAPICALLBACK MyNotificationFunc(HANDLE hApi, DWORD timestamp, int type, L
 	case NUR_NOTIFICATION_DEVSEARCH:
 		{
 			const struct NUR_NETDEV_INFO *netDev = (const NUR_NETDEV_INFO *)data;
-			_tprintf(_T("Ethernet device info founded from network (Ethernet Sampo devices)\r\n"));
+			_tprintf(_T("Device search event: title [%s]; ip %d.%d.%d.%d\r\n"), 
+				netDev->eth.title,
+				netDev->eth.ip[0], netDev->eth.ip[1], netDev->eth.ip[2], netDev->eth.ip[3]);
 		}
 		break;
 
@@ -367,9 +370,17 @@ void NURAPICALLBACK MyNotificationFunc(HANDLE hApi, DWORD timestamp, int type, L
 
 	case NUR_NOTIFICATION_GENERAL:
 		{
-			_tprintf(_T("General data from device. first byte indicates data content. 1=Tag deactivated 2=HealtCheckReport\r\n"));
+			_tprintf(_T("DEPRECATED\r\n"));
 		}
 		break;
+
+	case NUR_NOTIFICATION_TUNEEVENT:
+		{
+			struct NUR_TUNEEVENT_DATA *tuneData = (struct NUR_TUNEEVENT_DATA *)data;
+			_tprintf(_T("Tune event; antenna %d; freq %d; relf power %.1f\r\n"), tuneData->antenna, tuneData->freqKhz, ((float)tuneData->reflPower_dBm/1000.0));
+		}
+		break;
+
 	case NUR_NOTIFICATION_TT_CHANGED:
 		{
 			int tagIdx = 0,bufferCnt = 128;
@@ -560,6 +571,7 @@ int _tmain(int argc, _TCHAR* argv[])
 			ShowErrorAndExitIfNeeded(hApi, error);
 			DisplayMainMenu(hApi);
 			break;
+
 		case (int)'2':
 			// Start / Stop InventoryStream
 			if (NurApiIsInventoryStreamRunning(hApi))
@@ -575,6 +587,7 @@ int _tmain(int argc, _TCHAR* argv[])
 				ShowErrorAndExitIfNeeded(hApi, error);
 			}
 			break;
+
 		case (int)'3':
 			{
 				// Enable NUR module (SAMPO) sensor notifigation
@@ -598,6 +611,7 @@ int _tmain(int argc, _TCHAR* argv[])
 				DisplayMainMenu(hApi);
 			}
 			break;
+
 		case (int)'4':
 			{
 				// Configure TxLevel
@@ -612,12 +626,14 @@ int _tmain(int argc, _TCHAR* argv[])
 				_tprintf(_T("TxLevel is now %d\r\n"), txLevel);
 			}
 			break;
+
 		case (int)'v':
 			// Print module version
 			_tprintf(_T("Print module version...\r\n"));
 			error = PrintModuleVersion(hApi);
 			ShowErrorAndExitIfNeeded(hApi, error);
 			break;
+
 		case (int)'p':
 			// Ping module
 			_tprintf(_T("Ping module...\r\n"));
@@ -625,6 +641,7 @@ int _tmain(int argc, _TCHAR* argv[])
 			ShowErrorAndExitIfNeeded(hApi, error);
 			_tprintf(_T("OK\r\n"));
 			break;
+
 		case (int)'5':
 			{
 				// List physical antennas
@@ -643,21 +660,32 @@ int _tmain(int argc, _TCHAR* argv[])
 				_tprintf(_T("OK\r\n"));
 			}
 			break;
+
 		case (int)'6':
 			{
-				// Perform inventory
 				_tprintf(_T("Start/Stop tag tracking...\r\n"));
 				error = ToggleTagTracking(hApi);
 				ShowErrorAndExitIfNeeded(hApi, error);
 				DisplayMainMenu(hApi);
 			}
 			break;
+
+		case (int)'7':
+			{
+				// Perform device discovery
+				_tprintf(_T("Discovering devices (%d ms)...\r\n"), MAX_DEVQUERY_TIMEOUT);
+				error = NurApiDiscoverDevices(hApi, MAX_DEVQUERY_TIMEOUT);
+				ShowErrorAndExitIfNeeded(hApi, error);
+				DisplayMainMenu(hApi);
+			}
+			break;
+
 		default:
 			// Unknown choice
 			DisplayMainMenu(hApi);
 			break;
 		}
-	} while (choice != (int)'q');
+	} while (choice != (int)'q' && choice != -1);
 
 	// Free API object
 	_tprintf(_T("Free NurApi object...\r\n"));
