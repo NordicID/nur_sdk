@@ -2012,6 +2012,14 @@
             </summary>
             <param name="imager">Type of imager <see cref="T:NurApiDotNet.NurApi.ImagerType"/></param>
         </member>
+        <member name="M:NurApiDotNet.NurApi.StartProgramSmartDeviceUpdate(System.String)">
+            <summary>
+            Start smart device update uploading
+            </summary>
+            <param name="fname">Full path and filename to update file.</param>
+            <exception cref="T:NurApiDotNet.NurApiException">Thrown when "API not created" or "Already programming"</exception>
+            <seealso cref="M:NurApiDotNet.NurApi.StartProgramBootloader(System.String)"/>
+        </member>
         <member name="M:NurApiDotNet.NurApi.StartProgramApp(System.String)">
             <summary>
             Start firmware uploading
@@ -4731,6 +4739,13 @@
             Connect reader to COM port
             </summary>
             <param name="comNumber">COM port number</param>
+            <param name="baudrate"> 5=38400bps 0=115200bps 1=230400bps 2=500000bps 3=1000 000bps 4=1500 000bps</param>
+        </member>
+        <member name="M:NurApiDotNet.NurApi.ConnectSerialPort(System.String,System.Int32)">
+            <summary>
+            Connect reader to serial port
+            </summary>
+            <param name="portName">Serial port name i.e. "/dev/ttyACM0", "COM2:" etc</param>
             <param name="baudrate"> 5=38400bps 0=115200bps 1=230400bps 2=500000bps 3=1000 000bps 4=1500 000bps</param>
         </member>
         <member name="M:NurApiDotNet.NurApi.ConnectSerialPort(System.Int32)">

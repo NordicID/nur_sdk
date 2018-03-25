@@ -1,3 +1,7 @@
+v1.9.7
+- Added NurApiConnectSerialPortEx
+- Added Smart device updating
+
 v1.9.6
 - Added windows 10 UWP support
 
