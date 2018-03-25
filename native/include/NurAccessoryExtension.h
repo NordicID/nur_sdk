@@ -25,9 +25,6 @@ extern "C" {
 /** Byte size of the application context. */
 #define APP_CTX_SIZE sizeof(NUR_ACC_CONFIG)
 
-/** The notification number associated with accessory device events. First byte with notification NUR_NOTIFICATION_ACCESSORY is event type. */
-#define NUR_NOTIFICATION_ACCESSORY		0x90
-
 /** Barcode read event. First byte with notification NUR_NOTIFICATION_ACCESSORY is event type. */
 #define NUR_ACC_EVENT_BARCODE			0x1
 
@@ -328,6 +325,17 @@ int NURAPICONV NurAccSetLedOpMode(HANDLE hApi, BYTE mode);
  */
 NUR_API
 int NURAPICONV NurAccRestart(HANDLE hApi);
+
+/** @fn int NurAccRestartToDFU(HANDLE hApi)
+ * Restart the BLE module to DFU (Device Firmware Upgrade) mode.
+ * After the call, BLE module's FW can be upgraded using DFU protocol.
+ *
+ * @param	hApi			Handle to valid NurApi object instance.
+ *
+ * @return	Zero when succeeded, On error non-zero error code is returned.
+ */
+NUR_API
+int NURAPICONV NurAccRestartToDFU(HANDLE hApi);
 
 /** @fn int NurAccPowerOff(HANDLE hApi)
  * Power off accessory device.

@@ -4998,6 +4998,19 @@ int NURAPICONV NurApiEnterBoot(HANDLE hApi);
 NUR_API
 int NURAPICONV NurApiSetHopEvents(HANDLE hApi, BOOL enableEvents);
 
+/** @fn int NurApiProgramSmartFile(HANDLE hApi, const TCHAR *fname)
+ *
+ * Program a new update file for Nordic ID Smart Devices
+ * @sa NUR_NOTIFICATION_PRGPRGRESS in enum NUR_NOTIFICATION
+ *
+ * @param	hApi			Handle to valid NurApi object instance
+ * @param	fname			Path to smart device update file
+ *
+ * @return	Zero when succeeded, On error non-zero error code is returned.
+ */
+NUR_API
+int NURAPICONV NurApiProgramSmartFile(HANDLE hApi,const TCHAR *fname);
+
 /** @fn int NurApiProgramAppFile(HANDLE hApi, const TCHAR *fname)
  *
  * Program new firmware to NUR module.

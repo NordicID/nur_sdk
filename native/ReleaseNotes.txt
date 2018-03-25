@@ -1,3 +1,17 @@
+v1.9.11
+- Fixed possible crash when NurApi instance is freed before device discovery thread has exited
+- Fixed WinUsb transport reconnect issue 
+- Fixed possible thread leak in linux based platforms
+- Extended maximum network device discovery time to 10 sec
+- Added NurAccRestartToDFU function
+
+v1.9.10
+- Remove redundant NUR_NOTIFICATION_ACCESSORY from NurAccessoryExtension.h
+- Don't send boot event, if api is not fully connected yet 
+
+v1.9.8
+- Fixed network discovery crash when network is not available at all
+
 v1.9.7
 - Security enhancement, more strict input parameter validation 
 

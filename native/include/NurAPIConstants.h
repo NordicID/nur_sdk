@@ -54,7 +54,7 @@
 #define MIN_DEVQUERY_TIMEOUT	500
 
 /** Maximum per device response time in the Ethernet device query, milliseconds. */
-#define MAX_DEVQUERY_TIMEOUT	3000
+#define MAX_DEVQUERY_TIMEOUT	10000
 
 /** If PC-word masked with this value is nonzero, then the XPC is present.  */
 #define XPC_W1_MASK		0x0200
