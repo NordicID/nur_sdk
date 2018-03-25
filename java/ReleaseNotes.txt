@@ -1,3 +1,7 @@
+v1.8.1.36
+- Fixed setSetupRfProfile
+- Javadoc fixes
+
 v1.8.1.35
 - Fixed possible write failure after reconnection
 
