@@ -147,25 +147,17 @@ int PerformInventory(HANDLE hApi)
 	// internal tag storage and clear tags from module.
 	_tprintf(_T("Fetch tags from module...\r\n"));
 	error = NurApiFetchTags(hApi, TRUE, NULL);
-/*	if (error != NUR_NO_ERROR)
-	{
-		// Failed
-printf("asdgd\n");
-		return error;
-	}*/
-
 	error = NurApiGetTagCount(hApi, &tagCount);
 	if (error != NUR_NO_ERROR)
 	{
 		// Failed
-printf("asdgd 2\n");
 		return error;
 	}
 	_tprintf(_T("%d unigue tags found\r\n"), tagCount);
 
 	// Loop through tags
 	for (idx = 0; idx < tagCount; idx++)
-	{		
+	{
 		error = NurApiGetTagData(hApi, idx, &tagData);
 
 		if (error == NUR_NO_ERROR)
