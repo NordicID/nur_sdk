@@ -1,4 +1,4 @@
-#include <NurApi.h>
+#include <NurAPI.h>
 
 // Example: Set module TX level
 int SetTxLevel(HANDLE hApi, int level)

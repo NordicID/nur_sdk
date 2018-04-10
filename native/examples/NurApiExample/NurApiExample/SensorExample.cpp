@@ -1,4 +1,4 @@
-#include <NurApi.h>
+#include <NurAPI.h>
 
 /// <summary>
 /// Sets the sensor configuration.

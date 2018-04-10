@@ -1,4 +1,4 @@
-#include <NurApi.h>
+#include <NurAPI.h>
 
 // Example: Read user memory from tag, singluted by EPC memory
 int ReadTagUserMemoryByEPC(HANDLE hApi, BYTE *epc, int epcLength, BYTE *userMem, int userMemLen)

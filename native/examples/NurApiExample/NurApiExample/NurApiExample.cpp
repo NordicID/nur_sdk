@@ -1,12 +1,14 @@
-#include <NurApi.h>
+#include <NurAPI.h>
 #include <iostream>
 
 #include "SensorExample.h"
 #include "SetupExample.h"
 
+#ifdef WIN32
 #define USE_USB_AUTO_CONNECT 1
+#endif
+
 WORD FetchTagsFromModule = 0;
-DWORD TagTrackingStartedTicks = 0;
 
 /// <summary>
 /// Shows the error, free API object and exit if needed.
@@ -80,11 +82,9 @@ int ToggleTagTracking(HANDLE hApi)
 			// Failed
 			return error;
 		}
-		TagTrackingStartedTicks = GetTickCount();
 	}
 	else
 	{
-		TagTrackingStartedTicks = 0;
 		NurApiStopTagTracking(hApi);
 	}
 	return NUR_NO_ERROR;
@@ -117,10 +117,10 @@ int PerformInventory(HANDLE hApi)
 		return error;
 	}
 
-	_tprintf(_T("Perform inventory %d times\r\n"), rounds);
+	_tprintf(_T("Perform inventory..\r\n"));
 
 	while (rounds++ < 5)
-	{		
+	{
 		// Perform inventory
 		//error = NurApiInventory(hApi, 1, 0, 0, &invResp);
 		error = NurApiSimpleInventory(hApi, &invResp);
@@ -147,16 +147,18 @@ int PerformInventory(HANDLE hApi)
 	// internal tag storage and clear tags from module.
 	_tprintf(_T("Fetch tags from module...\r\n"));
 	error = NurApiFetchTags(hApi, TRUE, NULL);
-	if (error != NUR_NO_ERROR)
+/*	if (error != NUR_NO_ERROR)
 	{
 		// Failed
+printf("asdgd\n");
 		return error;
-	}
+	}*/
 
 	error = NurApiGetTagCount(hApi, &tagCount);
 	if (error != NUR_NO_ERROR)
 	{
 		// Failed
+printf("asdgd 2\n");
 		return error;
 	}
 	_tprintf(_T("%d unigue tags found\r\n"), tagCount);
@@ -413,7 +415,7 @@ void NURAPICALLBACK MyNotificationFunc(HANDLE hApi, DWORD timestamp, int type, L
 			delete[] buffer;
 			buffer = NULL;
 
-			if(ttChangedStream->stopped && (GetTickCount() - TagTrackingStartedTicks) < 5000)
+			if(ttChangedStream->stopped)
 			{
 				_tprintf(_T("Tag tracking restarted\r\n"));
 				// Restart tag tracking
@@ -518,7 +520,11 @@ void PerPolarityInventory(HANDLE hApi)
 	}
 }
 
-int _tmain(int argc, _TCHAR* argv[])
+#ifdef WIN32
+int _tmain(int argc, TCHAR* argv[])
+#else
+int main(int argc, char* argv[])
+#endif
 {
 	int error = 0;
 	int choice = 0;
@@ -550,8 +556,8 @@ int _tmain(int argc, _TCHAR* argv[])
 	ShowErrorAndExitIfNeeded(hApi, error);
 #else
 	// Connect API to module through serial port
-	_tprintf(_T("Connect to NUR module using serial port transport...\r\n"));
-	error = NurApiConnectSerialPort(hApi, 10, NUR_DEFAULT_BAUDRATE);
+	_tprintf(_T("Connect to NUR module using serial port transport... (/dev/ttyACM0)\r\n"));
+	error = NurApiConnectSerialPortEx(hApi, "/dev/ttyACM0", NUR_DEFAULT_BAUDRATE);
 	ShowErrorAndExitIfNeeded(hApi, error);
 #endif
 
@@ -618,12 +624,16 @@ int _tmain(int argc, _TCHAR* argv[])
 				_tprintf(_T("Configure TxLevel...\r\n"));
 				_tprintf(_T("[0 - 19 = MAX - MIN]: "));
 				int txLevel = 0;
-				scanf_s("%d", &txLevel);
-				error = SetTxLevel(hApi, txLevel);
-				ShowErrorAndExitIfNeeded(hApi, error);
-				error = GetTxLevel(hApi, &txLevel);
-				ShowErrorAndExitIfNeeded(hApi, error);
-				_tprintf(_T("TxLevel is now %d\r\n"), txLevel);
+				//scanf_s("%d", &txLevel);
+				if (scanf("%d", &txLevel) == 1) {
+					error = SetTxLevel(hApi, txLevel);
+					ShowErrorAndExitIfNeeded(hApi, error);
+					error = GetTxLevel(hApi, &txLevel);
+					ShowErrorAndExitIfNeeded(hApi, error);
+					_tprintf(_T("TxLevel is now %d\r\n"), txLevel);
+				} else {
+					_tprintf(_T("Invalid input\r\n"));
+				}
 			}
 			break;
 

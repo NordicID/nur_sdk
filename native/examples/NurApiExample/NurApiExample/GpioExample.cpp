@@ -1,4 +1,4 @@
-#include <NurApi.h>
+#include <NurAPI.h>
 
 // Example: Configure GPIO
 int ConfigureGPIO(HANDLE hApi, int level)

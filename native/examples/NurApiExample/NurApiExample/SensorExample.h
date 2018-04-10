@@ -1,7 +1,7 @@
 #ifndef _SENSOREXAMPLE_H_
 #define _SENSOREXAMPLE_H_ 1
 
-#include <NurApi.h>
+#include <NurAPI.h>
 
 /// <summary>
 /// Sets the sensor configuration.
