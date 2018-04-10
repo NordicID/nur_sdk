@@ -1,4 +1,9 @@
 #include <NurAPI.h>
+
+// Conflicts w/ g++ stdlib
+#undef min
+#undef max
+
 #include <iostream>
 
 #include "SensorExample.h"
