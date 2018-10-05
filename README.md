@@ -17,3 +17,7 @@ This repository contains SDK files for NurApi different platforms.
 
 ### Drivers
 - drivers folder contains USB drivers for NUR enabled products
+
+### NuGet packages
+- To keep your projects up-to date with NurApi deliveries you can use Nordic ID nuget packages
+https://www.nuget.org/profiles/NordicID
