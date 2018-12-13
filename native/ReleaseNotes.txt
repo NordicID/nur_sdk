@@ -1,3 +1,22 @@
+v1.9.19
+- Fixed epcWordLen handling, can also be 0
+- Preventing USB transport BAD_COMMAND spamming. Disconnects immediately when BAD_COMMAND received.
+
+v1.9.18
+- New functions for updating from binary buffer
+- NurApiProgramSecChipBuffer
+- NurApiProgramSmartBuffer
+- Added support for Secondary chip version number
+- Added parameter check to Monza 4 QT access
+- Fixed cache usage when updating RF profile
+- Added some parameter boundary checks to periodic inventory and inventory stream
+
+v1.9.17
+- Improve protocol handling in some cases
+
+v1.9.12
+- Added support for secondary chip programming, f.ex. Impinj Indy R2000
+
 v1.9.11
 - Fixed possible crash when NurApi instance is freed before device discovery thread has exited
 - Fixed WinUsb transport reconnect issue 
