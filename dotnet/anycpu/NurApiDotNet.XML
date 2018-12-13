@@ -1879,6 +1879,14 @@
             <exception cref="T:NurApiDotNet.NurApiException">Thrown when "API not created" or other error </exception>   
             <returns><see>BatteryInfo</see> object holding battery information</returns>
         </member>
+        <member name="M:NurApiDotNet.NurApi.AccSetLedOp(System.Int32)">
+            <summary>
+            Toggle aux LED<br></br>
+            
+            </summary>
+            <exception cref="T:NurApiDotNet.NurApiException">Thrown when "API not created" or other error</exception>   
+            <param name="mode">Force aux LED on, off or blinking</param>
+        </member>
         <member name="M:NurApiDotNet.NurApi.AccBarcodeStart(System.UInt16)">
             <summary>
             Start scan for barcode reader engine<br></br>
@@ -1945,6 +1953,13 @@
             Note: if pairings exist then accessory device will be rebooted.
             </summary>        
             <exception cref="T:NurApiDotNet.NurApiException">Thrown when "API not created" or other error </exception>           
+        </member>
+        <member name="M:NurApiDotNet.NurApi.AccSetConfig(NurApiDotNet.NurApi.AccessoryConfig)">
+            <summary>
+            Set configuration to accessory.
+            </summary>        
+            <returns>Sets AccessoryConfig object of the accessory.</returns>
+            <seealso cref="T:NurApiDotNet.NurApi.AccessoryConfig"/>     
         </member>
         <member name="M:NurApiDotNet.NurApi.AccGetConfig">
             <summary>
@@ -2035,6 +2050,15 @@
             <param name="fname">Full path and filename to bootloader file.</param>
             <exception cref="T:NurApiDotNet.NurApiException">Thrown when "API not created" or "Already programming"</exception>
             <seealso cref="M:NurApiDotNet.NurApi.StartProgramApp(System.String)"/>        
+        </member>
+        <member name="M:NurApiDotNet.NurApi.StartProgramSecChip(System.String)">
+            <summary>
+            Start program Secondary Chip (f.ex. Impinj Indy)
+            </summary>
+            <param name="fname">Full path and filename to bootloader file.</param>
+            <exception cref="T:NurApiDotNet.NurApiException">Thrown when "API not created" or "Already programming"</exception>
+            <seealso cref="M:NurApiDotNet.NurApi.StartProgramApp(System.String)"/>        
+            <seealso cref="M:NurApiDotNet.NurApi.StartProgramBootloader(System.String)"/>        
         </member>
         <member name="M:NurApiDotNet.NurApi.GetMode">
             <summary>
@@ -4739,14 +4763,14 @@
             Connect reader to COM port
             </summary>
             <param name="comNumber">COM port number</param>
-            <param name="baudrate"> 5=38400bps 0=115200bps 1=230400bps 2=500000bps 3=1000 000bps 4=1500 000bps</param>
+            <param name="baudrate">Connection port baud rate. Default is 115200 (NurApi.DEFAULT_BAUDRATE)</param>
         </member>
         <member name="M:NurApiDotNet.NurApi.ConnectSerialPort(System.String,System.Int32)">
             <summary>
             Connect reader to serial port
             </summary>
             <param name="portName">Serial port name i.e. "/dev/ttyACM0", "COM2:" etc</param>
-            <param name="baudrate"> 5=38400bps 0=115200bps 1=230400bps 2=500000bps 3=1000 000bps 4=1500 000bps</param>
+            <param name="baudrate">Connection port baud rate. Default is 115200 (NurApi.DEFAULT_BAUDRATE)</param>
         </member>
         <member name="M:NurApiDotNet.NurApi.ConnectSerialPort(System.Int32)">
             <summary>
@@ -8063,6 +8087,26 @@
             True if the module FW supports tag phase info. see OPFLAGS_EN_TAG_PHASE */
             </summary>
         </member>
+        <member name="F:NurApiDotNet.NurApi.DeviceCapabilites.secChipMajorVersion">
+            <summary>
+            Secondary chip major SW version */
+            </summary>
+        </member>
+        <member name="F:NurApiDotNet.NurApi.DeviceCapabilites.secChipMinorVersion">
+            <summary>
+            Secondary chip minor SW version */
+            </summary>
+        </member>
+        <member name="F:NurApiDotNet.NurApi.DeviceCapabilites.secChipMaintenanceVersion">
+            <summary>
+            Secondary chip maintenance SW version */
+            </summary>
+        </member>
+        <member name="F:NurApiDotNet.NurApi.DeviceCapabilites.secChipReleaseVersion">
+            <summary>
+            Secondary chip release SW version */
+            </summary>
+        </member>
         <member name="T:NurApiDotNet.NurApi.GpioEntry">
             <summary>
             Single GPIO configuration.
@@ -8437,10 +8481,30 @@
             Support level of Gen 2 version 2 commands.
             </summary>
         </member>
+        <member name="F:NurApiDotNet.NurApi.NurDevCaps.secChipMajorVersion">
+            <summary>
+            Secondary chip major SW version
+            </summary>
+        </member>
+        <member name="F:NurApiDotNet.NurApi.NurDevCaps.secChipMinorVersion">
+            <summary>
+            Secondary chip minor SW version
+            </summary>
+        </member>
+        <member name="F:NurApiDotNet.NurApi.NurDevCaps.secChipMaintenanceVersion">
+            <summary>
+            Secondary chip maintenance SW version
+            </summary>
+        </member>
+        <member name="F:NurApiDotNet.NurApi.NurDevCaps.secChipReleaseVersion">
+            <summary>
+            Secondary chip release SW version
+            </summary>
+        </member>
         <member name="F:NurApiDotNet.NurApi.NurDevCaps.reserved">
             <summary>
             Reserved part.
-            SZ_NUR_DEVCAPS - 4*sizeof(DWORD) - 2*sizeof(int) - 7*sizeof(WORD)
+            SZ_NUR_DEVCAPS - 8*sizeof(DWORD) - 2*sizeof(int) - 8*sizeof(WORD)
             </summary>
         </member>
         <member name="T:NurApiDotNet.NurApi.EPCEnumInfo">

@@ -1,3 +1,10 @@
+v1.9.8
+- Added missing AccExt functions (AccSetLedOp, AccSetConfig)
+- Added support for secondary chip version number
+- Added NULL buffer check to Write commands
+- Fixed baudrate documentation for ConnectToSerial
+- Added support for secondary chip programming (f.ex. Impinj Indy R2000)
+
 v1.9.7
 - Added NurApiConnectSerialPortEx
 - Added Smart device updating
