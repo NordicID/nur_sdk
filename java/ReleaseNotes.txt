@@ -1,3 +1,22 @@
+v1.8.1.46
+- Minor improvements
+
+v1.8.1.45
+- javadoc update (TxLevel)
+- Making sure disconnect event not fire if no success connection attempt
+
+v1.8.1.44
+- queryEthDevices use mDNS only with non Android devices.
+
+v1.8.1.41
+- Fixed queryEthDevices() to use only Java 7 functions
+- Added setConstantChannelIndex()
+- Improved documentation.
+- Fixed missing disconnect event if listener created after connection.
+
+v1.8.1.38
+- Added mDNS device search functionality in to queryEthDevices()
+
 v1.8.1.37
 - Fixed rssi filter data type
 
