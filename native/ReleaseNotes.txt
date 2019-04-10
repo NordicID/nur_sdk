@@ -1,3 +1,10 @@
+v1.9.20
+- Added Accessory Sensor API
+- Send MDNS queries to all interfaces
+- Added function NurApiGetSecChipFWINFO() to get sec chip FW info
+- Added 3 new parameters for forced sleep in NUR_AUTOPERIOD
+- Fix for getting Sec chip version number right
+
 v1.9.19
 - Fixed epcWordLen handling, can also be 0
 - Preventing USB transport BAD_COMMAND spamming. Disconnects immediately when BAD_COMMAND received.
@@ -15,7 +22,7 @@ v1.9.17
 - Improve protocol handling in some cases
 
 v1.9.12
-- Added support for secondary chip programming, f.ex. Impinj Indy R2000
+- Added support for secondary chip programming
 
 v1.9.11
 - Fixed possible crash when NurApi instance is freed before device discovery thread has exited

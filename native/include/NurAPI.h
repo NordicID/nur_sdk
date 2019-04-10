@@ -4250,8 +4250,8 @@ int NURAPICONV NurApiStopEPCEnumeration(HANDLE hApi);
 NUR_API
 BOOL NURAPICONV NurApiIsEPCEnumRunning(HANDLE hApi);
 
-/** @fn int NurApiGetFWINFO(HANDLE hApi, TCHAR *buf, DWORD buflen)
- * Get current FW information string.
+/** @fn int NurApiGetSecChipFWINFO(HANDLE hApi, TCHAR *buf, DWORD buflen)
+ * Get current Secondary chip FW information string.
  *
  * @param hApi      Handle to valid NurApi object instance
  * @param buf		Pointer to string buffer
@@ -4259,6 +4259,18 @@ BOOL NURAPICONV NurApiIsEPCEnumRunning(HANDLE hApi);
  *
  * @return	Zero when succeeded, on error non-zero error code is returned.
  */
+NUR_API
+int NURAPICONV NurApiGetSecChipFWINFO(HANDLE hApi, TCHAR *buf, DWORD buflen);
+
+/** @fn int NurApiGetFWINFO(HANDLE hApi, TCHAR *buf, DWORD buflen)
+* Get current FW information string.
+*
+* @param hApi      Handle to valid NurApi object instance
+* @param buf		Pointer to string buffer
+* @param buflen    Length of 'buf' in characters
+*
+* @return	Zero when succeeded, on error non-zero error code is returned.
+*/
 NUR_API
 int NURAPICONV NurApiGetFWINFO(HANDLE hApi, TCHAR *buf, DWORD buflen);
 

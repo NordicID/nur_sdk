@@ -59,6 +59,7 @@ typedef unsigned int DWORD;
 typedef unsigned int UINT;
 typedef unsigned int UINT32;
 typedef DWORD *LPDWORD;
+typedef int INT;
 
 typedef unsigned short WORD;
 typedef unsigned short UINT16;

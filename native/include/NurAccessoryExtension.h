@@ -25,8 +25,16 @@ extern "C" {
 /** Byte size of the application context. */
 #define APP_CTX_SIZE sizeof(NUR_ACC_CONFIG)
 
-/** Barcode read event. First byte with notification NUR_NOTIFICATION_ACCESSORY is event type. */
-#define NUR_ACC_EVENT_BARCODE			0x1
+/** First byte with notification NUR_NOTIFICATION_ACCESSORY is event type NUR_ACC_EVENT_TYPE */
+enum NUR_ACC_EVENT_TYPE
+{
+	NUR_ACC_EVENT_BARCODE = 1,		/** Barcode read event */
+	NUR_ACC_EVENT_SENSOR_CHANGED,		/** Sensor added/removed event.
+						  * Followed by a NUR_ACC_SENSOR_CHANGED struct describing the event */
+	NUR_ACC_EVENT_SENSOR_RANGE_DATA,	/** Sensor range data stream event. Sent when NUR_ACC_SENSOR_MODE_STREAM mode
+						  * is enabled for a NUR_ACC_SENSOR_FEATURE_RANGE sensor. Followed by a
+						  * NUR_ACC_SENSOR_RANGE_DATA struct describing the event */
+};
 
 /** NUR_NOTIFICATION_IOCHANGE source is set to this when accessory device trigger is pressed/released. */
 #define NUR_ACC_TRIGGER_SOURCE			100
@@ -95,6 +103,24 @@ extern "C" {
 /** Get connection info. */
 #define ACC_EXT_GET_CONNECTION_INFO	18
 
+/** Enumerate sensors. */
+#define ACC_EXT_SENSOR_ENUMERATE	19
+
+/** Set sensor config. */
+#define ACC_EXT_SENSOR_SET_CONFIG	20
+
+/** Get sensor config. */
+#define ACC_EXT_SENSOR_GET_CONFIG	21
+
+/** Set sensor filter. */
+#define ACC_EXT_SENSOR_SET_FILTER	22
+
+/** Get sensor filter. */
+#define ACC_EXT_SENSOR_GET_FILTER	23
+
+/** Get sensor value. */
+#define ACC_EXT_SENSOR_GET_VALUE	24
+
 /** Constant indicating battery level being "good". */
 #define BATT_GOOD_mV		3900
 /** Constant indicating battery level being "moderate". */
@@ -142,6 +168,56 @@ typedef struct __NUR_ACC_BATT_INFO
 	short curr_mA;				/**< Current battery current draw in mA. */
 	short cap_mA;				/**< Battery capacity in mAh. -1 if unknown. */
 } NUR_ACC_BATT_INFO;
+
+/**
+ * Nur accessory sensor changed description.
+ */
+typedef struct __NUR_ACC_SENSOR_CHANGED
+{
+	BYTE source;			/**< Source number for the sensor that was added/removed */
+	BYTE removed;			/**< Sensor added(0) or removed(1) */
+} NUR_ACC_SENSOR_CHANGED;
+
+/**
+ * Nur accessory range sensor stream data.
+ */
+typedef struct __NUR_ACC_SENSOR_RANGE_DATA
+{
+	BYTE source;
+	INT range;				/**< Unit: mm */
+} NUR_ACC_SENSOR_RANGE_DATA;
+
+/**
+ * Nur accessory sensor generic configuration.
+ *
+ * @sa NurAccSensorSetConfig(), NurAccSensorEnumerate()
+ */
+typedef struct __NUR_ACC_SENSOR_CONFIG
+{
+	BYTE source;			/**< Assigned by reader; Sensor/GPIO pin number changes will be reported on */
+	BYTE type;			/**< Assigned by reader; NUR_ACC_SENSOR_TYPE */
+	WORD feature;			/**< Assigned by reader; features supported by this sensor; see NUR_ACC_SENSOR_FEATURE */
+	BYTE mode;			/**< Bitmask specifying how sensor changes are reported; NUR_ACC_SENSOR_MODE */
+} NUR_ACC_SENSOR_CONFIG;
+
+typedef struct __NUR_ACC_SENSOR_FILTER
+{
+	WORD flags;			/**< Enabled filters flags; see NUR_ACC_SENSOR_FILTER_FLAG */
+
+	/**< Valid when flags contain NUR_ACC_SENSOR_FILTER_FLAG_RANGE */
+	struct
+	{
+		WORD lo;		/**< Goes low->high when sensors reads less than this (unit: mm) */
+		WORD hi;		/**< Goes high->low when sensors reads more than this (unit: mm) */
+	} range_threshold;	/**< hi must be equal or greater to lo */
+
+	/**< Valid when flags contain NUR_ACC_SENSOR_FILTER_FLAG_TIME */
+	struct
+	{
+		WORD lo;		/**< Triggers when level going high->low for this amount of time (unit: ms) */
+		WORD hi;		/**< Triggers when level going low->high for this amount of time (unit: ms) */
+	} time_threshold;
+} NUR_ACC_SENSOR_FILTER;
 
 #pragma pack(pop)
 
@@ -214,6 +290,41 @@ enum PAIRING_MODE
 {	
 	PAIRING_DISABLE = 0,	/** Pairing disabled */
 	PAIRING_ENABLE			/** Pairing enabled. */				
+};
+
+/**
+ * Nur accessory sensor types.
+ */
+enum NUR_ACC_SENSOR_TYPE
+{
+	NUR_ACC_SENSOR_TYPE_ULTRASONIC_MAXSONAR,
+};
+
+/**
+ * Features supported by sensor.
+ */
+enum NUR_ACC_SENSOR_FEATURE
+{
+	NUR_ACC_SENSOR_FEATURE_RANGE	 	= (1<<0),	/**< GPIO changes is triggered based on limit of read values */
+	NUR_ACC_SENSOR_FEATURE_STREAM_VALUE 	= (1<<1),	/**< Supports streaming of raw sensor values */
+};
+
+/**
+ * Event streams used to report changes.
+ */
+enum NUR_ACC_SENSOR_MODE
+{
+	NUR_ACC_SENSOR_MODE_GPIO			= (1<<0),		/**< Report changes as GPIO events */
+	NUR_ACC_SENSOR_MODE_STREAM			= (1<<1),		/**< Stream raw sensor values via the accessory sensor event API (feature flag requirement: NUR_ACC_SENSOR_FEATURE_STREAM_VALUE) */
+};
+
+/**
+ * Sensor filters in use.
+ */
+enum NUR_ACC_SENSOR_FILTER_FLAG
+{
+	NUR_ACC_SENSOR_FILTER_FLAG_RANGE 	= (1<<0),	/**< Range threshold filter enabled. */
+	NUR_ACC_SENSOR_FILTER_FLAG_TIME 	= (1<<1),	/**< Time threshold filter enabled. */
 };
 
 /** @fn int NurAccGetFwVersion(HANDLE hApi, TCHAR *fwVer, int fwVerSizeChars)
@@ -491,6 +602,87 @@ int NURAPICONV NurAccImagerCmd(HANDLE hApi,BYTE *cmd, int cmdLen,int imagerType,
  */
 NUR_API
 int NURAPICONV NurAccImagerSaveConfig(HANDLE hApi,int imagerType);
+
+/** Callback function type for NurAccSensorEnumerate() function */
+typedef void (NURAPICALLBACK *NurAccSensorEnumerateCallback)(HANDLE hApi, NUR_ACC_SENSOR_CONFIG *cfg, DWORD cfgSize);
+
+/** @fn int NurAccSensorEnumerate(HANDLE hApi, NurAccSensorEnumerateCallback *callback)
+ *
+ * Get sensor configuration from reader.
+ *
+ * Needs to be called at startup and after a NUR_ACC_EVENT_SENSOR_CONFIG_CHANGED
+ * event is received.
+ *
+ * @param callback	Callback function that will be called for each sensor attached to the reader.
+ * @return		Zero when succeeded, on error non-zero error code is returned.
+ */
+NUR_API
+int NURAPICONV NurAccSensorEnumerate(HANDLE hApi, NurAccSensorEnumerateCallback callback);
+
+/** @fn int NurAccSensorSetConfig(HANDLE hApi, NUR_ACC_SENSOR_CONFIG *cfg, DWORD cfgSize)
+ *
+ * Change the configuration for a sensor.  cfg->source needs to be set to
+ * identify the sensor. Currently only cfg->enabled can be set by this function.
+ *
+ * @param cfg          Sensor description (current configuration also returned here on success)
+ * @param cfgSize      Size of type specific derived structure
+ * @return		Zero when succeeded, on error non-zero error code is returned.
+ */
+NUR_API
+int NURAPICONV NurAccSensorSetConfig(HANDLE hApi, NUR_ACC_SENSOR_CONFIG *cfg, DWORD cfgSize);
+
+/** @fn int NurAccSensorGetConfig(HANDLE hApi, NUR_ACC_SENSOR_CONFIG *cfg, DWORD cfgSize)
+ *
+ * Get the configuration for a sensor. cfg->source needs to be set to identify
+ * the sensor.
+ *
+ * @param cfg		Sensor description
+ * @param cfgSize	Size of cfg
+ * @return		Zero when succeeded, on error non-zero error code is returned.
+ */
+NUR_API
+int NURAPICONV NurAccSensorGetConfig(HANDLE hApi, NUR_ACC_SENSOR_CONFIG *cfg, DWORD cfgSize);
+
+/** @fn int NurAccSensorSetFilter(HANDLE hApi, BYTE source, NUR_ACC_SENSOR_FILTER *filter, DWORD filterSize)
+ *
+ * Set triggers and filters for a sensor. GPIO events also support NUR_ACC_SENSOR_FILTER_FLAG_TIME.
+ *
+ * @param source	Value identifying the sensor/GPIO
+ * @param filter	Filter to take into use (current filter is also returned here on success)
+ * @param filterSize	Size of filter struct
+ * @return		Zero when succeeded, on error non-zero error code is returned.
+ */
+NUR_API
+int NURAPICONV NurAccSensorSetFilter(HANDLE hApi, BYTE source, NUR_ACC_SENSOR_FILTER *filter, DWORD filterSize);
+
+/** @fn int NurAccSensorGetFilter(HANDLE hApi, BYTE source, NUR_ACC_SENSOR_FILTER *filter, DWORD filterSize)
+ *
+ * Get triggers and filters for a sensor. GPIO events also support NUR_ACC_SENSOR_FILTER_FLAG_TIME.
+ *
+ * @param source	Value identifying the sensor/GPIO
+ * @param filter	Current filter will be returned here
+ * @param filterSize	Size of filter struct
+ * @return		Zero when succeeded, on error non-zero error code is returned.
+ */
+NUR_API
+int NURAPICONV NurAccSensorGetFilter(HANDLE hApi, BYTE source, NUR_ACC_SENSOR_FILTER *filter, DWORD filterSize);
+
+/** @fn int NurAccSensorGetValue(HANDLE hApi, BYTE source, BYTE *dataType, void *value, DWORD valueSize)
+ *
+ * Get the latest reading from sensor.
+ *
+ * The format of the value is sensor dependant; the format is returned in dataType:
+ * - NUR_ACC_EVENT_SENSOR_RANGE_DATA => value is a struct of type NUR_ACC_SENSOR_RANGE_DATA
+ *
+ * @param source	Value identifying the sensor/GPIO
+ * @param dataType	Data type will be returned here
+ * @param value		Current value will be returned here
+ * @param valueSize	Size of value struct
+ * @return		Zero when succeeded, on error non-zero error code is returned.
+ */
+NUR_API
+int NURAPICONV NurAccSensorGetValue(HANDLE hApi, BYTE source, BYTE *dataType, void *value, DWORD valueSize);
+
 /** @} */ // end of ACCESSORYAPI
 
 #ifdef __cplusplus

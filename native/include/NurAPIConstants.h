@@ -588,11 +588,14 @@ enum NUR_ANTENNAMASK
  */
 enum NUR_AUTOPERIOD
 {
-	NUR_AUTOPER_OFF	= 0,	/**< Autoperiod not in use */
-	NUR_AUTOPER_25,			/**< 25% cycle. */
-	NUR_AUTOPER_33,			/**< 33% cycle. */
-	NUR_AUTOPER_50,			/**< 50/50 cycle. */
-	NUR_AUTOPER_LAST = NUR_AUTOPER_50
+	NUR_AUTOPER_OFF	= 0,	  /**< Autoperiod not in use */
+	NUR_AUTOPER_25,			  /**< 25% cycle. */
+	NUR_AUTOPER_33,			  /**< 33% cycle. */
+	NUR_AUTOPER_50,			  /**< 50/50 cycle. */
+	NUR_AUTOPER_FORCE_1000MS, /**< Force 1s sleep */
+	NUR_AUTOPER_FORCE_500MS,  /**< Force 500ms sleep */
+	NUR_AUTOPER_FORCE_100MS,  /**< Force 100ms sleep */
+	NUR_AUTOPER_LAST = NUR_AUTOPER_FORCE_100MS
 };
 
 /**
@@ -920,6 +923,8 @@ enum NUR_DIAG_REPORT_FLAGS
 	NUR_DIAG_REPORT_TEMP_OVER = (1<<2),	/**< Set in NUR_DIAG_REPORT.flags if module temperature is over limits. All RF operations will fail with error NUR_ERROR_OVER_TEMP in this stage. */
 	NUR_DIAG_REPORT_LOWVOLT = (1<<3),	/**< Set in NUR_DIAG_REPORT.flags if low voltage is detected. All RF operations will fail with error NUR_ERROR_LOW_VOLTAGE in this stage. */
 };
+
+#define FW_INFO_REQUEST_SEC_CHIP 2
 
 /** @} */ // end of API
 
