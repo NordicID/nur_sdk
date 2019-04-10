@@ -1095,6 +1095,21 @@
             Auto-inventory has 100ms off time.
             </summary>
         </member>
+        <member name="F:NurApiDotNet.NurApi.NUR_AUTOPER_FORCE_1000MS">
+            <summary>
+            Forced off time 1000ms
+            </summary>
+        </member>
+        <member name="F:NurApiDotNet.NurApi.NUR_AUTOPER_FORCE_500MS">
+            <summary>
+            Forced off time 500ms
+            </summary>
+        </member>
+        <member name="F:NurApiDotNet.NurApi.NUR_AUTOPER_FORCE_100MS">
+            <summary>
+            Forced off time 100ms
+            </summary>
+        </member>
         <member name="F:NurApiDotNet.NurApi.SELSTATE_ALL">
             <summary>
             G2 Query sel state: All tags respond, ignoring SL flag
@@ -1637,6 +1652,11 @@
             Set in DiagReport.flags if low voltage is detected. All RF operations will fail with error NUR_ERROR_LOW_VOLTAGE in this stage.
             </summary>
         </member>
+        <member name="F:NurApiDotNet.NurApi.FW_INFO_REQUEST_SEC_CHIP">
+            <summary>
+            Parameter value used in getSecChipFWINFO when requesting secondary chip FW info
+            </summary>
+        </member>
         <member name="M:NurApiDotNet.NurApi.#ctor">
             <summary>
             <para>Standard constructor.</para>
@@ -2027,6 +2047,36 @@
             </summary>
             <param name="imager">Type of imager <see cref="T:NurApiDotNet.NurApi.ImagerType"/></param>
         </member>
+        <member name="M:NurApiDotNet.NurApi.AccSensorEnumerate">
+            <summary>
+            Get all connected sensors
+            </summary>
+        </member>
+        <member name="M:NurApiDotNet.NurApi.AccSensorSetConfig(NurApiDotNet.NurApi.AccessorySensorConfig)">
+            <summary>
+            Change sensor configuration (currently only the mode can be changed). cfg.source is used to identify the sensor. Current configuration is returned.
+            </summary>
+        </member>
+        <member name="M:NurApiDotNet.NurApi.AccSensorGetConfig(System.Byte)">
+            <summary>
+            Get current sensor configuration.
+            </summary>
+        </member>
+        <member name="M:NurApiDotNet.NurApi.AccSensorSetFilter(System.Byte,NurApiDotNet.NurApi.AccessorySensorFilter)">
+            <summary>
+            Change filter of sensor. Filter active on reader (after change) is returned.
+            </summary>
+        </member>
+        <member name="M:NurApiDotNet.NurApi.AccSensorGetFilter(System.Byte)">
+            <summary>
+            Get active filter of sensor.
+            </summary>
+        </member>
+        <member name="M:NurApiDotNet.NurApi.AccSensorGetValue(System.Byte)">
+            <summary>
+            Get latest value read from sensor. Returned value class depends on sensor type and should be cast to the right subclass of AccSensorData (currently only AccSensorRangeData exists).
+            </summary>
+        </member>
         <member name="M:NurApiDotNet.NurApi.StartProgramSmartDeviceUpdate(System.String)">
             <summary>
             Start smart device update uploading
@@ -2140,6 +2190,15 @@
             </summary>
             <typeparam name="T">Structure name.</typeparam>
             <param name="ptr">Byte data to convert.</param>
+            <returns>Return the byte data converted to the given structure.</returns>
+        </member>
+        <member name="M:NurApiDotNet.NurApi.ArrayToStruct``1(System.Byte[],System.Int32)">
+            <summary>
+            Array to data struture conversion.
+            </summary>
+            <typeparam name="T">Structure name.</typeparam>
+            <param name="ptr">Byte data to convert.</param>
+            <param name="index">Index from where to start in ptr.</param>
             <returns>Return the byte data converted to the given structure.</returns>
         </member>
         <member name="M:NurApiDotNet.NurApi.SetModuleSetup(System.Int32,NurApiDotNet.NurApi.ModuleSetup@)">
@@ -2544,6 +2603,12 @@
             </summary>
             <returns>Returns the <see cref="T:NurApiDotNet.NurApi.DeviceCapabilites"/> structure.</returns>
             <exception cref="T:NurApiDotNet.NurApiException">Thrown when "API not created", "GetDeviceCaps" or "Operation not supported" error </exception>
+        </member>
+        <member name="M:NurApiDotNet.NurApi.GetSecChipFWINFO">
+            <summary>
+            Get secondary chip FW building information string.
+            </summary>
+            <returns>Returns the sec chip FW information as a string.</returns>
         </member>
         <member name="M:NurApiDotNet.NurApi.GetFWINFO">
             <summary>
@@ -5303,11 +5368,6 @@
             Occurs when RFID module I/O pin changes state
             </summary>
         </member>
-        <member name="E:NurApiDotNet.NurApi.AccessoryEvent">
-            <summary>
-            Occurs when the Accessory notification is received.
-            </summary>
-        </member>
         <member name="E:NurApiDotNet.NurApi.TraceTagEvent">
             <summary>
             Occurs when the trace tag information is available.
@@ -5388,6 +5448,21 @@
             The API file version.
             </summary>
             <value>Returns the current file version string (.NET API file).</value>
+        </member>
+        <member name="E:NurApiDotNet.NurApi.AccessoryEvent">
+            <summary>
+            Occurs when the Accessory notification is received. Sensor related accessory notifications have their own event handlers.
+            </summary>
+        </member>
+        <member name="E:NurApiDotNet.NurApi.AccessorySensorChangedEvent">
+            <summary>
+            Occurs when the sensor is added or removed to/from reader.
+            </summary>
+        </member>
+        <member name="E:NurApiDotNet.NurApi.AccessoryRangeDataEvent">
+            <summary>
+            Occurs when the Accessory sensor value range data is received.
+            </summary>
         </member>
         <member name="P:NurApiDotNet.NurApi.LinkFrequency">
             <summary>
@@ -5902,6 +5977,9 @@
             <item><setting><see cref="F:NurApiDotNet.NurApi.NUR_AUTOPER_25"/></setting><meaning>The inventory stream off time is a maximum of 1000ms.</meaning></item>
             <item><setting><see cref="F:NurApiDotNet.NurApi.NUR_AUTOPER_33"/></setting><meaning>The inventory stream off time is a maximum of 500ms.</meaning></item>
             <item><setting><see cref="F:NurApiDotNet.NurApi.NUR_AUTOPER_50"/></setting><meaning>The inventory stream off time is a maximum of 100ms.</meaning></item>
+            <item><setting><see cref="!:NUR_AUTOPER_FORCE_1000"/></setting><meaning>The inventory stream off time is forced 1000ms.</meaning></item>
+            <item><setting><see cref="!:NUR_AUTOPER_FORCE_500"/></setting><meaning>The inventory stream off time is forced 500ms.</meaning></item>
+            <item><setting><see cref="!:NUR_AUTOPER_FORCE_100"/></setting><meaning>The inventory stream off time is forced 100ms.</meaning></item>
             </list>
             </value>
             <exception cref="T:NurApiDotNet.NurApiException">Thrown when "API not created" or "SetInventoryPeriod" error </exception>
@@ -5921,6 +5999,9 @@
             <item><setting><see cref="F:NurApiDotNet.NurApi.NUR_AUTOPER_25"/></setting><meaning>The inventory stream off time is a maximum of 1000ms.</meaning></item>
             <item><setting><see cref="F:NurApiDotNet.NurApi.NUR_AUTOPER_33"/></setting><meaning>The inventory stream off time is a maximum of 500ms.</meaning></item>
             <item><setting><see cref="F:NurApiDotNet.NurApi.NUR_AUTOPER_50"/></setting><meaning>The inventory stream off time is a maximum of 100ms.</meaning></item>
+            <item><setting><see cref="!:NUR_AUTOPER_FORCE_1000"/></setting><meaning>The inventory stream off time is forced 1000ms.</meaning></item>
+            <item><setting><see cref="!:NUR_AUTOPER_FORCE_500"/></setting><meaning>The inventory stream off time is forced 500ms.</meaning></item>
+            <item><setting><see cref="!:NUR_AUTOPER_FORCE_100"/></setting><meaning>The inventory stream off time is forced 100ms.</meaning></item>
             </list>
             </value>
             <exception cref="T:NurApiDotNet.NurApiException">Thrown when "API not created" or "SetInventoryPeriod" error </exception>
@@ -6239,26 +6320,6 @@
             I/O change results as <see cref="T:NurApiDotNet.NurApi.IOChangeData"/>
             </summary>            
         </member>
-        <member name="T:NurApiDotNet.NurApi.AccessoryEventArgs">
-            <summary>
-            Accessory Event Arguments class (<see cref="E:NurApiDotNet.NurApi.AccessoryEvent"/>)
-            </summary>
-        </member>
-        <member name="M:NurApiDotNet.NurApi.AccessoryEventArgs.#ctor(System.UInt32,System.Int32,NurApiDotNet.NurApi.AccessoryEventType,System.Byte[])">
-            <summary>
-            AccessoryEvent Arguments
-            </summary>
-            <param name="timestamp">milliseconds after NurApi initialized</param>
-            <param name="status">status code</param>
-            <param name="type">Type of event</param>
-            <param name="data">byte array of event arguments</param>
-        </member>
-        <member name="F:NurApiDotNet.NurApi.AccessoryEventArgs.type">
-            <summary>Type of AccessoryEvent</summary>
-        </member>
-        <member name="F:NurApiDotNet.NurApi.AccessoryEventArgs.data">
-            <summary>byte array of AccessoryEvent arguments</summary>
-        </member>
         <member name="T:NurApiDotNet.NurApi.TraceTagEventArgs">
             <summary>
             Trace Tag event arguments class (<see cref="E:NurApiDotNet.NurApi.TraceTagEvent"/>)
@@ -6440,6 +6501,16 @@
         <member name="F:NurApiDotNet.NurApi.AccessoryEventType.Barcode">
             <summary>
             Barcode result
+            </summary>
+        </member>
+        <member name="F:NurApiDotNet.NurApi.AccessoryEventType.SensorChanged">
+            <summary>
+            Sensor removed/added
+            </summary>
+        </member>
+        <member name="F:NurApiDotNet.NurApi.AccessoryEventType.SensorRangeData">
+            <summary>
+            Range sensor data
             </summary>
         </member>
         <member name="F:NurApiDotNet.NurApi.AccessoryEventType.SpeedTest">
@@ -6647,6 +6718,206 @@
             <summary>
             Battery capacity in mAh. -1 if unknown.
             </summary>
+        </member>
+        <member name="T:NurApiDotNet.NurApi.AccessorySensorType">
+            <summary>
+            Accessory sensor types
+            </summary>
+        </member>
+        <member name="F:NurApiDotNet.NurApi.AccessorySensorType.UltrasonicMaxSonar">
+            <summary>
+            Maxbotix HRUSB MaxSonar EZ range sensor
+            </summary>
+        </member>
+        <member name="T:NurApiDotNet.NurApi.AccessorySensorFeature">
+            <summary>
+            Accessory sensor features (used as a bitmask)
+            </summary>
+        </member>
+        <member name="F:NurApiDotNet.NurApi.AccessorySensorFeature.Range">
+            <summary>
+            GPIO changes is triggered based on limit threshold of read values (range sensor)
+            </summary>
+        </member>
+        <member name="F:NurApiDotNet.NurApi.AccessorySensorFeature.StreamValue">
+            <summary>
+            Supports streaming of raw sensor values
+            </summary>
+        </member>
+        <member name="T:NurApiDotNet.NurApi.AccessorySensorMode">
+            <summary>
+            Accessory sensor mode (used as a bitmask)
+            </summary>
+        </member>
+        <member name="F:NurApiDotNet.NurApi.AccessorySensorMode.Gpio">
+            <summary>
+            Report changes as GPIO events on IOChangeEvent. IOChangeData.sensor will be set to true, and for compability reasons, 128 needs to be added to IOChangeData.source to get the source id used for Accessory Sensors.
+            </summary>
+        </member>
+        <member name="F:NurApiDotNet.NurApi.AccessorySensorMode.Stream">
+            <summary>
+            Stream raw sensor values via an event handler (<see>AccessoryRangeDataEvent</see>) (feature flag requirement: <see>AccessorySensorFeature.StreamValue</see>)
+            </summary>
+        </member>
+        <member name="T:NurApiDotNet.NurApi.AccessorySensorConfig">
+            <summary>
+            Nur accessory sensor configuration.
+            </summary>
+        </member>
+        <member name="F:NurApiDotNet.NurApi.AccessorySensorConfig.source">
+            <summary>
+            Sensor/GPIO pin number changes will be reported on. Assigned by reader.
+            </summary>
+        </member>
+        <member name="F:NurApiDotNet.NurApi.AccessorySensorConfig.type">
+            <summary>
+            Type of sensor (see AccessorySensorType). Assigned by reader.
+            </summary>
+        </member>
+        <member name="F:NurApiDotNet.NurApi.AccessorySensorConfig.feature">
+            <summary>
+            Features supported by this sensor as a bitmask (see AccessorySensorFeature). Assigned by reader.
+            </summary>
+        </member>
+        <member name="F:NurApiDotNet.NurApi.AccessorySensorConfig.mode">
+            <summary>
+            Configurable bitmask specifying how sensor changes are reported (see AccessorySensorMode).
+            </summary>
+        </member>
+        <member name="T:NurApiDotNet.NurApi.AccessorySensorFilterThrehold">
+            <summary>
+            Nur accessory sensor filter threshold.
+            </summary>
+        </member>
+        <member name="F:NurApiDotNet.NurApi.AccessorySensorFilterThrehold.lo">
+            <summary>
+            Low threshold limit. GPIO event will go lo->high when sensor value is lower than this value.
+            </summary>
+        </member>
+        <member name="F:NurApiDotNet.NurApi.AccessorySensorFilterThrehold.hi">
+            <summary>
+            High threshold limit. GPIO event will go high->lo when sensor value equals or is higher than this value.
+            </summary>
+        </member>
+        <member name="T:NurApiDotNet.NurApi.AccessorySensorFilterFlag">
+            <summary>
+            Accessory sensor mode (used as a bitmask)
+            </summary>
+        </member>
+        <member name="F:NurApiDotNet.NurApi.AccessorySensorFilterFlag.Range">
+            <summary>
+            rangeThreshold defines when range sensor triggers events
+            </summary>
+        </member>
+        <member name="F:NurApiDotNet.NurApi.AccessorySensorFilterFlag.Time">
+            <summary>
+            timeThreshold defines event debounce filter
+            </summary>
+        </member>
+        <member name="T:NurApiDotNet.NurApi.AccessorySensorFilter">
+            <summary>
+            Nur accessory sensor filter. Configures sensor triggers/debounce parameters.
+            </summary>
+        </member>
+        <member name="F:NurApiDotNet.NurApi.AccessorySensorFilter.flags">
+            <summary>
+            Enabled filter flags (see AccessorySensorFilterFlag) as a bitmask.
+            </summary>
+        </member>
+        <member name="F:NurApiDotNet.NurApi.AccessorySensorFilter.rangeThreshold">
+            <summary>
+            Range threshold. Goes high->low when sensors reads less than lo, low->high when sensors reads equals or more than hi. Unit: mm.
+            </summary>
+        </member>
+        <member name="F:NurApiDotNet.NurApi.AccessorySensorFilter.timeThreshold">
+            <summary>
+            Time threshold. Triggers when level going high->low for lo amount of time, and low->high for hi amount of time. Unit: ms.
+            </summary>
+        </member>
+        <member name="T:NurApiDotNet.NurApi.AccessorySensorChanged">
+            <summary>
+            Nur accessory sensor changed information
+            </summary>
+        </member>
+        <member name="F:NurApiDotNet.NurApi.AccessorySensorChanged.source">
+            <summary>
+            Sensor/GPIO pin number for this sensor
+            </summary>
+        </member>
+        <member name="F:NurApiDotNet.NurApi.AccessorySensorChanged.removed">
+            <summary>
+            Sensor added(0) or removed(1)
+            </summary>
+        </member>
+        <member name="T:NurApiDotNet.NurApi.AccSensorData">
+            <summary>
+            Abstract base class for sensor values.
+            </summary>
+        </member>
+        <member name="F:NurApiDotNet.NurApi.AccSensorData.source">
+            <summary>
+            Sensor/GPIO pin number for this sensor
+            </summary>
+        </member>
+        <member name="T:NurApiDotNet.NurApi.AccSensorRangeData">
+            <summary>
+            Sensor value from a range sensor
+            </summary>
+        </member>
+        <member name="F:NurApiDotNet.NurApi.AccSensorRangeData.range">
+            <summary>
+            Range as read by sensor. Unit: mm.
+            </summary>
+        </member>
+        <member name="T:NurApiDotNet.NurApi.AccessoryEventArgs">
+            <summary>
+            Accessory Event Arguments class (for AccessoryEvent)
+            </summary>
+        </member>
+        <member name="M:NurApiDotNet.NurApi.AccessoryEventArgs.#ctor(System.UInt32,System.Int32,NurApiDotNet.NurApi.AccessoryEventType,System.Byte[])">
+            <summary>
+            AccessoryEvent Arguments
+            </summary>
+            <param name="timestamp">milliseconds after NurApi initialized</param>
+            <param name="status">status code</param>
+            <param name="type">Type of event</param>
+            <param name="data">byte array of event arguments</param>
+        </member>
+        <member name="F:NurApiDotNet.NurApi.AccessoryEventArgs.type">
+            <summary>Type of AccessoryEvent</summary>
+        </member>
+        <member name="F:NurApiDotNet.NurApi.AccessoryEventArgs.data">
+            <summary>byte array of AccessoryEvent arguments</summary>
+        </member>
+        <member name="T:NurApiDotNet.NurApi.AccessorySensorChangedEventArgs">
+            <summary>
+            Accessory Sensor Changed Event Arguments class (for AccessorySensorChangedEvent)
+            </summary>
+        </member>
+        <member name="M:NurApiDotNet.NurApi.AccessorySensorChangedEventArgs.#ctor(System.UInt32,NurApiDotNet.NurApi.AccessorySensorChanged)">
+            <summary>
+            AccessorySensorChangedEvent Arguments
+            </summary>
+            <param name="timestamp">milliseconds after NurApi initialized</param>
+            <param name="sensorChanged">AccessorySensorChanged</param>
+        </member>
+        <member name="F:NurApiDotNet.NurApi.AccessorySensorChangedEventArgs.sensorChanged">
+            <summary>Information about sensor change</summary>
+        </member>
+        <member name="T:NurApiDotNet.NurApi.AccessoryRangeDataEventArgs">
+            <summary>
+            Accessory Range Data Event Arguments class (for AccessoryRangeDataEvent)
+            </summary>
+        </member>
+        <member name="M:NurApiDotNet.NurApi.AccessoryRangeDataEventArgs.#ctor(System.UInt32,NurApiDotNet.NurApi.AccSensorRangeData)">
+            <summary>
+            AccessoryRangeDataEvent Arguments
+            </summary>
+            <param name="timestamp">milliseconds after NurApi initialized</param>
+            <param name="rangeData">AccSensorRangeData</param>
+        </member>
+        <member name="F:NurApiDotNet.NurApi.AccessoryRangeDataEventArgs.rangeData">
+            <summary>Range data information</summary>
         </member>
         <member name="T:NurApiDotNet.NurApi.PeriodicInventoryData">
             <summary>

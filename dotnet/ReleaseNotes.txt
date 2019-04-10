@@ -1,9 +1,14 @@
+v1.9.9
+- Added Accessory Sensor API
+- New function getSecChipFWINFO() added for secondary chip FW info
+- Added three new values for forced sleep into dynamic power save
+
 v1.9.8
 - Added missing AccExt functions (AccSetLedOp, AccSetConfig)
 - Added support for secondary chip version number
 - Added NULL buffer check to Write commands
 - Fixed baudrate documentation for ConnectToSerial
-- Added support for secondary chip programming (f.ex. Impinj Indy R2000)
+- Added support for secondary chip programming
 
 v1.9.7
 - Added NurApiConnectSerialPortEx
