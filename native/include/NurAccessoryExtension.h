@@ -190,6 +190,17 @@ typedef struct __NUR_ACC_SENSOR_RANGE_DATA
 /**
  * Nur accessory sensor generic configuration.
  *
+ * Source definitions:
+ *   0: GPIO pin 1
+ *   1: GPIO pin 2
+ *   2: GPIO pin 3
+ *   3: GPIO pin 4
+ * 128: Device tap sensor
+ * 130: USB sensor (connected directly or to USB hub port 1)
+ * 131: USB sensor (connected to USB hub port 2)
+ * 132: USB sensor (connected to USB hub port 3)
+ * 133: USB sensor (connected to USB hub port 4)
+ *
  * @sa NurAccSensorSetConfig(), NurAccSensorEnumerate()
  */
 typedef struct __NUR_ACC_SENSOR_CONFIG
@@ -298,6 +309,8 @@ enum PAIRING_MODE
 enum NUR_ACC_SENSOR_TYPE
 {
 	NUR_ACC_SENSOR_TYPE_ULTRASONIC_MAXSONAR,
+	NUR_ACC_SENSOR_TYPE_DEVICE_GPIO,
+	NUR_ACC_SENSOR_TYPE_DEVICE_TAP,
 };
 
 /**

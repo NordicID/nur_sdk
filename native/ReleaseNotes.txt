@@ -1,3 +1,6 @@
+v1.9.21
+- Added GPIO and Tap sensors to Accessory Sensor API
+
 v1.9.20
 - Added Accessory Sensor API
 - Send MDNS queries to all interfaces
