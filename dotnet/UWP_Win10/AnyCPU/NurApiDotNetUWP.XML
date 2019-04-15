@@ -1102,6 +1102,16 @@
             Maxbotix HRUSB MaxSonar EZ range sensor
             </summary>
         </member>
+        <member name="F:NurApiDotNet.NurApi.AccessorySensorType.DeviceGpio">
+            <summary>
+            Device GPIO input pins
+            </summary>
+        </member>
+        <member name="F:NurApiDotNet.NurApi.AccessorySensorType.DeviceTap">
+            <summary>
+            Device tap sensor
+            </summary>
+        </member>
         <member name="T:NurApiDotNet.NurApi.AccessorySensorFeature">
             <summary>
             Accessory sensor features (used as a bitmask)
@@ -1141,6 +1151,15 @@
             <summary>
             Sensor/GPIO pin number changes will be reported on. Assigned by reader.
             </summary>
+              0: GPIO pin 1
+              1: GPIO pin 2
+              2: GPIO pin 3
+              3: GPIO pin 4
+            128: Device tap sensor
+            130: USB sensor (connected directly or to USB hub port 1)
+            131: USB sensor (connected to USB hub port 2)
+            132: USB sensor (connected to USB hub port 3)
+            133: USB sensor (connected to USB hub port 4)
         </member>
         <member name="F:NurApiDotNet.NurApi.AccessorySensorConfig.type">
             <summary>

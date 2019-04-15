@@ -1,3 +1,6 @@
+v1.9.10
+- Added GPIO and Tap sensors to Accessory Sensor API
+
 v1.9.9
 - Added Accessory Sensor API
 - New function getSecChipFWINFO() added for secondary chip FW info
