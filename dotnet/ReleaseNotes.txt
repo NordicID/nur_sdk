@@ -1,3 +1,6 @@
+v1.9.11
+- Nuget package fixes
+
 v1.9.10
 - Added GPIO and Tap sensors to Accessory Sensor API
 
