@@ -408,7 +408,8 @@ enum NUR_GPIO_TYPE
 	NUR_GPIO_TYPE_RFIDREAD,		/**< GPIO will act as a Sampo S1 RFID read led (high active) */
 	NUR_GPIO_TYPE_BEEPER,		/**< GPIO will act as a beeper (high active) */
 	NUR_GPIO_TYPE_ANTCTL1,		/**< GPIO is configured as antenna control 1 (bit0) */
-	NUR_GPIO_TYPE_ANTCTL2		/**< GPIO is configured as antenna control 2 (bit1) */
+	NUR_GPIO_TYPE_ANTCTL2,		/**< GPIO is configured as antenna control 2 (bit1) */
+	NUR_GPIO_TYPE_DCE_RTS		/**< GPIO is configured as RTS control */
 };
 
 /**

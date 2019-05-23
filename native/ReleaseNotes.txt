@@ -1,3 +1,9 @@
+v1.9.22
+- Added NUR_GPIO_TYPE_DCE_RTS (NUR_GPIO_TYPE) on the header file
+- Fixed possible MDNS hanging issue
+- Fixed MDNS discovery on windows x64 build
+- Fixed EAS Alarm stream
+
 v1.9.21
 - Added GPIO and Tap sensors to Accessory Sensor API
 
