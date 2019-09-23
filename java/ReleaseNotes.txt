@@ -1,3 +1,29 @@
+v1.9.0.9
+- Added IR data refresing at TagStorage
+- Added nanoNUR moduletype constant
+
+v1.9.0.8
+- Fixed getGPIOStatus
+- Added setGPIOStatusEx
+
+v1.9.0.3
+- Added BLE passkey functions
+- Added getModelInfo()
+- Fixed isDeviceExa21()
+
+v1.9.0.2
+
+- Moved Accessory Extension under package com.nordicid.nurapi (NurApi.jar)
+- Accessory Sensor implementation
+- Ignore getModuleSetup packet response if out of sync
+- Implemented RESEND_PACKET (once) if device query it or timeout occur
+
+v1.8.1.50
+- Incresed default command timeout from 5000ms to 8000ms (help survive from secChip boot failure)
+- Refresh deviceCaps after secondary chip programming
+- Added secondary chip version info dev caps entries
+- Added programSecChipFile() and programSecChipBuffer() functions
+
 v1.8.1.46
 - Minor improvements
 
