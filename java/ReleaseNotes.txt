@@ -1,3 +1,14 @@
+v1.9.1.2
+- Added ToFCalibration()
+- Fixed accessory backward compatibility
+
+v1.9.1.1
+- Prevent accSensorEnumerate call for EXA31/EXA51 as BLE name corrupt on EXA FW version < 2.3.4
+- Fixed isDeviceExa31() to return true for EXA21 device where FW ver < 3.6.1
+
+v1.9.1.0
+- MDNS: Fixed null socket exception when app exit
+
 v1.9.0.9
 - Added IR data refresing at TagStorage
 - Added nanoNUR moduletype constant
