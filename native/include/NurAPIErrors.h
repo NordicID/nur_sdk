@@ -50,6 +50,8 @@ enum NUR_ERRORCODES
 
 	/** Generic, non-interpreted / unexpected error */
 	NUR_ERROR_GENERAL = 0x10,
+	/** Device wants to have last packet again due to the transfer failure. */
+	NUR_ERROR_RESEND_PACKET,
 
 	/** No tag(s) found */
 	NUR_ERROR_NO_TAG = 0x20,

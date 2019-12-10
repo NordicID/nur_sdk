@@ -200,6 +200,7 @@ typedef struct __NUR_ACC_SENSOR_RANGE_DATA
  * 131: USB sensor (connected to USB hub port 2)
  * 132: USB sensor (connected to USB hub port 3)
  * 133: USB sensor (connected to USB hub port 4)
+ * 134: Time-of-Flight sensor
  *
  * @sa NurAccSensorSetConfig(), NurAccSensorEnumerate()
  */

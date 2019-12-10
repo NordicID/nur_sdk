@@ -617,6 +617,13 @@ struct NUR_MODULESETUP
 
 	/** The RF profile. 0 = Robust, 1 = Nominal, 2 = High speed */
 	int rfProfile;
+
+	/** Time before module enters deep sleep in milliseconds. 
+	* 0 = Sleep disabled. Valid range 1000 - 65535ms.
+	* NOTE: When module is in deep sleep there might be slight (100ms) delay before command is executed.
+	*/
+	int toSleepTime;
+
 };
 
 /**

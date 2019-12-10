@@ -1,3 +1,6 @@
+v1.9.24
+- Stability improvements
+
 v1.9.22
 - Added NUR_GPIO_TYPE_DCE_RTS (NUR_GPIO_TYPE) on the header file
 - Fixed possible MDNS hanging issue

@@ -96,7 +96,7 @@
 #define AUTOTUNE_MODE_THRESHOLD_ENABLE	(1 << 1)
 
 /** Gen2 version 2 TID hide policy: hide none. */
-#define NUR_TID_HIDE_NONE	2
+#define NUR_TID_HIDE_NONE	0
 /** Gen2 version 2 TID hide policy: hide some. */
 #define NUR_TID_HIDE_SOME	1
 /** Gen2 version 2 TID hide policy: hide all. */
@@ -638,7 +638,10 @@ enum NUR_MODULESETUP_FLAGS
 	// ADDED NUR2 7.0
 	NUR_SETUP_RFPROFILE		= (1<<29), /**< rfProfile field in struct NUR_MODULESETUP is valid */
 
-	NUR_SETUP_ALL			=	((1 << 30) - 1)	/**< All setup flags in the structure. */
+	// ADDED NUR2 7.5, NanoNur 10.2
+	NUR_SETUP_TO_SLEEP_TIME	= (1<<30), /**< toSleepTime field in struct NUR_MODULESETUP is valid */
+
+	NUR_SETUP_ALL			=	((1U << 31) - 1)	/**< All setup flags in the structure. */
 };
 
 /** Possible inventory targets. 
@@ -816,7 +819,8 @@ enum NUR_DEVCAPS_F1
 	NUR_DC_RFPROFILE	= (1<<24),  /**< The module FW supports RF profile setting. */
 	NUR_DC_DIAG	        = (1<<25),	/**< This module FW supports diagnostics commands. */
 	NUR_DC_TAGPHASE     = (1<<26),	/**< This module FW supports tag phase info. see NUR_OPFLAGS_EN_TAG_PHASE */
-	NUR_DC_LASTBITF1	= (1<<27),	/**< Next available bit for future extensions. */
+	NUR_DC_SLEEP		= (1<<27),	/**< This module FW supports sleep. See NUR_SETUP_TO_SLEEP_TIME */
+	NUR_DC_LASTBITF1	= (1<<28),	/**< Next available bit for future extensions. */
 };
 
 /** Flag field 1 'all device caps' bitmask. */
