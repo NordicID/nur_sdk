@@ -753,6 +753,12 @@
             </summary>
             <remarks>NUR2-1W module FW version 7.0-A onwards. </remarks>       
         </member>
+        <member name="F:NurApiDotNet.NurApi.SETUP_TO_SLEEP_TIME">
+            <summary>
+            "To sleep time" field in struct NUR_MODULESETUP is valid.
+            </summary>
+            <remarks>NUR2-1W module FW version 7.5-A onwards. NanoNur v10.2-A onwards.</remarks>       
+        </member>
         <member name="F:NurApiDotNet.NurApi.SETUP_ALL">
             <summary>
             All setup flags.
@@ -1331,6 +1337,11 @@
         <member name="F:NurApiDotNet.NurApi.NUR_DC_TAGPHASE">
             <summary>
             Bit is set if this module FW supports tag phase info. see OPFLAGS_EN_TAG_PHASE
+            </summary>
+        </member>
+        <member name="F:NurApiDotNet.NurApi.NUR_DC_SLEEP">
+            <summary>
+            Bit is set if this module FW supports sleep.
             </summary>
         </member>
         <member name="F:NurApiDotNet.NurApi.NUR_IR_EPCDATA">
@@ -5778,6 +5789,17 @@
             <seealso cref="F:NurApiDotNet.NurApi.RFPROFILE_NOMINAL"/>		
             <seealso cref="F:NurApiDotNet.NurApi.RFPROFILE_HIGHSPEED"/>		
         </member>
+        <member name="P:NurApiDotNet.NurApi.ToSleepTime">
+            <summary>
+            Set or get "to sleep time"
+            Time before module enters deep sleep in milliseconds. 
+            0 disables deep sleep. 
+            NOTE: When module is in deep sleep there might be slight (100ms) delay before command is executed.
+            </summary>
+            <value>
+            The value can be 0 = sleep disabled, or 1000 - 65535 ms
+            </value>
+        </member>
         <member name="P:NurApiDotNet.NurApi.EnabledAntennas">
             <summary>
             Antenna enable helper.
@@ -8163,6 +8185,13 @@
             RF Profile: <see cref="F:NurApiDotNet.NurApi.RFPROFILE_ROBUST"/>, <see cref="F:NurApiDotNet.NurApi.RFPROFILE_NOMINAL"/> and <see cref="F:NurApiDotNet.NurApi.RFPROFILE_HIGHSPEED"/>.
             </summary>
         </member>
+        <member name="F:NurApiDotNet.NurApi.ModuleSetup.toSleepTime">
+            <summary>
+            Time before module enters deep sleep in milliseconds. 
+            0 disables deep sleep. 
+            NOTE: When module is in deep sleep there might be slight (100ms) delay before command is executed.
+            </summary>
+        </member>
         <member name="T:NurApiDotNet.NurApi.ModuleVersions">
             <summary>
             Module versions.
@@ -8375,6 +8404,11 @@
         <member name="F:NurApiDotNet.NurApi.DeviceCapabilites.tagPhaseInfo">
             <summary>
             True if the module FW supports tag phase info. see OPFLAGS_EN_TAG_PHASE */
+            </summary>
+        </member>
+        <member name="F:NurApiDotNet.NurApi.DeviceCapabilites.sleep">
+            <summary>
+            True if the module FW supports sleep */
             </summary>
         </member>
         <member name="F:NurApiDotNet.NurApi.DeviceCapabilites.secChipMajorVersion">
