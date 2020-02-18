@@ -1,3 +1,6 @@
+v1.9.1.3
+- Stability improvements
+
 v1.9.1.2
 - Added ToFCalibration()
 - Fixed accessory backward compatibility
