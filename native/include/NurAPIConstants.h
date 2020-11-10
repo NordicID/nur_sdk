@@ -409,7 +409,8 @@ enum NUR_GPIO_TYPE
 	NUR_GPIO_TYPE_BEEPER,		/**< GPIO will act as a beeper (high active) */
 	NUR_GPIO_TYPE_ANTCTL1,		/**< GPIO is configured as antenna control 1 (bit0) */
 	NUR_GPIO_TYPE_ANTCTL2,		/**< GPIO is configured as antenna control 2 (bit1) */
-	NUR_GPIO_TYPE_DCE_RTS		/**< GPIO is configured as RTS control */
+	NUR_GPIO_TYPE_DCE_RTS,		/**< GPIO is configured as RTS control */
+	NUR_GPIO_TYPE_EXT_RX        /**< GPIO is configured as External RX enable (active low) */
 };
 
 /**
@@ -728,6 +729,8 @@ enum NUR_OPFLAGS
 	NUR_OPFLAGS_EN_TUNEEVENTS   = (1<<12),		/**< Notification NUR_NOTIFICATION_TUNEEVENT is enabled. */
 	NUR_OPFLAGS_EN_EXACT_BLF    = (1<<13),		/**< Return exact BLF in Hz in tag meta data frequency field. Supported only in NUR L2 modules. */
 	NUR_OPFLAGS_EN_TAG_PHASE	= (1<<14),		/**< Return tag phase angle in units of tenths of degrees in tag meta data timestamp field. Supported only in NUR2 modules. */
+	NUR_OPFLAGS_EN_NXP_BID      = (1<<15),      /**< NXP Brand ID in NXP UCODE8 tag is enabled */
+	NUR_OPFLAGS_EN_IR_MEM_OVERRUN = (1<<16)     /**< Inventory read will report EPC even if there is memory overrun error (f.ex. no user mem bank) */	
 };
 
 /**

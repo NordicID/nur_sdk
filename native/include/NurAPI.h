@@ -2751,7 +2751,7 @@ BOOL NURAPICONV NurApiIsTraceRunning(HANDLE hApi);
 							  BYTE sBank, DWORD sAddress, int sMaskBitLength, BYTE *sMask,
 							  BYTE rdBank, DWORD rdAddress, int rdByteCount, BYTE *rdBuffer)
 
- * 	Read data from tag with specific singulation. 
+ * 	Read data from tag with specific singulation.
  * 	Tag can be singluted against desired memory bank and mask.
  *
  * @sa NurApiReadTagByEPC(), NurApiReadTag32()
@@ -2773,8 +2773,38 @@ BOOL NURAPICONV NurApiIsTraceRunning(HANDLE hApi);
  */
 NUR_API
 int NURAPICONV NurApiReadSingulatedTag32(HANDLE hApi, DWORD passwd, BOOL secured,
+	BYTE sBank, DWORD sAddress, int sMaskBitLength, BYTE* sMask,
+	BYTE rdBank, DWORD rdAddress, int rdByteCount, BYTE* rdBuffer);
+
+/** @fn int NurApiReadSingulatedTagEx32(HANDLE hApi, DWORD passwd, BOOL secured,
 							  BYTE sBank, DWORD sAddress, int sMaskBitLength, BYTE *sMask,
-							  BYTE rdBank, DWORD rdAddress, int rdByteCount, BYTE *rdBuffer);
+							  BYTE rdBank, DWORD rdAddress, int rdByteCount, BYTE *rdBuffer)
+
+ * 	Read data from tag with specific singulation.
+ * 	Tag can be singluted against desired memory bank and mask.
+ *
+ * @sa NurApiReadTagByEPC(), NurApiReadTag32()
+ *
+ * @param	hApi				Handle to valid NurApi object instance.
+ * @param	passwd				Password for secured operations.
+ * @param	secured				TRUE if operation is secured, otherwise FALSE.
+ * @param	sBank				Memory bank used for tag singulation.
+ * @param	sAddress			Singulation data address in <b>bits</b>.
+ * @param	sMaskBitLength  	Length of the mask data in <b>bits</b>.
+ * @param	sMask   			Mask data buffer.
+ * @param	rdBank				Memory bank for read operation.
+ * @param	rdAddress			<b>Word</b> address for read operation.
+ * @param	rdByteCount			Number of bytes to read. Use 0 to read all data in the bank. This must <b>divisible by two</b>.
+ * @param	rdBuffer			Pointer to a buffer that received read data. Must be atleast <i>rdByteCount</i> bytes long.
+ * @param	rdBufferLength		Pointer to a DWORD that contains size of the rdBuffer. When function returns, this contains number of bytes written rdBuffer.
+ *
+ * @return	Zero when succeeded, On error non-zero error code is returned.
+ * @remark This function uses 32-bit tag data addressing.
+ */
+NUR_API
+int NURAPICONV NurApiReadSingulatedTagEx32(HANDLE hApi, DWORD passwd, BOOL secured,
+	BYTE sBank, DWORD sAddress, int sMaskBitLength, BYTE* sMask,
+	BYTE rdBank, DWORD rdAddress, int rdByteCount, BYTE* rdBuffer, DWORD *rdBufferLength);
 
 /** @fn int NurApiCustomReadSingulatedTag32(HANDLE hApi, 
               DWORD rdCmd, BYTE cmdBits, DWORD rdBank, BYTE bankBits,							 

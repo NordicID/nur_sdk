@@ -1,3 +1,9 @@
+v1.9.26
+- Add support for reading tag whole memory bank content using NurApiReadSingulatedTagEx32() when rdByteCount=0
+
+v1.9.25
+- New API features
+
 v1.9.24
 - Stability improvements
 

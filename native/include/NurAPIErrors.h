@@ -24,7 +24,7 @@ enum NUR_ERRORCODES
 	NUR_ERROR_INVALID_COMMAND,
 	/** Invalid packet length sent to module */
 	NUR_ERROR_INVALID_LENGTH,
-	/** Command parametr(s) out of range */
+	/** Command parameter(s) out of range */
 	NUR_ERROR_PARAMETER_OUT_OF_RANGE,
 	/** Data receive timeout */
 	NUR_ERROR_RECEIVE_TIMEOUT,
