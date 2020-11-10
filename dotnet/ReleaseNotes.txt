@@ -1,3 +1,12 @@
+v1.9.16
+- Add support for reading tag whole memory bank content when rdByteCount=0
+
+v1.9.15
+- Fix log message text decoding in non-unicode environments
+
+v1.9.14
+- Fix possible memory corruption in TCP server client disconnection
+
 v1.9.13
 - Fixed ConnectSerial(string, int) on windows platforms
 

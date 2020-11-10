@@ -790,6 +790,16 @@
             Return tag phase angle in units of tenths of degrees in tag meta data timestamp field. Supported only in NUR2 modules.
             </summary>
         </member>
+        <member name="F:NurApiDotNet.NurApi.OPFLAGS_EN_NXP_BID">
+            <summary>        
+            NXP Brand ID in NXP UCODE8 tag is enabled
+            </summary>
+        </member>
+        <member name="F:NurApiDotNet.NurApi.OPFLAGS_EN_IR_MEM_OVERRUN">
+            <summary>        
+            Inventory read will report EPC even if there is memory overrun error (f.ex. no user mem bank)
+            </summary>
+        </member>
         <member name="F:NurApiDotNet.NurApi.STORE_RF">
             <summary>
             Store RF settings to module internal non-volatile memory.
@@ -6761,6 +6771,11 @@
             Device tap sensor
             </summary>
         </member>
+        <member name="F:NurApiDotNet.NurApi.AccessorySensorType.DeviceToF">
+            <summary>
+            Device Time of Flight sensor
+            </summary>
+        </member>
         <member name="T:NurApiDotNet.NurApi.AccessorySensorFeature">
             <summary>
             Accessory sensor features (used as a bitmask)
@@ -6791,6 +6806,61 @@
             Stream raw sensor values via an event handler (<see>AccessoryRangeDataEvent</see>) (feature flag requirement: <see>AccessorySensorFeature.StreamValue</see>)
             </summary>
         </member>
+        <member name="T:NurApiDotNet.NurApi.AccessorySensorSource">
+            <summary>
+            Accessory sensor source
+            </summary>
+        </member>
+        <member name="F:NurApiDotNet.NurApi.AccessorySensorSource.GpioPin1">
+            <summary>
+            GPIO pin 1
+            </summary>
+        </member>
+        <member name="F:NurApiDotNet.NurApi.AccessorySensorSource.GpioPin2">
+            <summary>
+            GPIO pin 2
+            </summary>
+        </member>
+        <member name="F:NurApiDotNet.NurApi.AccessorySensorSource.GpioPin3">
+            <summary>
+            GPIO pin 3
+            </summary>
+        </member>
+        <member name="F:NurApiDotNet.NurApi.AccessorySensorSource.GpioPin4">
+            <summary>
+            GPIO pin 4
+            </summary>
+        </member>
+        <member name="F:NurApiDotNet.NurApi.AccessorySensorSource.TapSensor">
+            <summary>
+            Tap Sensor
+            </summary>
+        </member>
+        <member name="F:NurApiDotNet.NurApi.AccessorySensorSource.USB1Sensor">
+            <summary>
+            USB Sensor connected directly or to hub port 1
+            </summary>
+        </member>
+        <member name="F:NurApiDotNet.NurApi.AccessorySensorSource.USB2Sensor">
+            <summary>
+            USB Sensor hub port 2
+            </summary>
+        </member>
+        <member name="F:NurApiDotNet.NurApi.AccessorySensorSource.USB3Sensor">
+            <summary>
+            USB Sensor hub port 3
+            </summary>
+        </member>
+        <member name="F:NurApiDotNet.NurApi.AccessorySensorSource.USB4Sensor">
+            <summary>
+            USB Sensor hub port 4
+            </summary>
+        </member>
+        <member name="F:NurApiDotNet.NurApi.AccessorySensorSource.ToFSensor">
+            <summary>
+            ToF Sensor
+            </summary>
+        </member>
         <member name="T:NurApiDotNet.NurApi.AccessorySensorConfig">
             <summary>
             Nur accessory sensor configuration.
@@ -6799,16 +6869,8 @@
         <member name="F:NurApiDotNet.NurApi.AccessorySensorConfig.source">
             <summary>
             Sensor/GPIO pin number changes will be reported on. Assigned by reader.
+            <see> AccessorySensorSource </see>
             </summary>
-              0: GPIO pin 1
-              1: GPIO pin 2
-              2: GPIO pin 3
-              3: GPIO pin 4
-            128: Device tap sensor
-            130: USB sensor (connected directly or to USB hub port 1)
-            131: USB sensor (connected to USB hub port 2)
-            132: USB sensor (connected to USB hub port 3)
-            133: USB sensor (connected to USB hub port 4)
         </member>
         <member name="F:NurApiDotNet.NurApi.AccessorySensorConfig.type">
             <summary>
