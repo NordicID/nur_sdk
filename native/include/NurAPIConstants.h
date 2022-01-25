@@ -730,7 +730,8 @@ enum NUR_OPFLAGS
 	NUR_OPFLAGS_EN_EXACT_BLF    = (1<<13),		/**< Return exact BLF in Hz in tag meta data frequency field. Supported only in NUR L2 modules. */
 	NUR_OPFLAGS_EN_TAG_PHASE	= (1<<14),		/**< Return tag phase angle in units of tenths of degrees in tag meta data timestamp field. Supported only in NUR2 modules. */
 	NUR_OPFLAGS_EN_NXP_BID      = (1<<15),      /**< NXP Brand ID in NXP UCODE8 tag is enabled */
-	NUR_OPFLAGS_EN_IR_MEM_OVERRUN = (1<<16)     /**< Inventory read will report EPC even if there is memory overrun error (f.ex. no user mem bank) */	
+	NUR_OPFLAGS_EN_IR_MEM_OVERRUN = (1<<16),    /**< Inventory read will report EPC even if there is memory overrun error (f.ex. no user mem bank) */	
+	NUR_OPFLAGS_EN_PHASE_DIFF = (1 << 17),		/**< Return tag phase angle difference in units of tenths of degrees in tag meta data timestamp field. Supported only in NUR3 modules. */
 };
 
 /**
@@ -823,7 +824,8 @@ enum NUR_DEVCAPS_F1
 	NUR_DC_DIAG	        = (1<<25),	/**< This module FW supports diagnostics commands. */
 	NUR_DC_TAGPHASE     = (1<<26),	/**< This module FW supports tag phase info. see NUR_OPFLAGS_EN_TAG_PHASE */
 	NUR_DC_SLEEP		= (1<<27),	/**< This module FW supports sleep. See NUR_SETUP_TO_SLEEP_TIME */
-	NUR_DC_LASTBITF1	= (1<<28),	/**< Next available bit for future extensions. */
+	NUR_DC_PHASEDIFF	= (1<<28),	/**< This module FW supports tag phase diff info. see NUR_OPFLAGS_EN_PHASE_DIFF */
+	NUR_DC_LASTBITF1	= (1<<29),	/**< Next available bit for future extensions. */
 };
 
 /** Flag field 1 'all device caps' bitmask. */

@@ -1,3 +1,8 @@
+v1.9.28
+- Stability improvements
+- Remove usage of deprecated system calls 
+- Fix minor memory leak in some cases
+
 v1.9.27
 - Fix possible race condition on linux based platforms
 

@@ -8,6 +8,7 @@
 #include <wchar.h>
 #include <string.h>
 #include <stdarg.h>
+#include <stdint.h>
 #include <ctype.h>
 #include <math.h>
 
@@ -47,26 +48,26 @@ extern "C" {
 
 //#define NURAPI_WIDECHARS 1
 
-typedef unsigned long long ULONGLONG;
-typedef long LONG;
+typedef uint64_t ULONGLONG;
+typedef int32_t LONG;
 
 #if !defined(__ios__) && !defined(__APPLE__) 
-    typedef unsigned long ULONG;
-    typedef unsigned int BOOL;
+    typedef uint32_t ULONG;
+    typedef uint32_t BOOL;
 #endif
 
-typedef unsigned int DWORD;
-typedef unsigned int UINT;
-typedef unsigned int UINT32;
+typedef uint32_t DWORD;
+typedef uint32_t UINT;
+typedef uint32_t UINT32;
 typedef DWORD *LPDWORD;
-typedef int INT;
+typedef int32_t INT;
 
-typedef unsigned short WORD;
-typedef unsigned short UINT16;
-typedef unsigned short USHORT;
-typedef short SHORT;
+typedef uint16_t WORD;
+typedef uint16_t UINT16;
+typedef uint16_t USHORT;
+typedef int16_t SHORT;
 
-typedef unsigned char BYTE;
+typedef uint8_t BYTE;
 
 typedef void *HANDLE;
 typedef void *HMODULE;
@@ -104,6 +105,7 @@ typedef wchar_t WCHAR;
 	#define _tcslwr _strlwr
 	#define _tcschr	strchr
 	#define _tcstok strtok
+	#define _putts puts
 
 	#undef UNICODE
 	#undef _UNICODE
@@ -127,6 +129,8 @@ typedef wchar_t WCHAR;
 	#define _tscanf wscanf
 	#define _tcsupr wcsupr
 	#define _tcslwr wcslwr
+	#define _putts putws
+	
 	#define UNICODE 1
 	#define _UNICODE 1
 #endif
@@ -208,7 +212,9 @@ typedef struct
 	pthread_t locker;
 	int lockCount;
 	pthread_cond_t cond;
+	pthread_condattr_t cond_attr;
 	pthread_mutex_t lock;
+	pthread_mutexattr_t lock_attr;
 } NURMUTEX;
 
 typedef NURMUTEX CRITICAL_SECTION;
@@ -245,6 +251,21 @@ DWORD GetTickCount();
 int MultiByteToWideChar(UINT CodePage, DWORD dwFlags, 
   LPCSTR lpMultiByteStr, int cbMultiByte,
   LPWSTR lpWideCharStr, int cchWideChar);
+  
+#if defined(__GNUC__) && (__GNUC___ > 4 || (__GNUC__ == 4 && __GNUC_MINOR__ >= 9))
+	#define NurAtomicVar _Atomic
+	#define NurAtomicSet(ptr, val) *(ptr) = val
+	#define NurAtomicGet(ptr) *(ptr)
+	#define NurAtomicInc(ptr) *(ptr)++
+	#define NurAtomicDec(ptr) *(ptr)--
+#else
+	#define NurAtomicVar
+	#define NurAtomicSet(ptr, val) __sync_lock_test_and_set(ptr, val)
+	#define NurAtomicGet(ptr) __sync_fetch_and_add(ptr, 0)
+	#define NurAtomicInc(ptr) __sync_fetch_and_add(ptr, 1)
+	#define NurAtomicDec(ptr) __sync_fetch_and_sub(ptr, 1)
+#endif
+#define NurSyncMem() __sync_synchronize()
 
 #define Sleep(x) usleep((x)*1000)
 

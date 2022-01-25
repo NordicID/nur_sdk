@@ -105,6 +105,7 @@ struct NUR_TT_TAG
 	/** Array containing the tag seen count for each antenna */
 	DWORD seenCnt[NUR_MAX_ANTENNAS_EX];
 };
+
 /**
  * Data sent within tag tracking change event.
 */

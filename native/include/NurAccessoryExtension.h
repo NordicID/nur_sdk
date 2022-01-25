@@ -34,6 +34,7 @@ enum NUR_ACC_EVENT_TYPE
 	NUR_ACC_EVENT_SENSOR_RANGE_DATA,	/** Sensor range data stream event. Sent when NUR_ACC_SENSOR_MODE_STREAM mode
 						  * is enabled for a NUR_ACC_SENSOR_FEATURE_RANGE sensor. Followed by a
 						  * NUR_ACC_SENSOR_RANGE_DATA struct describing the event */
+	NUR_ACC_EVENT_SENSOR_TOF_FR_BFA_RAW_DATA, /** Raw data from FR BFA ToF sensor. Followed by a NUR_ACC_SENSOR_TOF_FR_BFA_RAW_DATA struct describing the event. */
 };
 
 /** NUR_NOTIFICATION_IOCHANGE source is set to this when accessory device trigger is pressed/released. */
@@ -46,7 +47,7 @@ enum NUR_ACC_EVENT_TYPE
 #define SHORTVALUE_NOT_VALID			-1
 
 /** The protocol's value that the extension handler captures. */
-#define NUR_CMD_ACC_EXT					0x55
+//#define NUR_CMD_ACC_EXT					0x55
 
 /** BLE FW version. */
 #define ACC_EXT_GET_FWVERSION			0
@@ -121,6 +122,12 @@ enum NUR_ACC_EVENT_TYPE
 /** Get sensor value. */
 #define ACC_EXT_SENSOR_GET_VALUE	24
 
+/** Set sensor specific settings. */
+#define ACC_EXT_SENSOR_SET_SETTINGS	25
+
+/** Get sensor specific settings. */
+#define ACC_EXT_SENSOR_GET_SETTINGS	26
+
 /** Constant indicating battery level being "good". */
 #define BATT_GOOD_mV		3900
 /** Constant indicating battery level being "moderate". */
@@ -188,6 +195,40 @@ typedef struct __NUR_ACC_SENSOR_RANGE_DATA
 } NUR_ACC_SENSOR_RANGE_DATA;
 
 /**
+ * Nur accessory FR BFA ToF raw data for one ToF sensor.
+ */
+typedef struct __NUR_ACC_SENSOR_TOF_FR_BFA_RAW_DATA_ITEM
+{
+	WORD dist_cm;		/**< Unit: cm */
+	BYTE status;		/**< A status with status 6 or 9 can be considered with a confidence value of 50%. All other status are below 50% confidence level.
+						  * Measurement validity status meanings:
+						  * 0	Ranging data are not updated
+						  * 1	Signal rate too low on SPAD array
+						  * 2	Target phase error
+						  * 3	Sigma estimator too high
+						  * 4	Target consistency failed (Wrap Around fail 1/2)
+						  * 5	Range valid
+						  * 6	Wrap around not performed (Typically the first range)
+						  * 7	Rate consistency failed (Wrap Around fail 2/2)
+						  * 8	Signal rate too low for the current target
+						  * 9	Range valid with large pulse (may be due to a merged target)
+						  * 10	Range valid, but no target detected at previous range
+						  * 11	-
+						  * 12	Target blurred by another one, due to sharpener
+						  * 15	No target detected (only if nb of target detected is enabled)
+						  */
+} NUR_ACC_SENSOR_TOF_FR_BFA_RAW_DATA_ITEM;
+
+/**
+ * Nur accessory FR BFA ToF raw stream data.
+ */
+typedef struct __NUR_ACC_SENSOR_TOF_FR_BFA_RAW_DATA
+{
+	BYTE source;
+	NUR_ACC_SENSOR_TOF_FR_BFA_RAW_DATA_ITEM items[16];
+} NUR_ACC_SENSOR_TOF_FR_BFA_RAW_DATA;
+
+/**
  * Nur accessory sensor generic configuration.
  *
  * Source definitions:
@@ -201,6 +242,7 @@ typedef struct __NUR_ACC_SENSOR_RANGE_DATA
  * 132: USB sensor (connected to USB hub port 3)
  * 133: USB sensor (connected to USB hub port 4)
  * 134: Time-of-Flight sensor
+ * 135: FR BFA Time-of-Flight sensor
  *
  * @sa NurAccSensorSetConfig(), NurAccSensorEnumerate()
  */
@@ -231,6 +273,26 @@ typedef struct __NUR_ACC_SENSOR_FILTER
 	} time_threshold;
 } NUR_ACC_SENSOR_FILTER;
 
+
+typedef struct __NUR_ACC_SENSOR_SETTINGS_FRBFA
+{
+	BYTE freq_hz;		/**< Sampling frequency in hertz. Value 1 - 60 */
+} NUR_ACC_SENSOR_SETTINGS_FRBFA;
+
+/**
+ * Nur accessory sensor sensor specici settings.
+ *
+ *
+ * @sa NurAccSensorGetSettings(), NurAccSensorSetSettings()
+ */
+typedef struct __NUR_ACC_SENSOR_SETTINGS
+{
+	union {
+		/** NUR_ACC_SENSOR_TYPE_EXT_TOF_FR_BFA */
+		NUR_ACC_SENSOR_SETTINGS_FRBFA fr_bfa;
+	};
+} NUR_ACC_SENSOR_SETTINGS;
+
 #pragma pack(pop)
 
 /** NUR_ACC_BATT_INFO.flags value. If set device is currently charging. */
@@ -245,6 +307,8 @@ typedef struct __NUR_ACC_SENSOR_FILTER
 #define NUR_ACC_CFG_ACD 		(1<<0)
 /** NUR_ACC_CONFIG.config value. If set, device has wearable antenna. */
 #define NUR_ACC_CFG_WEARABLE 	(1<<1)
+/** NUR_ACC_CONFIG.config value. If set, device has an imager. */
+#define DEV_FEATURE_IMAGER      (1<<2)
 
 /**
  * Nur accessory device (such as EXA51) programmable LED operating mode.
@@ -312,7 +376,8 @@ enum NUR_ACC_SENSOR_TYPE
 	NUR_ACC_SENSOR_TYPE_ULTRASONIC_MAXSONAR,
 	NUR_ACC_SENSOR_TYPE_DEVICE_GPIO,
 	NUR_ACC_SENSOR_TYPE_DEVICE_TAP,
-	NUR_ACC_SENSOR_TYPE_DEVICE_TOF
+	NUR_ACC_SENSOR_TYPE_DEVICE_TOF,
+	NUR_ACC_SENSOR_TYPE_EXT_TOF_FR_BFA,
 };
 
 /**
@@ -697,6 +762,32 @@ int NURAPICONV NurAccSensorGetFilter(HANDLE hApi, BYTE source, NUR_ACC_SENSOR_FI
  */
 NUR_API
 int NURAPICONV NurAccSensorGetValue(HANDLE hApi, BYTE source, BYTE *dataType, void *value, DWORD valueSize);
+
+/** @fn int NurAccSensorSetSettings(HANDLE hApi, BYTE source, byte type, NUR_ACC_SENSOR_SETTINGS *settings, DWORD settingsSize)
+ *
+ * Get sensor specifc settings for a sensor.
+ *
+ * @param source	Value identifying the sensor/GPIO
+ * @param type		Type of sensor (NUR_ACC_SENSOR_TYPE); determines NUR_ACC_SENSOR_SETTINGS union layout
+ * @param settings	Current settings will be returned here
+ * @param settingsSize	Size of settings struct
+ * @return			Zero when succeeded, on error non-zero error code is returned.
+ */
+NUR_API
+int NURAPICONV NurAccSensorSetSettings(HANDLE hApi, BYTE source, BYTE type, NUR_ACC_SENSOR_SETTINGS* settings, DWORD settingsSize);
+
+/** @fn int NurAccSensorGetSettings(HANDLE hApi, BYTE source, byte type, NUR_ACC_SENSOR_SETTINGS *settings, DWORD settingsSize)
+ *
+ * Get sensor specifc settings for a sensor.
+ *
+ * @param source	Value identifying the sensor/GPIO
+ * @param type		Type of sensor (NUR_ACC_SENSOR_TYPE); determines NUR_ACC_SENSOR_SETTINGS union layout
+ * @param settings	Current settings will be returned here
+ * @param settingsSize	Size of settings struct
+ * @return			Zero when succeeded, on error non-zero error code is returned.
+ */
+NUR_API
+int NURAPICONV NurAccSensorGetSettings(HANDLE hApi, BYTE source, BYTE type, NUR_ACC_SENSOR_SETTINGS* settings, DWORD settingsSize);
 
 /** @} */ // end of ACCESSORYAPI
 

@@ -40,4 +40,15 @@ enum NUR_USB_CONNTYPE
 	USB_CONNTYPE_WINUSB = 2
 };
 
+#define NurAtomicVar
+#define NurAtomicSet(ptr, val) InterlockedExchange((volatile LONG*)ptr, val)
+#define NurAtomicGet(ptr) InterlockedExchangeAdd((volatile LONG*)ptr, 0)
+#define NurAtomicInc(ptr) InterlockedExchangeAdd((volatile LONG*)ptr, 1)
+#define NurAtomicDec(ptr) InterlockedExchangeSubtract((volatile LONG*)ptr, 1)
+#ifdef NUR_WINCE
+#define NurSyncMem() do { } while (0)
+#else
+#define NurSyncMem() MemoryBarrier()
+#endif
+
 #endif /* NUROS_WIN32_H_ */
