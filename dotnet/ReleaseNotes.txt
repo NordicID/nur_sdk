@@ -1,3 +1,6 @@
+v1.9.17
+- Add support for FR BFA ToF accessory sensor
+
 v1.9.16
 - Add support for reading tag whole memory bank content when rdByteCount=0
 

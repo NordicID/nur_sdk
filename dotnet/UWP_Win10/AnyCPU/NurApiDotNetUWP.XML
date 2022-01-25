@@ -717,6 +717,11 @@
             Range sensor data
             </summary>
         </member>
+        <member name="F:NurApiDotNet.NurApi.AccessoryEventType.SensorTofFrBfaRawData">
+            <summary>
+            Raw data from FR BFA ToF sensor
+            </summary>
+        </member>
         <member name="F:NurApiDotNet.NurApi.AccessoryEventType.SpeedTest">
             <summary>
             SpeedTest result
@@ -1117,6 +1122,11 @@
             Device Time of Flight sensor
             </summary>
         </member>
+        <member name="F:NurApiDotNet.NurApi.AccessorySensorType.ExtensionToFFrBfa">
+            <summary>
+            FR BFA Time-of-Flight sensor
+            </summary>
+        </member>
         <member name="T:NurApiDotNet.NurApi.AccessorySensorFeature">
             <summary>
             Accessory sensor features (used as a bitmask)
@@ -1200,6 +1210,11 @@
         <member name="F:NurApiDotNet.NurApi.AccessorySensorSource.ToFSensor">
             <summary>
             ToF Sensor
+            </summary>
+        </member>
+        <member name="F:NurApiDotNet.NurApi.AccessorySensorSource.ToFSensorFrBfa">
+            <summary>
+            FR BFA ToF Sensor
             </summary>
         </member>
         <member name="T:NurApiDotNet.NurApi.AccessorySensorConfig">
@@ -1293,6 +1308,26 @@
             Sensor added(0) or removed(1)
             </summary>
         </member>
+        <member name="T:NurApiDotNet.NurApi.AccessorySensorSettings">
+            <summary>
+            Nur accessory sensor filter. Configures sensor triggers/debounce parameters.
+            </summary>
+        </member>
+        <member name="T:NurApiDotNet.NurApi.AccessorySensorSettings.AccessorySensorSettingsFrFba">
+            <summary>
+            Sensor specific settings for FR FBA.
+            </summary>
+        </member>
+        <member name="F:NurApiDotNet.NurApi.AccessorySensorSettings.AccessorySensorSettingsFrFba.freqHz">
+            <summary>
+            Sampling frequency in hertz. Value 1 - 60
+            </summary>
+        </member>
+        <member name="F:NurApiDotNet.NurApi.AccessorySensorSettings.frFba">
+            <summary>
+            Sensor specific settings for FR FBA.
+            </summary>
+        </member>
         <member name="M:NurApiDotNet.NurApi.AccSensorEnumerate">
             <summary>
             Get all connected sensors
@@ -1318,6 +1353,16 @@
             Get active filter of sensor.
             </summary>
         </member>
+        <member name="M:NurApiDotNet.NurApi.AccSensorSetSettings(System.Byte,System.Byte,NurApiDotNet.NurApi.AccessorySensorSettings)">
+            <summary>
+            Set settings of sensor.
+            </summary>
+        </member>
+        <member name="M:NurApiDotNet.NurApi.AccSensorGetSettings(System.Byte,System.Byte)">
+            <summary>
+            Get settings of sensor.
+            </summary>
+        </member>
         <member name="T:NurApiDotNet.NurApi.AccSensorData">
             <summary>
             Abstract base class for sensor values.
@@ -1336,6 +1381,51 @@
         <member name="F:NurApiDotNet.NurApi.AccSensorRangeData.range">
             <summary>
             Range as read by sensor. Unit: mm.
+            </summary>
+        </member>
+        <member name="T:NurApiDotNet.NurApi.AccSensorToFFrBfaRawData">
+            <summary>
+            Nur accessory FR BFA ToF raw data.
+            </summary>
+        </member>
+        <member name="T:NurApiDotNet.NurApi.AccSensorToFFrBfaRawData.AccSensorToFFrBfaRawDataItem">
+            <summary>
+            Nur accessory FR BFA ToF raw data for one ToF sensor.
+            </summary>
+        </member>
+        <member name="F:NurApiDotNet.NurApi.AccSensorToFFrBfaRawData.AccSensorToFFrBfaRawDataItem.distCm">
+            <summary>
+            Range as read by sensor. Unit: cm.
+            </summary>
+        </member>
+        <member name="F:NurApiDotNet.NurApi.AccSensorToFFrBfaRawData.AccSensorToFFrBfaRawDataItem.status">
+            <summary>
+            A status with status 6 or 9 can be considered with a confidence value of 50%. All other status are below 50% confidence level.
+            Measurement validity status meanings:
+            0	Ranging data are not updated
+            1	Signal rate too low on SPAD array
+            2	Target phase error
+            3	Sigma estimator too high
+            4	Target consistency failed (Wrap Around fail 1/2)
+            5	Range valid
+            6	Wrap around not performed (Typically the first range)
+            7	Rate consistency failed (Wrap Around fail 2/2)
+            8	Signal rate too low for the current target
+            9	Range valid with large pulse (may be due to a merged target)
+            10	Range valid, but no target detected at previous range
+            11	-
+            12	Target blurred by another one, due to sharpener
+            15	No target detected (only if nb of target detected is enabled)
+            </summary>
+        </member>
+        <member name="F:NurApiDotNet.NurApi.AccSensorToFFrBfaRawData.items">
+            <summary>
+            Nur accessory FR BFA ToF raw data for ToF sensor array.
+            </summary>
+        </member>
+        <member name="M:NurApiDotNet.NurApi.AccSensorToFFrBfaRawData.#ctor(System.Byte[],System.Boolean)">
+            <summary>
+            Initialize new AccSensorToFFrBfaRawData instance
             </summary>
         </member>
         <member name="M:NurApiDotNet.NurApi.AccSensorGetValue(System.Byte)">
@@ -1393,6 +1483,11 @@
             Occurs when the Accessory sensor value range data is received.
             </summary>
         </member>
+        <member name="E:NurApiDotNet.NurApi.AccessorySensorToFFrBfaRawDataEvent">
+            <summary>
+            Occurs when the Accessory sensor value ToF FR BFA raw data is received.
+            </summary>
+        </member>
         <member name="T:NurApiDotNet.NurApi.AccessoryRangeDataEventArgs">
             <summary>
             Accessory Range Data Event Arguments class (for AccessoryRangeDataEvent)
@@ -1407,6 +1502,21 @@
         </member>
         <member name="F:NurApiDotNet.NurApi.AccessoryRangeDataEventArgs.rangeData">
             <summary>Range data information</summary>
+        </member>
+        <member name="T:NurApiDotNet.NurApi.AccessorySensorToFFrBfaRawDataEventArgs">
+            <summary>
+            Accessory ToF FR BFA Data Event Arguments class (for AccessoryRangeDataEvent)
+            </summary>
+        </member>
+        <member name="M:NurApiDotNet.NurApi.AccessorySensorToFFrBfaRawDataEventArgs.#ctor(System.UInt32,NurApiDotNet.NurApi.AccSensorToFFrBfaRawData)">
+            <summary>
+            AccessorySensorToFFrBfaRawDataEvent Arguments
+            </summary>
+            <param name="timestamp">milliseconds after NurApi initialized</param>
+            <param name="rawData">AccSensorToFFrBfaRawData</param>
+        </member>
+        <member name="F:NurApiDotNet.NurApi.AccessorySensorToFFrBfaRawDataEventArgs.rawData">
+            <summary>Raw FR BFA ToF data</summary>
         </member>
         <member name="M:NurApiDotNet.NurApi.GetMode">
             <summary>
