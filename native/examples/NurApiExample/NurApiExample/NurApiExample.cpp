@@ -112,6 +112,8 @@ int PerformInventory(HANDLE hApi)
 	struct NUR_INVENTORY_RESPONSE invResp;
 	struct NUR_TAG_DATA tagData;
 	TCHAR epcStr[128];
+	
+	BYTE tagUser[64];
 
 	// Clear previously inventoried tags from NurApi internal tag storage
 	// and from module.
@@ -169,6 +171,13 @@ int PerformInventory(HANDLE hApi)
 		{
 			EpcToString(tagData.epc, tagData.epcLen, epcStr);
 
+			int ret = 0;
+			ret = NurApiReadTagByEPC(hApi, 0, FALSE, tagData.epc, tagData.epcLen, NUR_BANK_USER, 0, 64, tagUser);
+			char str[(sizeof tagUser) + 1];
+    			memcpy(str, tagUser, sizeof tagUser);
+    			str[sizeof tagUser] = 0; // Null termination.
+    			printf("%s\n", str);
+			
 			// Print tag info
 			_tprintf(_T("Tag info:\r\n"));
 			_tprintf(_T("  EPC: [%s]\r\n"), epcStr);
