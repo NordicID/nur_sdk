@@ -1,3 +1,7 @@
+## NOTE
+- **Newer C# NordicID.NurApi.Net library is available at nuget.org**
+- **Samples and docs: https://github.com/NordicID/nur_sample_csharp**
+
 ###### NurApi C# libraries
 
 This folder NurApi C# libraries for different targets.
