@@ -1,3 +1,6 @@
+v1.9.1.6
+- Fixed setLockRaw to allow to use all accepted action bits
+
 v1.9.1.5
 - Fixed setAccessPasswordByEpc & setKillPasswordByEpc epcBufLen parameter by multiplying value by 8
 
