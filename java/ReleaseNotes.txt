@@ -1,5 +1,5 @@
 v1.9.1.7
-- Fixed reflected power calculation
+- Fixed reflected power calculation handling
 
 v1.9.1.6
 - Fixed setLockRaw to allow to use all accepted action bits
