@@ -1,3 +1,7 @@
+v1.9.29
+- Fix NurApiGetReflectedPowerValue with nur3 readers
+- Fix socket connect issue on busy linux based platforms
+
 v1.9.28
 - Stability improvements
 - Remove usage of deprecated system calls 

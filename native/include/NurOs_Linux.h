@@ -256,8 +256,8 @@ int MultiByteToWideChar(UINT CodePage, DWORD dwFlags,
 	#define NurAtomicVar _Atomic
 	#define NurAtomicSet(ptr, val) *(ptr) = val
 	#define NurAtomicGet(ptr) *(ptr)
-	#define NurAtomicInc(ptr) *(ptr)++
-	#define NurAtomicDec(ptr) *(ptr)--
+	#define NurAtomicInc(ptr) (*(ptr))++
+	#define NurAtomicDec(ptr) (*(ptr))--
 #else
 	#define NurAtomicVar
 	#define NurAtomicSet(ptr, val) __sync_lock_test_and_set(ptr, val)
