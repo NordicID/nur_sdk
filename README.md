@@ -12,6 +12,10 @@ This repository contains SDK files for NurApi different platforms.
 - [Embedded MCU](embedded)
 - For samples and docs, see corresponding platform folder.
 
+#### Community supported platforms
+These platforms are maintained by community members, we highly appreciate contributors
+- [Flutter](https://pub.dev/packages/nordic_id), Thanks [amorenew](https://github.com/amorenew)
+
 ### Docs
 - docs folder contains general NUR related documentation
 
