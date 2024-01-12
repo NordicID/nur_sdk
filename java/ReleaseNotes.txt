@@ -1,5 +1,14 @@
+v1.9.2.1
+- Fixed maxmimum file size
+
+v1.9.2.1
+- Removed BLE pass key functionality
+
+v1.9.1.9
+- Bug fixes
+
 v1.9.1.8
-- Added isDeviceExa21() and isDeviceExa1()
+- Added to check EXA devices
 
 v1.9.1.7
 - Fixed reflected power calculation handling
