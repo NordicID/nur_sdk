@@ -1,7 +1,10 @@
+v1.10.0.0
+- Add HID format API
+
 v1.9.2.1
 - Fixed maxmimum file size
 
-v1.9.2.1
+v1.9.2.0
 - Removed BLE pass key functionality
 
 v1.9.1.9
