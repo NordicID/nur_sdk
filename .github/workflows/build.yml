@@ -1,0 +1,25 @@
+name: Master Branch CI
+
+on:
+  push:
+    branches:
+      - master
+      - main
+
+jobs:
+  build_windows:
+    runs-on: windows-latest
+    permissions:
+      contents: read
+    steps:
+      - name: Checkout sources
+        uses: actions/checkout@v6
+
+      # 1. Setup MSVC Environment (Recommended)
+      # Ensures MSBuild, cl.exe, etc., are in your PATH
+      - name: Setup MSBuild
+        uses: microsoft/setup-msbuild@v2
+
+      - name: Build-Win32
+        shell: cmd
+        run: gh\build_native_example.bat Win32
