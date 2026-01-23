@@ -75,6 +75,12 @@
 #define NUR_RFPROFILE_NOMINAL		1
 /** High speed RF profile. This profile provides best throughput, but is prone to RF interference. */
 #define NUR_RFPROFILE_HIGHSPEED		2
+/** High speed 2 RF profile. This profile optimizes for speed by reducing the Tari value for the pulse interval encoded (PIE) data. */
+#define NUR_RFPROFILE_HIGHSPEED_2	3
+/** Fast RF profile. This profile provides a balance between speed and sensitivity. */
+#define NUR_RFPROFILE_FAST   		4
+/** Autoset RF profile. This profile switches across different rf modes during each inventory. */
+#define NUR_RFPROFILE_AUTOSET		5
 
 /** Maximum length of antenna mapping's name. */
 #define MAX_MAPPINGLEN	16

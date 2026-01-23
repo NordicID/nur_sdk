@@ -1479,6 +1479,20 @@ int NURAPICONV NurApiStoreCurrentSetup(HANDLE hApi);
 NUR_API
 int NURAPICONV NurApiStoreCurrentSetupEx(HANDLE hApi, BYTE flags);
 
+/** @fn int NurApiClearSetupCache(HANDLE hApi, DWORD flags)
+ * Clear specified 'NUR_MODULESETUP_FLAGS' flags from NURAPI internal cache,
+ * thus making next call to NurApiGetModuleSetup to retvieve fresh values from Nur module.
+ *
+ * @sa enum NUR_MODULESETUP_FLAGS
+ *
+ * @param	hApi	Handle to valid NurApi object instance.
+ * @param	flags   Defines which setup flags to clear. see NUR_MODULESETUP_FLAGS
+ *
+ * @return	Zero when succeeded, On error non-zero error code is returned.
+ */
+NUR_API
+int NURAPICONV NurApiClearSetupCache(HANDLE hApi, DWORD flags);
+
 /** @fn void NurApiSetLogLevel(HANDLE hApi, int logMask)
  * Set NurApi logging level mask.
  * 

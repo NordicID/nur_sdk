@@ -49,84 +49,69 @@ enum NUR_ACC_EVENT_TYPE
 /** The protocol's value that the extension handler captures. */
 //#define NUR_CMD_ACC_EXT					0x55
 
-/** BLE FW version. */
-#define ACC_EXT_GET_FWVERSION			0
 
-/** Get configuration command. */
-#define ACC_EXT_GET_CFG					1
+/******************************************************************************/
+/* EXTERNAL ACCESSORY SUB COMMANDS - START                                    */
+/******************************************************************************/
 
-	/** Set configuration command. */
-#define ACC_EXT_SET_CFG					2
+/** Please Note here is the main reference for all list of sub commands 
+  * used in various devices like EXA31,EXA51,EXA21,EXA81 etc.
+  * 
+  * This list has to used for any reference in future and all other old implementations
+  * should be corrected whenever they are updated.
+  */
 
-/** System restart command. */
-#define ACC_EXT_RESTART					5
+#define ACC_EXT_GET_FWVERSION           0  /** BLE FW version. */
+#define ACC_EXT_GET_CFG                 1  /** Get configuration command. */
+#define ACC_EXT_SET_CFG                 2  /** Set configuration command. */
+#define ACC_EXT_GET_BATT                3  /** Get Batter Voltage(in mV) command. */
+#define ACC_EXT_READ_BARCODE            4  /** Read Imager/barcode command.(blocking) */
+#define ACC_EXT_RESTART                 5  /** System restart command. */
+#define ACC_EXT_READ_BARCODE_ASYNC      6  /** Asynchronous barcode scan (non-blocking). */
+#define ACC_EXT_SET_LED_OP              7  /** Set external LED. */
+#define ACC_EXT_BEEP_ASYNC              8  /** Asynchronous beep operation. */
+#define ACC_EXT_GET_BATT_INFO           9  /** Battery information ("extended information"). */
+#define ACC_EXT_ENTER_TESTMODE          10 /** NUR/BLE Radio TestMode settings */
+#define ACC_EXT_GET_HEALTHSTATE         11 /** Get HW status (imager, NUR module etc.). */
+#define ACC_EXT_WIRELESS_CHARGE         12 /** Set/ get wireless charging. */
+#define ACC_EXT_IMAGER                  13 /** Imager base Command */
+#define ACC_EXT_VIBRATE                 14 /** Use device's vibra. */
+#define ACC_EXT_CLEAR_PAIRS             15 /** Clear device pairing information. */
+#define ACC_EXT_GET_MODEL_INFORMATION   16 /** Get Device Model Information. */
+#define ACC_EXT_BLE_PACKET_SEND_TEST    17 /** BLE Packet Test via NUR_NOTIFY_BLE_READER */
+#define ACC_EXT_GET_CONNECTION_INFO     18 /** Get connection info. */
+#define ACC_EXT_SENSOR_ENUMERATE        19 /** Enumerate sensors. */
+#define ACC_EXT_SENSOR_SET_CONFIG       20 /** Set sensor config. */
+#define ACC_EXT_SENSOR_GET_CONFIG       21 /** Get sensor config. */
+#define ACC_EXT_SENSOR_SET_FILTER       22 /** Set sensor filter. */
+#define ACC_EXT_SENSOR_GET_FILTER       23 /** Get sensor filter. */
+#define ACC_EXT_SENSOR_GET_VALUE        24 /** Get sensor value. */
+#define ACC_EXT_SENSOR_SET_SETTINGS     25 /** Set sensor specific settings. */
+#define ACC_EXT_SENSOR_GET_SETTINGS     26 /** Get sensor specific settings. */
+#define ACC_EXT_CONFLICTED_27           27 /** CONFLICTED. Remove if used */
+#define ACC_EXT_MCUMGR                  28 /** Mcumgr base Command */
+#define ACC_EXT_HID                     29 /** HID Base command */
+/******** Next Free Commands for future use. ******/
+
+#define ACC_EXT_PRODUCTION              99 /** Production base Command */
+#define ACC_EXT_IMAGER_DIAGNOTICS      100 /** Imager Diagnotics */
+/******** Next Free Commands for future use. ******/
+
+/** List of Names to be removed to avoid usage conflicts.*/
+//#define BLE_EXT_SET_BLENAME             19   /** CONFLICTED. Remove if used */
+//#define ACC_EXT_SET_BLE_PASSKEY         25   /** CONFLICTED. Remove if used */
+//#define ACC_EXT_GET_BLE_PASSKEY         26   /** CONFLICTED. Remove if used */
+//#define ACC_EXT_CLEAR_BLE_PASSKEY       27   /** CONFLICTED. Remove if used */
+
+/******************************************************************************/
+/* EXTERNAL ACCESSORY SUB COMMANDS - END                                      */
+/******************************************************************************/
 
 /** Instruct the restart command to enter the DFU mode. */
 #define RESET_BOOTLOADER_DFU_START	0xB1
 
 /** Instruct the restart command to actually power off the device. */
 #define RESET_POWEROFF				0xF1
-
-/** Asynchronous barcode scan (non-blocking). */
-#define ACC_EXT_READ_BARCODE_ASYNC	6
-/** Set external LED. */
-#define ACC_EXT_SET_LED_OP			7
-/** Asynchronous beep operation. */
-#define ACC_EXT_BEEP_ASYNC			8
-
-/** Battery information ("extended information"). */
-#define ACC_EXT_GET_BATT_INFO		9
-
-/** Imager base Command */
-#define ACC_EXT_IMAGER				13
-
-/** Imager configuration Command */
-#define ACC_EXT_IMAGER_CMD			4
-
-/** Imager power on/off */
-#define ACC_EXT_IMAGER_POWER		5
-
-/** Imager aiming on/off */
-#define ACC_EXT_IMAGER_AIM			6
-
-/** Get HW status (imager, NUR module etc.). */
-#define ACC_EXT_GET_HEALTHSTATE		11
-
-/** Set/ get wireless charging. */
-#define ACC_EXT_WIRELESS_CHARGE		12
-
-/** Use device's vibra. */
-#define ACC_EXT_VIBRATE				14
-
-/** Clear device pairing information. */
-#define ACC_EXT_CLEAR_PAIRS			15
-
-/** Get connection info. */
-#define ACC_EXT_GET_CONNECTION_INFO	18
-
-/** Enumerate sensors. */
-#define ACC_EXT_SENSOR_ENUMERATE	19
-
-/** Set sensor config. */
-#define ACC_EXT_SENSOR_SET_CONFIG	20
-
-/** Get sensor config. */
-#define ACC_EXT_SENSOR_GET_CONFIG	21
-
-/** Set sensor filter. */
-#define ACC_EXT_SENSOR_SET_FILTER	22
-
-/** Get sensor filter. */
-#define ACC_EXT_SENSOR_GET_FILTER	23
-
-/** Get sensor value. */
-#define ACC_EXT_SENSOR_GET_VALUE	24
-
-/** Set sensor specific settings. */
-#define ACC_EXT_SENSOR_SET_SETTINGS	25
-
-/** Get sensor specific settings. */
-#define ACC_EXT_SENSOR_GET_SETTINGS	26
 
 /** Constant indicating battery level being "good". */
 #define BATT_GOOD_mV		3900
@@ -144,6 +129,20 @@ enum NUR_ACC_EVENT_TYPE
 #define APP_FL_NO_BATT_IND		(1<<3) 
 #define APP_FL_ACDE				(1<<4)
 #define APP_FL_USE_PEERMGR		(1<<5)
+
+
+/** IMAGER COMMANDS [sub commands for ACC_EXT_IMAGER] */
+#define IMAGER_CMD_TRIGGER_PRE_SET      1
+#define IMAGER_CMD_TRIGGER_CANCEL       2
+#define IMAGER_CMD_CENTRAL_READING      3
+#define IMAGER_CMD_RAW_CMD              4   /** To send Imager commands */
+#define IMAGER_CMD_POWER                5   /** Imager power on/off  */
+#define IMAGER_CMD_AIM                  6   /** Imager aiming on/off */
+
+/** ALIAS Names to avoid dependency builds failures. */
+#define ACC_EXT_IMAGER_CMD      IMAGER_CMD_RAW_CMD
+#define ACC_EXT_IMAGER_POWER    IMAGER_CMD_POWER            
+#define ACC_EXT_IMAGER_AIM      IMAGER_CMD_AIM        
 
 #pragma pack(push, 1)
 

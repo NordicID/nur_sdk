@@ -1,3 +1,11 @@
+v1.9.31
+- Added NUR_RFPROFILE_AUTOSET (NUR-127)
+- Fixed TransportSerial windows connecting FR22 (ftdi) over USB
+- Reused NUR_CMD_AUTOTUNE_TESTING_NOTINUSE to NUR_CMD_SIMULATE_ERR_RESP
+
+v1.9.30
+- Add NurApiClearSetupCache
+
 v1.9.29
 - Fix NurApiGetReflectedPowerValue with nur3 readers
 - Fix socket connect issue on busy linux based platforms
