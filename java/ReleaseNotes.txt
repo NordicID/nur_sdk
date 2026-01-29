@@ -1,3 +1,7 @@
+v1.10.2.0
+- Fixed page reading with SAM4-based modules
+- Fixed page reading verification after page writing
+
 v1.10.0.0
 - Add HID format API
 
@@ -14,7 +18,7 @@ v1.9.1.8
 - Added to check EXA devices
 
 v1.9.1.7
-- Fixed reflected power calculation handling
+- Fixed reflected power calculation
 
 v1.9.1.6
 - Fixed setLockRaw to allow to use all accepted action bits
