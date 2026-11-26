@@ -2431,6 +2431,11 @@
             Inventory read will report EPC even if there is memory overrun error (f.ex. no user mem bank)
             </summary>
         </member>
+        <member name="F:NurApiDotNet.NurApi.OPFLAGS_EN_PHASE_DIFF">
+            <summary>        
+            Return tag phase angle difference in units of tenths of degrees in tag meta data timestamp field. Supported only in NUR3 modules.
+            </summary>
+        </member>
         <member name="F:NurApiDotNet.NurApi.STORE_RF">
             <summary>
             Store RF settings to module internal non-volatile memory.
@@ -2988,6 +2993,16 @@
             Bit is set if this module FW supports sleep.
             </summary>
         </member>
+        <member name="F:NurApiDotNet.NurApi.NUR_DC_PHASEDIFF">
+            <summary>
+            This module FW supports tag phase diff info. see OPFLAGS_EN_PHASE_DIFF
+            </summary>
+        </member>
+        <member name="F:NurApiDotNet.NurApi.NUR_DC_GEN2X">
+            <summary>
+            The module FW supports impinj Gen2X at some level.
+            </summary>
+        </member>
         <member name="F:NurApiDotNet.NurApi.NUR_IR_EPCDATA">
             <summary>
             Inventory read is the type of EPC + data.
@@ -3028,6 +3043,31 @@
             Chip version R2000.
             </summary>
         </member>
+        <member name="F:NurApiDotNet.NurApi.CHIPVER_R2000D">
+            <summary>
+            Chip version R2000D.
+            </summary>
+        </member>
+        <member name="F:NurApiDotNet.NurApi.CHIPVER_E310">
+            <summary>
+            Chip version Impinj E310.
+            </summary>
+        </member>
+        <member name="F:NurApiDotNet.NurApi.CHIPVER_E510">
+            <summary>
+            Chip version Impinj E510.
+            </summary>
+        </member>
+        <member name="F:NurApiDotNet.NurApi.CHIPVER_E710">
+            <summary>
+            Chip version Impinj E710.
+            </summary>
+        </member>
+        <member name="F:NurApiDotNet.NurApi.CHIPVER_E910">
+            <summary>
+            Chip version Impinj E910.
+            </summary>
+        </member>
         <member name="F:NurApiDotNet.NurApi.MODULETYPE_NUR05W">
             <summary>
             Module type NUR05W.
@@ -3051,6 +3091,51 @@
         <member name="F:NurApiDotNet.NurApi.MODULETYPE_NUR2_1W">
             <summary>
             Module type NUR2-1W (1W module).
+            </summary>
+        </member>
+        <member name="F:NurApiDotNet.NurApi.MODULETYPE_NUR2_01W">
+            <summary>
+            Module type NUR2-01W
+            </summary>
+        </member>
+        <member name="F:NurApiDotNet.NurApi.MODULETYPE_NUR3IE_1W">
+            <summary>
+            Module type NUR3IE
+            </summary>
+        </member>
+        <member name="F:NurApiDotNet.NurApi.MODULETYPE_NUR3FR_1W">
+            <summary>
+            Module type NUR3FR_1W
+            </summary>
+        </member>
+        <member name="F:NurApiDotNet.NurApi.MODULETYPE_NUR3MOD_1W">
+            <summary>
+            Module type NUR3MOD_1W
+            </summary>
+        </member>
+        <member name="F:NurApiDotNet.NurApi.MODULETYPE_NUR3IR_1W">
+            <summary>
+            Module type NUR3IR_1W
+            </summary>
+        </member>
+        <member name="F:NurApiDotNet.NurApi.MODULETYPE_NUR3MOD_0W1">
+            <summary>
+            Module type NUR3MOD_0W1
+            </summary>
+        </member>
+        <member name="F:NurApiDotNet.NurApi.MODULETYPE_NUR3MOD_0W5">
+            <summary>
+            Module type NUR3MOD_0W5
+            </summary>
+        </member>
+        <member name="F:NurApiDotNet.NurApi.MODULETYPE_NUR3IOLINK_1W">
+            <summary>
+            Module type NUR3IOLINK_1W
+            </summary>
+        </member>
+        <member name="F:NurApiDotNet.NurApi.MODULETYPE_NUR3FR26_1W">
+            <summary>
+            Module type NUR3FR26_1W
             </summary>
         </member>
         <member name="F:NurApiDotNet.NurApi.HTERR_COUNT">
@@ -3144,6 +3229,21 @@
         <member name="F:NurApiDotNet.NurApi.RFPROFILE_HIGHSPEED">
             <summary>
             High speed RF profile. This profile provides best throughput, but is prone to RF interference.
+            </summary>
+        </member>
+        <member name="F:NurApiDotNet.NurApi.RFPROFILE_HIGHSPEED2">
+            <summary>
+            High speed 2 RF profile. This profile provides best throughput, but is prone to RF interference.
+            </summary>
+        </member>
+        <member name="F:NurApiDotNet.NurApi.RFPROFILE_FAST">
+            <summary>
+            Fast RF profile. This profile provides fastest read rate.
+            </summary>
+        </member>
+        <member name="F:NurApiDotNet.NurApi.RFPROFILE_AUTOSET">
+            <summary>
+            Autoset RF profile. This profile provides best throughput, but is prone to RF interference.
             </summary>
         </member>
         <member name="F:NurApiDotNet.NurApi.TTEV_NONE">
@@ -3310,6 +3410,41 @@
         <member name="F:NurApiDotNet.NurApi.FW_INFO_REQUEST_SEC_CHIP">
             <summary>
             Parameter value used in getSecChipFWINFO when requesting secondary chip FW info
+            </summary>
+        </member>
+        <member name="F:NurApiDotNet.NurApi.GEN2X_ENABLE_SCANID">
+            <summary>
+            Enable ScanId feature
+            </summary>
+        </member>
+        <member name="F:NurApiDotNet.NurApi.GEN2X_ENABLE_TAGFOCUS">
+            <summary>
+            Enable TagFocus feature
+            </summary>
+        </member>
+        <member name="F:NurApiDotNet.NurApi.GEN2X_ENABLE_FASTID">
+            <summary>
+            Enable FastID feature
+            </summary>
+        </member>
+        <member name="F:NurApiDotNet.NurApi.GEN2X_ACCEPT_CRC5_CRC5PLUS">
+            <summary>
+            Enable accepting both CRC5 and CRC5Plus for CR protection
+            </summary>
+        </member>
+        <member name="F:NurApiDotNet.NurApi.GEN2X_POWER_BOOST">
+            <summary>
+            Enable gen2v3 power boost feature
+            </summary>
+        </member>
+        <member name="F:NurApiDotNet.NurApi.GEN2X_ENABLE_PROTECTED_MODE">
+            <summary>
+            Enable protected mode feature
+            </summary>
+        </member>
+        <member name="F:NurApiDotNet.NurApi.GEN2X_ALL_FLAGS">
+            <summary>
+            All supported flags
             </summary>
         </member>
         <member name="T:NurApiDotNet.NurApi.PeriodicInventoryData">
@@ -4534,7 +4669,13 @@
         </member>
         <member name="F:NurApiDotNet.NurApi.ModuleSetup.rfProfile">
             <summary>
-            RF Profile: <see cref="F:NurApiDotNet.NurApi.RFPROFILE_ROBUST"/>, <see cref="F:NurApiDotNet.NurApi.RFPROFILE_NOMINAL"/> and <see cref="F:NurApiDotNet.NurApi.RFPROFILE_HIGHSPEED"/>.
+            RF Profile: 
+            <see cref="F:NurApiDotNet.NurApi.RFPROFILE_ROBUST"/>, 
+            <see cref="F:NurApiDotNet.NurApi.RFPROFILE_NOMINAL"/>, 
+            <see cref="F:NurApiDotNet.NurApi.RFPROFILE_HIGHSPEED"/>, 
+            <see cref="F:NurApiDotNet.NurApi.RFPROFILE_HIGHSPEED2"/>, 
+            <see cref="F:NurApiDotNet.NurApi.RFPROFILE_FAST"/> and 
+            <see cref="F:NurApiDotNet.NurApi.RFPROFILE_AUTOSET"/>.
             </summary>
         </member>
         <member name="F:NurApiDotNet.NurApi.ModuleSetup.toSleepTime">
@@ -4755,12 +4896,22 @@
         </member>
         <member name="F:NurApiDotNet.NurApi.DeviceCapabilites.tagPhaseInfo">
             <summary>
-            True if the module FW supports tag phase info. see OPFLAGS_EN_TAG_PHASE */
+            True if the module FW supports tag phase info. see OPFLAGS_EN_TAG_PHASE
             </summary>
         </member>
         <member name="F:NurApiDotNet.NurApi.DeviceCapabilites.sleep">
             <summary>
             True if the module FW supports sleep */
+            </summary>
+        </member>
+        <member name="F:NurApiDotNet.NurApi.DeviceCapabilites.tagPhaseDiffInfo">
+            <summary>
+            True if the module FW supports tag phase diff info. see OPFLAGS_EN_PHASE_DIFF
+            </summary>
+        </member>
+        <member name="F:NurApiDotNet.NurApi.DeviceCapabilites.gen2x">
+            <summary>
+            True if the module FW supports impinj Gen2X at some level.
             </summary>
         </member>
         <member name="F:NurApiDotNet.NurApi.DeviceCapabilites.secChipMajorVersion">
@@ -6126,6 +6277,63 @@
             Number of invalid (not supported) commands received
             </summary>
         </member>
+        <member name="T:NurApiDotNet.NurApi.Gen2XConfig">
+            <summary>
+            Gen2XConfig
+            </summary>
+            <seealso cref="M:NurApiDotNet.NurApi.GetGen2XConfig"/>
+            <seealso cref="M:NurApiDotNet.NurApi.SetGen2XConfig(NurApiDotNet.NurApi.Gen2XConfig)"/>		
+        </member>
+        <member name="F:NurApiDotNet.NurApi.Gen2XConfig.flags">
+            <summary>
+            Gen2X control flags. see GEN2X_* flags
+            </summary>
+        </member>
+        <member name="F:NurApiDotNet.NurApi.Gen2XConfig.inventoryMode">
+            <summary>
+            Inventory mode: 0=Gen2, 1=Gen2X, 2=Hybrid
+            </summary>
+        </member>
+        <member name="F:NurApiDotNet.NurApi.Gen2XConfig.scanCodeType">
+            <summary>
+            Scan/ScanId encoding method: 0=Rfu, 1=Antipodal, 2=CCOneHalf, 3=CCThreeQuarters
+            </summary>
+        </member>
+        <member name="F:NurApiDotNet.NurApi.Gen2XConfig.scanCRType">
+            <summary>
+            Scan/ScanId collision resolution: 0=ID32, 1=ID16, 2=StoredCRC, 3=RN16
+            </summary>
+        </member>
+        <member name="F:NurApiDotNet.NurApi.Gen2XConfig.scanProtectionType">
+            <summary>
+            Scan/ScanId data protection setting: 0=None, 1=Parity, 2=CRC5, 3=CRC5Plus
+            </summary>
+        </member>
+        <member name="F:NurApiDotNet.NurApi.Gen2XConfig.scanIdType">
+            <summary>
+            Scan/ScanId ID setting: 0=NoAckResponse, 1=TMNPlusTSN, 2=Part, 3=Full
+            </summary>
+        </member>
+        <member name="F:NurApiDotNet.NurApi.Gen2XConfig.scanCrypto">
+            <summary>
+            Scan/ScanId Crypto setting: 0=All tags, 1=S=1 tags only
+            </summary>
+        </member>
+        <member name="F:NurApiDotNet.NurApi.Gen2XConfig.scanIdAppSize">
+            <summary>
+            ScanId application size: 0=Rfu, 1=24 bits, 2=16 bits, 3=8 bits
+            </summary>
+        </member>
+        <member name="F:NurApiDotNet.NurApi.Gen2XConfig.scanIdAppId">
+            <summary>
+            ScanId AppId setting used to select certain tag population
+            </summary>
+        </member>
+        <member name="F:NurApiDotNet.NurApi.Gen2XConfig.protectedModePin">
+            <summary>
+            Protected mode PIN code
+            </summary>
+        </member>
         <member name="M:NurApiDotNet.NurApi.ArrayToStruct``1(System.Byte[])">
             <summary>
             Array to data struture conversion.
@@ -6451,11 +6659,14 @@
             Set or get the RF profile.
             </summary>
             <value>
-            The value can be <see cref="F:NurApiDotNet.NurApi.RFPROFILE_ROBUST"/>, <see cref="F:NurApiDotNet.NurApi.RFPROFILE_NOMINAL"/> or <see cref="F:NurApiDotNet.NurApi.RFPROFILE_HIGHSPEED"/>.
+            The value can be <see cref="F:NurApiDotNet.NurApi.RFPROFILE_ROBUST"/>, <see cref="F:NurApiDotNet.NurApi.RFPROFILE_NOMINAL"/>, <see cref="F:NurApiDotNet.NurApi.RFPROFILE_HIGHSPEED"/>, <see cref="F:NurApiDotNet.NurApi.RFPROFILE_HIGHSPEED2"/>, <see cref="F:NurApiDotNet.NurApi.RFPROFILE_FAST"/> or <see cref="F:NurApiDotNet.NurApi.RFPROFILE_AUTOSET"/>.
             </value>
             <seealso cref="F:NurApiDotNet.NurApi.RFPROFILE_ROBUST"/>		
             <seealso cref="F:NurApiDotNet.NurApi.RFPROFILE_NOMINAL"/>		
             <seealso cref="F:NurApiDotNet.NurApi.RFPROFILE_HIGHSPEED"/>		
+            <seealso cref="F:NurApiDotNet.NurApi.RFPROFILE_HIGHSPEED2"/>		
+            <seealso cref="F:NurApiDotNet.NurApi.RFPROFILE_FAST"/>		
+            <seealso cref="F:NurApiDotNet.NurApi.RFPROFILE_AUTOSET"/>		
         </member>
         <member name="P:NurApiDotNet.NurApi.ToSleepTime">
             <summary>
@@ -6558,6 +6769,14 @@
             Get / set tag phase info. Return tag phase angle in units of tenths of degrees in tag meta data timestamp field. Supported only in NUR2 modules.
             <seealso cref="P:NurApiDotNet.NurApi.OpFlags"/>
             <see cref="F:NurApiDotNet.NurApi.OPFLAGS_EN_TAG_PHASE"/>
+            </summary>
+            <value>true to enable, false to disable</value>
+        </member>
+        <member name="P:NurApiDotNet.NurApi.EnableTagPhaseDiffInfo">
+            <summary>
+            Get / set tag phase diff. Return tag phase angle difference in units of tenths of degrees in tag meta data timestamp field. Supported only in NUR3 modules.
+            <seealso cref="P:NurApiDotNet.NurApi.OpFlags"/>
+            <see cref="F:NurApiDotNet.NurApi.OPFLAGS_EN_PHASE_DIFF"/>
             </summary>
             <value>true to enable, false to disable</value>
         </member>
@@ -7651,6 +7870,21 @@
             <para>Also note that the application is responsible for the bit data handling.</para>
             <para>The bit level understanding is especially required in case where the returned data is not exactly byte (8-bit) aligned.</para>
             </remarks>
+        </member>
+        <member name="M:NurApiDotNet.NurApi.GetGen2XConfig">
+            <summary>
+            Get Gen2XConfig
+            </summary>
+            <returns> Gen2XConfig if successful. </returns>
+            <exception cref="T:NurApiDotNet.NurApiException">Thrown when "API not created", "GetGen2XConfig" or "Operation not supported" error </exception>       
+            <seealso cref="T:NurApiDotNet.NurApi.Gen2XConfig"/>
+        </member>
+        <member name="M:NurApiDotNet.NurApi.SetGen2XConfig(NurApiDotNet.NurApi.Gen2XConfig)">
+            <summary>
+            Set Gen2XConfig
+            </summary>
+            <exception cref="T:NurApiDotNet.NurApiException">Thrown when "API not created", "SetGen2XConfig" or "Operation not supported" error </exception>       
+            <seealso cref="T:NurApiDotNet.NurApi.Gen2XConfig"/>
         </member>
         <member name="M:NurApiDotNet.NurApi.GetGPIOConfig">
             <summary>
