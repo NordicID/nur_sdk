@@ -1192,7 +1192,34 @@ struct NUR_DIAG_REPORT
 	DWORD invalidCmds;	/**< Number of invalid (not supported) commands received */
 };
 
-/** 
+#pragma pack(push, 1)
+
+/**
+ * Gen2X configuration
+ * @sa NurApiGetGen2XConfig
+ * @sa NurApiSetGen2XConfig
+*/
+struct NUR_GEN2X_CONFIG
+{
+	WORD flags;                 /**< Gen2X control flags. see enum NUR_GEN2X_FLAGS */
+
+	BYTE inventoryMode;         /**< Inventory mode: 0=Gen2, 1=Gen2X, 2=Hybrid */
+
+	BYTE scanCodeType;          /**< Scan/ScanId encoding method: 0=Rfu, 1=Antipodal, 2=CCOneHalf, 3=CCThreeQuarters */
+	BYTE scanCRType;            /**< Scan/ScanId collision resolution: 0=ID32, 1=ID16, 2=StoredCRC, 3=RN16 */
+	BYTE scanProtectionType;    /**< Scan/ScanId data protection setting: 0=None, 1=Parity, 2=CRC5, 3=CRC5Plus */
+	BYTE scanIdType;            /**< Scan/ScanId ID setting: 0=NoAckResponse, 1=TMNPlusTSN, 2=Part, 3=Full */
+	BYTE scanCrypto;            /**< Scan/ScanId Crypto setting: 0=All tags, 1=S=1 tags only */
+
+	BYTE scanIdAppSize;         /**< ScanId application size: 0=Rfu, 1=24 bits, 2=16 bits, 3=8 bits */
+	DWORD scanIdAppId;          /**< ScanId AppId setting used to select certain tag population */
+
+	DWORD protectedModePin;     /**< Protected mode PIN code */
+};
+
+#pragma pack(pop)
+
+/**
  * Type of NurApi notification callback. Used for receiving events from NurApi.
  */
 typedef void (NURAPICALLBACK *NotificationCallback)(HANDLE hApi, DWORD timestamp, int type, LPVOID data, int dataLen);
@@ -5242,6 +5269,36 @@ int NURAPICONV NurApiDiagGetConfig(HANDLE hApi, DWORD *flags, DWORD *interval);
 NUR_API
 int NURAPICONV NurApiDiagSetConfig(HANDLE hApi, DWORD flags, DWORD interval);
 
+/** @fn int NurApiGetGen2XConfig(HANDLE hApi, struct NUR_GEN2X_CONFIG* cfg, DWORD cfgSize)
+ *
+ * Get current gen2x config from NUR module.
+ *
+ * @sa NUR_GEN2X_CONFIG, NurApiSetGen2XConfig(), enum NUR_GEN2X_FLAGS
+ *
+ * @param	hApi		Handle to valid NurApi object instance.
+ * @param	cfg			Pointer to a buffer that receives current gen2x config.
+ * @param	cfgSize		Size of the <i>cfg</i> structure in bytes. Usually: sizeof(struct NUR_GEN2X_CONFIG).
+ *
+ * @return	Zero when succeeded, On error non-zero error code is returned.
+ */
+NUR_API
+int NURAPICONV NurApiGetGen2XConfig(HANDLE hApi, struct NUR_GEN2X_CONFIG* cfg, DWORD cfgSize);
+
+/** @fn int NurApiSetGen2XConfig(HANDLE hApi, struct NUR_GEN2X_CONFIG* cfg, DWORD cfgSize)
+ *
+ * Set new gen2x config to NUR module. This will store new setup in volatile memory.
+ * If you need persistent setup, you'll need to call NurApiStoreCurrentSetup() or NurApiStoreCurrentSetupEx()
+ *
+ * @sa NUR_GEN2X_CONFIG, NurApiGetGen2XConfig(), NurApiStoreCurrentSetup(), NurApiStoreCurrentSetupEx()
+ *
+ * @param	hApi		Handle to valid NurApi object instance.
+ * @param	cfg			Pointer to a new gen2x config.
+ * @param	cfgSize		Size of the <i>cfg</i> structure in bytes. Usually: sizeof(struct NUR_GEN2X_CONFIG).
+ *
+ * @return	Zero when succeeded, On error non-zero error code is returned.
+ */
+NUR_API
+int NURAPICONV NurApiSetGen2XConfig(HANDLE hApi, struct NUR_GEN2X_CONFIG* cfg, DWORD cfgSize);
 
 /** @example NurApiExample.cpp
  * Simple console application project.

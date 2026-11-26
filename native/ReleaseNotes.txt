@@ -1,3 +1,7 @@
+v1.9.32
+- Added Gen2X (NUR-122)
+- Update module types and chip versions
+
 v1.9.31
 - Added NUR_RFPROFILE_AUTOSET (NUR-127)
 - Fixed TransportSerial windows connecting FR22 (ftdi) over USB

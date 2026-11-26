@@ -831,7 +831,8 @@ enum NUR_DEVCAPS_F1
 	NUR_DC_TAGPHASE     = (1<<26),	/**< This module FW supports tag phase info. see NUR_OPFLAGS_EN_TAG_PHASE */
 	NUR_DC_SLEEP		= (1<<27),	/**< This module FW supports sleep. See NUR_SETUP_TO_SLEEP_TIME */
 	NUR_DC_PHASEDIFF	= (1<<28),	/**< This module FW supports tag phase diff info. see NUR_OPFLAGS_EN_PHASE_DIFF */
-	NUR_DC_LASTBITF1	= (1<<29),	/**< Next available bit for future extensions. */
+	NUR_DC_GEN2X		= (1<<29),	/**< The module FW supports impinj Gen2X at some level. */
+	NUR_DC_LASTBITF1	= (1<<30),	/**< Next available bit for future extensions. */
 };
 
 /** Flag field 1 'all device caps' bitmask. */
@@ -856,7 +857,17 @@ enum NUR_CHIPVER
 	/** Chip version AS3993 */
 	NUR_CHIPVER_AS3993 = 2,
 	/** Chip version R2000 */
-	NUR_CHIPVER_R2000 = 3
+	NUR_CHIPVER_R2000 = 3,
+	/** Chip version R2000D */
+	NUR_CHIPVER_R2000D = 4,
+	/** Chip version E310 */
+	NUR_CHIPVER_E310 = 5,
+	/** Chip version E510 */
+	NUR_CHIPVER_E510 = 6,
+	/** Chip version E710 */
+	NUR_CHIPVER_E710 = 7,
+	/** Chip version E910 */
+	NUR_CHIPVER_E910 = 8
 };
 
 /**
@@ -874,7 +885,25 @@ enum NUR_MODULETYPE
 	/** Module type NUR10W (1W module)*/
 	NUR_MODULETYPE_NUR10W = 4,
 	/** Module type NUR2-1W (1W module)*/
-	NUR_MODULETYPE_NUR2_1W = 5
+	NUR_MODULETYPE_NUR2_1W = 5,
+	/** Module type NUR2-01W */
+	NUR_MODULETYPE_NUR2_01W = 6,
+	/** Module type NUR3IE-1W */
+	NUR_MODULETYPE_NUR3IE_1W = 7,
+	/** Module type NUR3FR-1W */
+	NUR_MODULETYPE_NUR3FR_1W = 8,
+	/** Module type NUR3MOD-1W */
+	NUR_MODULETYPE_NUR3MOD_1W = 9,
+	/** Module type NUR3IR-1W */
+	NUR_MODULETYPE_NUR3IR_1W = 10,
+	/** Module type NUR3MOD-0W1 */
+	NUR_MODULETYPE_NUR3MOD_0W1 = 11,
+	/** Module type NUR3MOD-0W5 */
+	NUR_MODULETYPE_NUR3MOD_0W5 = 12,
+	/** Module type NUR3IOLINK-1W */
+	NUR_MODULETYPE_NUR3IOLINK_1W = 13,
+	/** Module type NUR3FR26-1W */
+	NUR_MODULETYPE_NUR3FR26_1W = 14
 };
 
 /**
@@ -941,6 +970,23 @@ enum NUR_DIAG_REPORT_FLAGS
 };
 
 #define FW_INFO_REQUEST_SEC_CHIP 2
+
+/**
+ * Gen2X control flags.
+ * @sa struct NUR_GEN2X_CONFIG
+ * @sa NurApiGetGen2XConfig
+ * @sa NurApiSetGen2XConfig
+ */
+enum NUR_GEN2X_FLAGS
+{
+	NUR_GEN2X_ENABLE_SCANID         = (1 << 0),	/**< Enable ScanId feature */
+	NUR_GEN2X_ENABLE_TAGFOCUS       = (1 << 1),	/**< Enable TagFocus feature */
+	NUR_GEN2X_ENABLE_FASTID	        = (1 << 2),	/**< Enable FastID feature */
+	NUR_GEN2X_ACCEPT_CRC5_CRC5PLUS  = (1 << 3),	/**< Enable accepting both CRC5 and CRC5Plus for CR protection */
+	NUR_GEN2X_POWER_BOOST           = (1 << 4),	/**< Enable gen2v3 power boost feature */
+	NUR_GEN2X_ENABLE_PROTECTED_MODE = (1 << 5),	/**< Enable protected mode feature */
+	NUR_GEN2X_ALL_FLAGS				= 0x3F		/**< All supported flags */
+};
 
 /** @} */ // end of API
 
